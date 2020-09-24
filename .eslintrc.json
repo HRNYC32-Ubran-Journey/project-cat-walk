@@ -11,7 +11,7 @@
       "jsx": true
     }
   },
-  "extends": "eslint:recommended",
+  "extends": ["airbnb", "airbnb/hooks"],
   "globals": {
     "Atomics": "readonly",
     "SharedArrayBuffer": "readonly"

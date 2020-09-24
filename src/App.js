@@ -16,4 +16,8 @@ class App extends React.Component {
   }
 }
 
+function hi (e):string {
+  return e;
+}
+
 export default App;
