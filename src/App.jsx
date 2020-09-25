@@ -6,16 +6,20 @@ import Recomended from './components/recommended/index';
 import Reviews from './components/reviews/index';
 
 class App extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+
+    };
+  }
+
   render() {
-    const { name } = this.props;
     return (
       <>
-        <h1>
-          Hello {name}
-        </h1>
         <Overview />
-        <Qa />
         <Recomended />
+        <Qa />
         <Reviews />
         <Button variant="contained">this is a material UI button</Button>
       </>
