@@ -17,7 +17,7 @@ class Recomended extends React.Component {
   render() {
     const { recommended } = this.state;
 
-    return ( 
+    return (
       <div className="recommended">
         {recommended}
       </div>
