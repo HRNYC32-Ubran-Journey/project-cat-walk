@@ -30,7 +30,23 @@ class Reviews extends React.Component {
         this.setState({
           reviews: res.data,
         });
-        return 'hi';
+      });
+  }
+
+  getMetadata() {
+    const { id } = this.props;
+
+    axios.get({
+      url: '/reviews/meta',
+      query: {
+        product_id: id,
+      },
+    })
+      .then((res) => {
+        console.log(res);
+        this.setState({
+          metadata: res.data,
+        });
       });
   }
 }
