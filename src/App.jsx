@@ -15,7 +15,7 @@ class App extends React.Component {
       cart: [],
     };
 
-    this.addToCart = this.addToCard.bind(this);
+    this.addToCart = this.addToCart.bind(this);
   }
 
   addToCart({
@@ -42,7 +42,6 @@ class App extends React.Component {
     // Note: The button is here as a temperary refrence on how to use materal-ui.
     return (
       <>
-        {this.axios()}
         <Overview id={id} addToCart={this.addToCart} />
         <Recomended id={id} cart={cart} />
         <Qa id={id} />
