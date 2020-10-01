@@ -10,23 +10,18 @@ const config = {
   module: {
     rules: [
       {
-        test: /\.(js|jsx)$/,
+        test: /\.js$|jsx/,
         use: 'babel-loader',
         exclude: /node_modules/
       },
       {
         test: /\.css$/,
-        use: [
-          'style-loader',
-          {
-            loader: 'css-loader',
-            options: {
-              importLoaders: 1,
-              modules: true
-            }
-          }
-        ]
-      }
+        loader: "style-loader!css-loader"
+      }, 
+      {
+        test: /\.(jpe?g|png|gif|woff|woff2|eot|ttf|svg)(\?[a-z0-9=.]+)?$/,
+        loader: 'url-loader?limit=100000' 
+      } 
     ]
   },
   resolve: {
@@ -38,3 +33,8 @@ const config = {
 };
 
 module.exports = config;
+
+
+
+
+
