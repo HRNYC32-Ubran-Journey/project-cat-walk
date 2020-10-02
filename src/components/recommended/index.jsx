@@ -15,14 +15,14 @@ class Recomended extends React.Component {
   }
 
   render() {
-    const { recommended } = this.state;
+    const { id } = this.props;
 
     return (
       <div className="recommended">
-        <div className="RelatedOutFit">
-          <GetRecommended />
+        <div className="RelatedOutFits">
+          <GetRecommended id={id} />
         </div>
-        {/* { console.log(this.props)} */}
+
       </div>
     );
   }
