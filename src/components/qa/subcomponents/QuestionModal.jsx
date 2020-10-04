@@ -24,34 +24,42 @@ export default function QuestionModal() {
           <DialogContentText>
             This is where the product name is going...
           </DialogContentText>
+          <DialogContentText>
+            Your Question
+          </DialogContentText>
           <TextField
-            id="outlined-multiline-static"
+            id="question-field"
             required
+            margin="dense"
             multiline
             rows={7}
             variant="outlined"
-            label="Your Question"
             fullWidth
           />
+           <br/>   
+          <DialogContentText>
+            What is you nickname  
+          </DialogContentText>
           <TextField
-            placeholder="Example: jackson11!"
+            id="nickname-field"
             margin="dense"
-            id="nickname"
-            label="What is you nickname"
+            required
+            label="Example: jackson11!"
             variant="outlined"
             fullWidth
           />
           <DialogContentText>
             For privacy reasons, do not use your full name or email address
           </DialogContentText>
-
+          <DialogContentText>
+            Your Email
+          </DialogContentText>
           <TextField
-            autoFocus
             margin="dense"
             id="email"
-            label="Your Email"
+            required
             variant="outlined"
-            placeholder="Why did you like the product or not?"
+            label="Why did you like the product or not?"
             type="email"
             fullWidth
           />
@@ -61,7 +69,7 @@ export default function QuestionModal() {
         </DialogContent>
         <DialogActions>
           <Button> Cancel </Button>
-          <Button onClick={() => {console.log('clicked')}}> Subscribe </Button>
+          <Button> Submit </Button>
         </DialogActions>
       </Dialog>
     </div>
