@@ -2,14 +2,14 @@ import React from 'react';
 import Card from '@material-ui/core/Card';
 import CardMedia from '@material-ui/core/CardMedia';
 import clothingImg from '../../../../dist/clothing.jpg';
-export default function UploadMediaCard() {
-  return (
-    <div>
+
+export default function UploadMediaCard({files}) {
+  const renderPhotos = files.map((file) => {
+    return (
       <Card>
         <CardMedia
           component="img"
-          image={clothingImg}
-          title="this is ttile of pic"
+          image={file}
           style={{
             boxSizing: 'content-box',
             width: '50px',
@@ -20,6 +20,11 @@ export default function UploadMediaCard() {
           }}
         />
       </Card>
+    )
+  })
+  return (
+    <div id="media-cards" style={{ display: 'inline-flex'}}>
+      {files ? renderPhotos : null}
     </div>
   );
 }
