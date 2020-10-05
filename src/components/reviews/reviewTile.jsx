@@ -47,7 +47,7 @@ const renderResponse = (response) => {
 };
 
 const ReviewTile = (props) => {
-  const { review } = props;
+  const { review, markAsHelpful, report } = props;
   const reviewDate = new Date(review.date);
   const months = [
     'January',
@@ -65,6 +65,14 @@ const ReviewTile = (props) => {
   ];
   const reviewDateText = `${months[reviewDate.getMonth()]} ${reviewDate.getDate()}, ${reviewDate.getFullYear()}`;
 
+  const runMarkAsHelpful = () => {
+    markAsHelpful(review.review_id);
+  };
+
+  const runReport = () => {
+    report(review.review_id);
+  };
+  
   return (
     <Card>
       <CardContent>
@@ -89,7 +97,11 @@ const ReviewTile = (props) => {
         { renderRecommend(review.recommend) }
         { renderResponse(review.response) }
         <Typography variant="caption" color="textSecondary">
-          Helpful? <a href="#">Yes</a> ({review.helpfulness}) | <a href="#">Report</a>
+          Helpful?
+          <a onClick={runMarkAsHelpful}>Yes</a>
+          {`(${review.helpfulness})`}
+          |
+          <a onClick={runReport}>Report</a>
         </Typography>
       </CardContent>
     </Card>
