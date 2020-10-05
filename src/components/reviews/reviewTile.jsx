@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Card, CardContent } from '@material-ui/core';
+import { Card, CardContent, Grid } from '@material-ui/core';
 
 // This song is
 // One you won't forget!
@@ -12,11 +12,34 @@ import { Card, CardContent } from '@material-ui/core';
 // Too catchy!~
 const ReviewTile = (props) => {
   const { review } = props;
+  const reviewDate = new Date(review.date);
+  const months = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
+  ];
+  const reviewDateText = `${months[reviewDate.getMonth()]} ${reviewDate.getDate()}, ${reviewDate.getFullYear()}`;
 
   return (
     <Card>
       <CardContent>
-        hi
+        <Grid container>
+          <Grid item>
+            {`${review.rating} stars`}
+          </Grid>
+          <Grid item>
+            {`${review.reviewer_name}, ${reviewDateText}`}
+          </Grid>
+        </Grid>
       </CardContent>
     </Card>
   );
