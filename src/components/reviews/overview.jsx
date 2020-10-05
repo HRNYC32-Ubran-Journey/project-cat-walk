@@ -17,8 +17,17 @@ const Overview = (props) => {
     totalRatings += amount;
     totalScore += amount * parseInt(score, 10);
   });
-
   const averageRating = `${totalScore / totalRatings}`.slice(0, 3);
+
+  let likeRatio = null;
+  if (metadata.recommended[0] === 0 && metadata.recommended[1] > 0) {
+    likeRatio = '100%';
+  } else if (metadata.recommended[1] === 0) {
+    likeRatio = '0%';
+  } else {
+    const ratio = metadata.recommended[1] / (metadata.recommended[0] + metadata.recommended[1]);
+    likeRatio = `${Math.trunc(ratio * 100)}%`;
+  }
 
   return (
     <>
@@ -26,6 +35,9 @@ const Overview = (props) => {
         RATINGS & REVIEWS
       </Typography>
       <Summery rating={averageRating} />
+      <Typography>
+        {`${likeRatio} of people recommend this product.`}
+      </Typography>
     </>
   );
 };
