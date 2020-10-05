@@ -14,6 +14,7 @@ class Reviews extends React.Component {
     this.getReviews = this.getReviews.bind(this);
     this.getMetadata = this.getMetadata.bind(this);
     this.markAsHelpful = this.markAsHelpful.bind(this);
+    this.reportReview = this.reportReview.bind(this);
 
     // Define state.
     this.state = {
@@ -65,6 +66,16 @@ class Reviews extends React.Component {
 
   markAsHelpful(id) {
     axios.put(`http://18.224.37.110/${id}/helpful`)
+      .then(() => {
+        this.getReviews();
+      })
+      .catch((e) => {
+        alert(e);
+      });
+  }
+
+  reportReview(id) {
+    axios.put(`http://18.224.37.110/${id}/report`)
       .then(() => {
         this.getReviews();
       })
