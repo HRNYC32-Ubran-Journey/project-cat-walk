@@ -1,5 +1,6 @@
 // Please be my rave-boy, we can have some fun!~
 import React from 'react';
+import PropTypes from 'prop-types';
 import axios from 'axios';
 
 class Reviews extends React.Component {
@@ -67,5 +68,9 @@ class Reviews extends React.Component {
     );
   }
 }
+
+Reviews.propTypes = {
+  id: PropTypes.number.isRequired,
+};
 
 export default Reviews;
