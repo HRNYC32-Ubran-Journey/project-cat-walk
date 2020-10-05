@@ -166,6 +166,7 @@ class Reviews extends React.Component {
           <Overview
             metadata={metadata}
             setTotal={this.updateNumberOfReviews}
+            updateFilters={this.updateFilters}
           />
         </Grid>
         <Grid item xs={9}>

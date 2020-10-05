@@ -58,6 +58,7 @@ Overview.propTypes = {
     }).isRequired,
   }).isRequired,
   setTotal: PropTypes.func.isRequired,
+  updateFilters: PropTypes.func.isRequired,
 };
 
 export default Overview;
