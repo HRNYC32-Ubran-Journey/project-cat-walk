@@ -32,7 +32,7 @@ const ReviewTile = (props) => {
   return (
     <Card>
       <CardContent>
-        <Grid container>
+        <Grid container justify="space-between">
           <Grid item>
             {`${review.rating} stars`}
           </Grid>
