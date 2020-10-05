@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+// Import Components:
+import ReviewTile from './reviewTile';
 
 const ReviewsList = (props) => {
   const { reviews } = props;
@@ -7,7 +9,7 @@ const ReviewsList = (props) => {
   return (
     <div>
       This is a list.
-      {reviews.map((e) => <div>{e.summary}</div>)}
+      {reviews.map((e) => <ReviewTile review={e} />)}
     </div>
   );
 };
