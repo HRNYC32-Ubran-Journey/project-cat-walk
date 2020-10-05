@@ -1,10 +1,6 @@
 // Please be my rave-boy, we can have some fun!~
 import React from 'react';
-import { create } from 'axios';
-
-const axios = create({
-  baseURL: 'http://18.224.37.110/',
-});
+import axios from 'axios';
 
 class Reviews extends React.Component {
   constructor(props) {
@@ -33,8 +29,10 @@ class Reviews extends React.Component {
   getReviews() {
     const { id } = this.props;
 
-    axios.get({
-      url: `/reviews/${id}`,
+    axios.get('http://18.224.37.110/reviews/', {
+      params: {
+        product_id: id,
+      },
     })
       .then((res) => {
         console.log(res);
@@ -47,9 +45,8 @@ class Reviews extends React.Component {
   getMetadata() {
     const { id } = this.props;
 
-    axios.get({
-      url: '/reviews/meta',
-      query: {
+    axios.get('http://18.224.37.110/reviews/meta', {
+      params: {
         product_id: id,
       },
     })
