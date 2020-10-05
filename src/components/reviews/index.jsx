@@ -99,12 +99,12 @@ class Reviews extends React.Component {
   }
 
   render() {
-    const { reviews, sortType } = this.state;
+    const { reviews, metadata, sortType } = this.state;
 
     return (
       <Grid container>
         <Grid item xs={3}>
-          <Overview />
+          <Overview metadata={metadata} />
         </Grid>
         <Grid item xs={9}>
           <ReviewsList
