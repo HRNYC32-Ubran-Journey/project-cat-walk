@@ -4,12 +4,12 @@ import Reviews from '.';
 
 const ReviewsList = (props) => {
   const { reviews } = props;
-
+  if (!reviews) { return <div> Loading... </div>; }
   console.log(reviews);
   return (
     <div>
       This is a list.
-      {reviews.map((e) => <div>{e.summery}</div>)}
+      {reviews.map((e) => <div>{e.summary}</div>)}
     </div>
   );
 };
