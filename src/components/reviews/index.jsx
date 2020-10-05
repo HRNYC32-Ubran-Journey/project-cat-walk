@@ -2,6 +2,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
+// Components:
+import ReviewsList from './reviewsList';
 
 class Reviews extends React.Component {
   constructor(props) {
@@ -60,10 +62,13 @@ class Reviews extends React.Component {
   }
 
   render() {
+    const { reviews } = this.state;
+
     return (
       <>
         <h1>Overview</h1>
         <h1>Reviews List</h1>
+        <ReviewsList reviews={reviews} />
       </>
     );
   }
