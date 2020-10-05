@@ -10,6 +10,11 @@ class Reviews extends React.Component {
   constructor(props) {
     super(props);
 
+    // Bind methods.
+    this.getReviews = this.getReviews.bind(this);
+    this.getMetadata = this.getMetadata.bind(this);
+
+    // Define state.
     this.state = {
       metadata: null,
       reviews: null,
@@ -18,6 +23,11 @@ class Reviews extends React.Component {
       expanded: false,
       ratingsFilters: []
     };
+  }
+
+  componentDidMount() {
+    this.getReviews();
+    this.getMetadata();
   }
 
   getReviews() {
