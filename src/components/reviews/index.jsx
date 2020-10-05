@@ -35,10 +35,12 @@ class Reviews extends React.Component {
 
   getReviews() {
     const { id } = this.props;
+    const { sortType } = this.state;
 
     axios.get('http://18.224.37.110/reviews/', {
       params: {
         product_id: id,
+        sort: sortType,
       },
     })
       .then((res) => {
