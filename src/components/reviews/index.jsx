@@ -1,3 +1,4 @@
+// Please be my rave-boy, we can have some fun!~
 import React from 'react';
 import { create } from 'axios';
 
@@ -13,7 +14,7 @@ class Reviews extends React.Component {
       metadata: null,
       reviews: null,
       sortType: null,
-      currentPage: 1, 
+      currentPage: 1,
       expanded: false,
       ratingsFilters: []
     };
@@ -48,6 +49,12 @@ class Reviews extends React.Component {
           metadata: res.data,
         });
       });
+  }
+
+  render() {
+    return (
+      <h1>hi</h1>
+    );
   }
 }
 
