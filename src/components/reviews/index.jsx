@@ -106,6 +106,7 @@ class Reviews extends React.Component {
     this.setState({
       expanded: !expanded,
     });
+    this.getReviews();
   }
 
   render() {
