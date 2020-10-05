@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Card, CardContent, Grid } from '@material-ui/core';
+import { Card, CardContent, Grid, Typography } from '@material-ui/core';
 
 // This song is
 // One you won't forget!
@@ -34,15 +34,25 @@ const ReviewTile = (props) => {
       <CardContent>
         <Grid container justify="space-between">
           <Grid item>
-            {`${review.rating} stars`}
+            <Typography variant="caption" color="textSecondary">
+              {`${review.rating} stars`}
+            </Typography>
           </Grid>
           <Grid item>
-            {`${review.reviewer_name}, ${reviewDateText}`}
+            <Typography variant="caption" color="textSecondary">
+              {`${review.reviewer_name}, ${reviewDateText}`}
+            </Typography>
           </Grid>
         </Grid>
-        <h3>{review.summary}</h3>
-        <p>{review.body}</p>
-        <p>Helpful? <u>Yes</u> ({review.helpfulness}) | <u>Report</u></p>
+        <Typography variant="h5" component="h4" gutterBottom>
+          <b>{review.summary}</b>
+        </Typography>
+        <Typography variant="body2" component="p" gutterBottom>
+          {review.body}
+        </Typography>
+        <Typography variant="caption" color="textSecondary">
+          Helpful? <a href="#">Yes</a> ({review.helpfulness}) | <a href="#">Report</a>
+        </Typography>
       </CardContent>
     </Card>
   );
