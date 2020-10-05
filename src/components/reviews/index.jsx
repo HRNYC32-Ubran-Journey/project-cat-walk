@@ -18,15 +18,17 @@ class Reviews extends React.Component {
     this.reportReview = this.reportReview.bind(this);
     this.changeSortingMethod = this.changeSortingMethod.bind(this);
     this.toggleExpanded = this.toggleExpanded.bind(this);
+    this.updateNumberOfReviews = this.updateNumberOfReviews.bind(this);
 
     // Define state.
     this.state = {
       metadata: null,
+      totalReviews: 0,
       reviews: null,
       sortType: 'relevant',
       currentPage: 1,
       expanded: false,
-      ratingsFilters: []
+      ratingsFilters: [],
     };
   }
 
@@ -109,13 +111,29 @@ class Reviews extends React.Component {
     this.getReviews();
   }
 
+  updateNumberOfReviews(total) {
+    this.setState({
+      totalReviews: total,
+    });
+    this.getReviews();
+  }
+
   render() {
-    const { reviews, metadata, sortType } = this.state;
+    const {
+      reviews,
+      metadata,
+      sortType,
+      totalReviews,
+      updateNumberOfReviews,
+    } = this.state;
 
     return (
       <Grid container>
         <Grid item xs={3}>
-          <Overview metadata={metadata} />
+          <Overview
+            metadata={metadata}
+            setTotal={updateNumberOfReviews}
+          />
         </Grid>
         <Grid item xs={9}>
           <ReviewsList
@@ -125,6 +143,7 @@ class Reviews extends React.Component {
             sortType={sortType}
             changeSortType={this.changeSortingMethod}
             toggleExpanded={this.toggleExpanded}
+            totalReviews={totalReviews}
           />
         </Grid>
       </Grid>
