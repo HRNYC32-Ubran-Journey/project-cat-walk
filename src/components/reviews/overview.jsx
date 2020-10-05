@@ -1,10 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Typography } from '@material-ui/core';
 
 const Overview = (props) => {
   const { metadata } = props;
   return (
-    <div>hi</div>
+    <>
+      <Typography variant="h6">
+        RATINGS & REVIEWS
+      </Typography>
+    </>
   );
 };
 
