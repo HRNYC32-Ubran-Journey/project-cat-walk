@@ -14,4 +14,8 @@ const ReviewsList = (props) => {
   );
 };
 
+ReviewsList.propTypes = {
+  reviews: PropTypes.array.isRequired,
+};
+
 export default ReviewsList;
