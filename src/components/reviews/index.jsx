@@ -15,6 +15,7 @@ class Reviews extends React.Component {
     this.getMetadata = this.getMetadata.bind(this);
     this.markAsHelpful = this.markAsHelpful.bind(this);
     this.reportReview = this.reportReview.bind(this);
+    this.changeSortingMethod = this.changeSortingMethod.bind(this);
 
     // Define state.
     this.state = {
@@ -84,6 +85,14 @@ class Reviews extends React.Component {
       });
   }
 
+  changeSortingMethod(method) {
+    if (['relevant', 'newest', 'helpful'].includes(method)) {
+      this.setState({sortType: method});
+    }
+    alert('There was an error changing the sorting method.');
+    throw new Error(`WARNING: method was ${method} which is not an acceptable method.`)
+  }
+
   render() {
     const { reviews } = this.state;
 
@@ -98,6 +107,7 @@ class Reviews extends React.Component {
             reviews={reviews}
             markAsHelpful={this.markAsHelpful}
             report={this.reportReview}
+            changeSortType={this.changeSortingMethod}
           />
         </Grid>
       </Grid>
