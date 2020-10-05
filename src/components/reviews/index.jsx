@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import axios from 'axios';
 import { Grid } from '@material-ui/core';
 // Components:
+import Overview from './overview';
 import ReviewsList from './reviewsList';
 
 class Reviews extends React.Component {
@@ -103,10 +104,9 @@ class Reviews extends React.Component {
     return (
       <Grid container>
         <Grid item xs={3}>
-          <h1>Overview</h1>
+          <Overview />
         </Grid>
         <Grid item xs={9}>
-          <h1>Reviews List</h1>
           <ReviewsList
             reviews={reviews}
             markAsHelpful={this.markAsHelpful}
