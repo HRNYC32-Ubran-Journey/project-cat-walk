@@ -15,10 +15,11 @@ const ReviewsList = (props) => {
     reviews,
     report,
     markAsHelpful,
+    sortType = 'relevant',
     changeSortType,
   } = props;
   if (!reviews) { return <div> Loading... </div>; }
-
+  console.log(sortType)
   const runChangeSortType = (e) => {
     changeSortType(e.target.value);
   };
@@ -31,7 +32,7 @@ const ReviewsList = (props) => {
           <TextField
             id="select-sort-type"
             select
-            value="relevant"
+            value={sortType}
             onChange={runChangeSortType}
           >
             <MenuItem key="relevant" value="relevant">
@@ -79,6 +80,7 @@ ReviewsList.propTypes = {
   ).isRequired,
   markAsHelpful: PropTypes.func.isRequired,
   report: PropTypes.func.isRequired,
+  sortType: PropTypes.string.isRequired,
   changeSortType: PropTypes.func.isRequired,
 };
 

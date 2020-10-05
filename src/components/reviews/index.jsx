@@ -21,7 +21,7 @@ class Reviews extends React.Component {
     this.state = {
       metadata: null,
       reviews: null,
-      sortType: 'relevent',
+      sortType: 'relevant',
       currentPage: 1,
       expanded: false,
       ratingsFilters: []
@@ -95,7 +95,7 @@ class Reviews extends React.Component {
   }
 
   render() {
-    const { reviews } = this.state;
+    const { reviews, sortType } = this.state;
 
     return (
       <Grid container>
@@ -108,6 +108,7 @@ class Reviews extends React.Component {
             reviews={reviews}
             markAsHelpful={this.markAsHelpful}
             report={this.reportReview}
+            sortType={sortType}
             changeSortType={this.changeSortingMethod}
           />
         </Grid>
