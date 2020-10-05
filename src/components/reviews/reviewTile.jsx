@@ -66,13 +66,14 @@ const ReviewTile = (props) => {
   const reviewDateText = `${months[reviewDate.getMonth()]} ${reviewDate.getDate()}, ${reviewDate.getFullYear()}`;
 
   const runMarkAsHelpful = () => {
+    console.group(review.review_id);
     markAsHelpful(review.review_id);
   };
 
   const runReport = () => {
     report(review.review_id);
   };
-  
+
   return (
     <Card>
       <CardContent>
@@ -110,8 +111,9 @@ const ReviewTile = (props) => {
 
 ReviewTile.propTypes = {
   review: PropTypes.shape({
-    rating: PropTypes.number.isRequired,
+    review_id: PropTypes.number.isRequired,
 
+    rating: PropTypes.number.isRequired,
     reviewer_name: PropTypes.string.isRequired,
     recommend: PropTypes.number.isRequired,
     date: PropTypes.string.isRequired,
@@ -130,6 +132,8 @@ ReviewTile.propTypes = {
     response: PropTypes.string,
 
   }).isRequired,
+  markAsHelpful: PropTypes.func.isRequired,
+  report: PropTypes.func.isRequired,
 };
 
 export default ReviewTile;
