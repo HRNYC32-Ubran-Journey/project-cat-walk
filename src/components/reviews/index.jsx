@@ -13,12 +13,13 @@ class Reviews extends React.Component {
     // Bind methods.
     this.getReviews = this.getReviews.bind(this);
     this.getMetadata = this.getMetadata.bind(this);
+    this.markAsHelpful = this.markAsHelpful.bind(this);
 
     // Define state.
     this.state = {
       metadata: null,
       reviews: null,
-      sortType: null,
+      sortType: 'relevent',
       currentPage: 1,
       expanded: false,
       ratingsFilters: []
@@ -62,6 +63,16 @@ class Reviews extends React.Component {
       });
   }
 
+  markAsHelpful(id) {
+    axios.put(`http://18.224.37.110/${id}/helpful`)
+      .then(() => {
+        this.getReviews();
+      })
+      .catch((e) => {
+        alert(e);
+      });
+  }
+
   render() {
     const { reviews } = this.state;
 
@@ -72,7 +83,9 @@ class Reviews extends React.Component {
         </Grid>
         <Grid item xs={9}>
           <h1>Reviews List</h1>
-          <ReviewsList reviews={reviews} />
+          <ReviewsList
+            reviews={reviews}
+          />
         </Grid>
       </Grid>
     );
