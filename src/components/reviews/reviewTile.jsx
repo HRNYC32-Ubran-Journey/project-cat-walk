@@ -29,6 +29,23 @@ const renderRecommend = (recommends) => {
   return '';
 };
 
+const renderResponse = (response) => {
+  if (response) {
+    return (
+      <Typography
+        variant="body2"
+        component="p"
+        style={{
+          backgroundColor: 'lightgray',
+        }}
+      >
+        { response }
+      </Typography>
+    );
+  }
+  return '';
+};
+
 const ReviewTile = (props) => {
   const { review } = props;
   const reviewDate = new Date(review.date);
@@ -69,7 +86,8 @@ const ReviewTile = (props) => {
         <Typography variant="body2" component="p" gutterBottom>
           {review.body}
         </Typography>
-        { renderRecommend(review.recommend)}
+        { renderRecommend(review.recommend) }
+        { renderResponse(review.response) }
         <Typography variant="caption" color="textSecondary">
           Helpful? <a href="#">Yes</a> ({review.helpfulness}) | <a href="#">Report</a>
         </Typography>
