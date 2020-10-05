@@ -11,8 +11,15 @@ import {
 import ReviewTile from './reviewTile';
 
 const ReviewsList = (props) => {
-  const { reviews, report, markAsHelpful } = props;
-  if (!reviews || !report || !markAsHelpful) { return <div> Loading... </div>; }
+  const {
+    reviews,
+    report,
+    markAsHelpful,
+    changeSortType,
+  } = props;
+  if (!reviews) { return <div> Loading... </div>; }
+
+
   return (
     <>
       <Grid item>
@@ -63,6 +70,7 @@ ReviewsList.propTypes = {
   ).isRequired,
   markAsHelpful: PropTypes.func.isRequired,
   report: PropTypes.func.isRequired,
+  changeSortType: PropTypes.func.isRequired,
 };
 
 export default ReviewsList;
