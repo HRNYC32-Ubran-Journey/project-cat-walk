@@ -86,6 +86,7 @@ ReviewsList.propTypes = {
   changeSortType: PropTypes.func.isRequired,
   expanded: PropTypes.bool.isRequired,
   toggleExpanded: PropTypes.func.isRequired,
+  totalReviews: PropTypes.number.isRequired,
 };
 
 export default ReviewsList;
