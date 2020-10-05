@@ -5,7 +5,7 @@ import { Typography } from '@material-ui/core';
 import Summery from './summery';
 
 const Overview = (props) => {
-  const { metadata } = props;
+  const { metadata, setTotal } = props;
   if (!metadata) { return <div>Loading...</div>; }
   console.log(metadata);
 
@@ -28,6 +28,8 @@ const Overview = (props) => {
     const ratio = metadata.recommended[1] / (metadata.recommended[0] + metadata.recommended[1]);
     likeRatio = `${Math.trunc(ratio * 100)}%`;
   }
+
+  setTotal(totalRatings);
 
   return (
     <>

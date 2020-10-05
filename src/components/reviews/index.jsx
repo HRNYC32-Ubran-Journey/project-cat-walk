@@ -23,7 +23,7 @@ class Reviews extends React.Component {
     // Define state.
     this.state = {
       metadata: null,
-      totalReviews: 0,
+      totalReviews: null,
       reviews: null,
       sortType: 'relevant',
       currentPage: 1,
@@ -112,10 +112,12 @@ class Reviews extends React.Component {
   }
 
   updateNumberOfReviews(total) {
-    this.setState({
-      totalReviews: total,
-    });
-    this.getReviews();
+    const { totalReviews } = this.state;
+    if (totalReviews === null) {
+      this.setState({
+        totalReviews: total,
+      });
+    }
   }
 
   render() {
@@ -124,7 +126,6 @@ class Reviews extends React.Component {
       metadata,
       sortType,
       totalReviews,
-      updateNumberOfReviews,
     } = this.state;
 
     return (
@@ -132,7 +133,7 @@ class Reviews extends React.Component {
         <Grid item xs={3}>
           <Overview
             metadata={metadata}
-            setTotal={updateNumberOfReviews}
+            setTotal={this.updateNumberOfReviews}
           />
         </Grid>
         <Grid item xs={9}>
