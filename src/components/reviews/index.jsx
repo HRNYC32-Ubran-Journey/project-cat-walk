@@ -96,6 +96,8 @@ class Reviews extends React.Component {
           <h1>Reviews List</h1>
           <ReviewsList
             reviews={reviews}
+            markAsHelpful={this.markAsHelpful}
+            report={this.reportReview}
           />
         </Grid>
       </Grid>

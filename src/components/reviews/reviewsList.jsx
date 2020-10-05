@@ -11,8 +11,8 @@ import {
 import ReviewTile from './reviewTile';
 
 const ReviewsList = (props) => {
-  const { reviews } = props;
-  if (!reviews) { return <div> Loading... </div>; }
+  const { reviews, report, markAsHelpful } = props;
+  if (!reviews || !report || !markAsHelpful) { return <div> Loading... </div>; }
   return (
     <>
       <Grid item>
@@ -33,7 +33,11 @@ const ReviewsList = (props) => {
       <Grid container item spacing={2}>
         {reviews.map((e) => (
           <Grid key={e.review_id} xs={12} item>
-            <ReviewTile review={e} />
+            <ReviewTile
+              review={e}
+              markAsHelpful={markAsHelpful}
+              report={report}
+            />
           </Grid>
         ))}
       </Grid>
