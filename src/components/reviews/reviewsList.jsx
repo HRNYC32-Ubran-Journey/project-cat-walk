@@ -19,6 +19,7 @@ const ReviewsList = (props) => {
     changeSortType,
     expanded,
     toggleExpanded,
+    totalReviews,
   } = props;
   if (!reviews) { return <div> Loading... </div>; }
   const runChangeSortType = (e) => {
@@ -29,7 +30,7 @@ const ReviewsList = (props) => {
     <>
       <Grid item>
         <Typography>
-          {'<number> reviews, sorted by '}
+          {`${totalReviews} reviews, sorted by `}
           <TextField
             id="select-sort-type"
             select
