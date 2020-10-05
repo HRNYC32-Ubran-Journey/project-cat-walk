@@ -1,6 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Card, CardContent, Grid, Typography } from '@material-ui/core';
+import {
+  Card,
+  CardContent,
+  Grid,
+  Typography,
+} from '@material-ui/core';
 
 // This song is
 // One you won't forget!
@@ -10,6 +15,20 @@ import { Card, CardContent, Grid, Typography } from '@material-ui/core';
 // You can't blame me!
 // Just like I said
 // Too catchy!~
+const renderRecommend = (recommends) => {
+  if (recommends) {
+    return (
+      <Typography
+        variant="body2"
+        component="p"
+      >
+        I recommend this product
+      </Typography>
+    );
+  }
+  return '';
+};
+
 const ReviewTile = (props) => {
   const { review } = props;
   const reviewDate = new Date(review.date);
@@ -44,12 +63,13 @@ const ReviewTile = (props) => {
             </Typography>
           </Grid>
         </Grid>
-        <Typography variant="h5" component="h4" gutterBottom>
+        <Typography variant="h5" component="h6">
           <b>{review.summary}</b>
         </Typography>
         <Typography variant="body2" component="p" gutterBottom>
           {review.body}
         </Typography>
+        { renderRecommend(review.recommend)}
         <Typography variant="caption" color="textSecondary">
           Helpful? <a href="#">Yes</a> ({review.helpfulness}) | <a href="#">Report</a>
         </Typography>
