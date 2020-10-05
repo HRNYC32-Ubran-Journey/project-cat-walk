@@ -60,7 +60,10 @@ class Reviews extends React.Component {
 
   render() {
     return (
-      <h1>hi</h1>
+      <>
+        <h1>Overview</h1>
+        <h1>Reviews List</h1>
+      </>
     );
   }
 }
