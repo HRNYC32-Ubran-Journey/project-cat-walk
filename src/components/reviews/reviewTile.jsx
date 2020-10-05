@@ -66,7 +66,6 @@ const ReviewTile = (props) => {
   const reviewDateText = `${months[reviewDate.getMonth()]} ${reviewDate.getDate()}, ${reviewDate.getFullYear()}`;
 
   const runMarkAsHelpful = () => {
-    console.group(review.review_id);
     markAsHelpful(review.review_id);
   };
 
@@ -99,10 +98,10 @@ const ReviewTile = (props) => {
         { renderResponse(review.response) }
         <Typography variant="caption" color="textSecondary">
           Helpful?
-          <a onClick={runMarkAsHelpful}>Yes</a>
+          <button className="link-button" type="button" onClick={runMarkAsHelpful}>Yes</button>
           {`(${review.helpfulness})`}
           |
-          <a onClick={runReport}>Report</a>
+          <button className="link-button" type="button" onClick={runReport}>Report</button>
         </Typography>
       </CardContent>
     </Card>
