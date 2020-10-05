@@ -9,7 +9,7 @@ const ReviewsList = (props) => {
   return (
     <div>
       This is a list.
-      {reviews.map((e) => <ReviewTile review={e} />)}
+      {reviews.map((e) => <ReviewTile key={e.review_id} review={e} />)}
     </div>
   );
 };
