@@ -18,7 +18,7 @@ const ReviewsList = (props) => {
     sortType = 'relevant',
     changeSortType,
     expanded,
-    toggleExpanded
+    toggleExpanded,
   } = props;
   if (!reviews) { return <div> Loading... </div>; }
   const runChangeSortType = (e) => {
@@ -83,6 +83,8 @@ ReviewsList.propTypes = {
   report: PropTypes.func.isRequired,
   sortType: PropTypes.string.isRequired,
   changeSortType: PropTypes.func.isRequired,
+  expanded: PropTypes.bool.isRequired,
+  toggleExpanded: PropTypes.func.isRequired,
 };
 
 export default ReviewsList;
