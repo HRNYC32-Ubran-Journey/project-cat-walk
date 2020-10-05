@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Card } from '@material-ui/core';
+import { Card, CardContent } from '@material-ui/core';
 
 // This song is
 // One you won't forget!
@@ -14,7 +14,11 @@ const ReviewTile = (props) => {
   const { review } = props;
 
   return (
-    <div>hi</div>
+    <Card>
+      <CardContent>
+        hi
+      </CardContent>
+    </Card>
   );
 };
 
