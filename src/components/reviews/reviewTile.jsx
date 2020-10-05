@@ -40,6 +40,9 @@ const ReviewTile = (props) => {
             {`${review.reviewer_name}, ${reviewDateText}`}
           </Grid>
         </Grid>
+        <h3>{review.summary}</h3>
+        <p>{review.body}</p>
+        <p>Helpful? <u>Yes</u> ({review.helpfulness}) | <u>Report</u></p>
       </CardContent>
     </Card>
   );
