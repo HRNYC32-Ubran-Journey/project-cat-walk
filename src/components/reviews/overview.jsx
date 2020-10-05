@@ -31,7 +31,19 @@ const Overview = (props) => {
 };
 
 Overview.propTypes = {
-  metadata: PropTypes.object.isRequired,
+  metadata: PropTypes.shape({
+    ratings: PropTypes.objectOf({
+      1: PropTypes.number.isRequired,
+      2: PropTypes.number.isRequired,
+      3: PropTypes.number.isRequired,
+      4: PropTypes.number.isRequired,
+      5: PropTypes.number.isRequired,
+    }).isRequired,
+    recommended: PropTypes.objectOf({
+      0: PropTypes.number.isRequired,
+      1: PropTypes.number.isRequired,
+    }).isRequired,
+  }).isRequired,
 };
 
 export default Overview;
