@@ -19,6 +19,7 @@ class Reviews extends React.Component {
     this.changeSortingMethod = this.changeSortingMethod.bind(this);
     this.toggleExpanded = this.toggleExpanded.bind(this);
     this.updateNumberOfReviews = this.updateNumberOfReviews.bind(this);
+    this.updateFilters = this.updateFilters.bind(this);
 
     // Define state.
     this.state = {
@@ -119,6 +120,37 @@ class Reviews extends React.Component {
       });
     }
   }
+
+  updateFilters(n) {
+    const { ratingsFilters } = this.state;
+    if ([1, 2, 3, 4, 5].includes(n)) {
+      if (ratingsFilters.includes(n)) {
+        this.setState({
+          ratingsFilters: ratingsFilters.filter((e) => e !== n),
+        });
+        return;
+      }
+      this.setState({
+        ratingsFilters: [...ratingsFilters].push(n),
+      });
+      return;
+    }
+    alert('There was an error trying to filter the reviews');
+    throw new Error('n was out of range.');
+  }
+  // updatePage(direction) {
+  //   const { currentPage } = this.state;
+  //   if (direction === 'next') {
+  //     this.setState({
+  //       currentPage: currentPage + 1,
+  //     });
+  //   } else if (direction === 'before') {
+  //     this.setState({
+  //       currentPage: currentPage > 1 ? currentPage - 1 : 1,
+  //     });
+  //   }
+  //   alert('There was an error trying to navigate pages.')
+  // }
 
   render() {
     const {
