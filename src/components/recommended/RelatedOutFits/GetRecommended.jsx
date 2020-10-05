@@ -24,11 +24,15 @@ class GetRecommended extends React.Component {
         return data.data;
       })
       .then((data) => {
+        // eslint-disable-next-line no-console
+        // console.log(data)
         return data.map((productID) => {
           return axios
             .get(`http://18.224.37.110/products/${productID}/styles`)
-            .then((data) => {
-              return data.data.results;
+            .then((productInfo) => {
+              // eslint-disable-next-line no-console
+              // console.log(productInfo)
+              return productInfo.data.results;
             })
             .catch((err) => {
               // eslint-disable-next-line no-console
@@ -43,21 +47,20 @@ class GetRecommended extends React.Component {
 
     Promise.resolve(relatedProduct).then((x) => {
       // eslint-disable-next-line no-console
-      return Promise.all(x).then((data) => {
+      Promise.all(x).then((data) => {
         // eslint-disable-next-line no-console
-        console.log(data);
+        // console.log(data);
         this.setState({ recommended: data });
       });
     });
   }
 
   render() {
-    let { recommended } = this.state;
+    const { recommended } = this.state;
     return (
       <div>
-        test
         {/* // eslint-disable-next-line no-console */}
-        {console.log(this.state)}
+        {/* {console.log(this.state)} */}
         <FormatRelated recommended={recommended} />
       </div>
     );

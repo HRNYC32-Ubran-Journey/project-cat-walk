@@ -1,5 +1,6 @@
 import React from 'react';
 import GetRecommended from './RelatedOutFits/GetRecommended';
+import GetCurrentCart from './CurrentCart/GetCurrentCart';
 // const Recomended = () => (
 //   <h1>Hello World</h1>
 // );
@@ -7,20 +8,20 @@ import GetRecommended from './RelatedOutFits/GetRecommended';
 class Recomended extends React.Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      recomended: [],
-      currentOutFit: [],
-    };
+    this.state = {};
   }
 
   render() {
     const { id } = this.props;
+    const { cart } = this.props;
 
     return (
       <div className="recommended">
         <div className="RelatedOutFits">
           <GetRecommended id={id} />
+        </div>
+        <div className={"currentCartContainer"}>
+          <GetCurrentCart cart={[{ id: 2 }, { id: 4 }]} />
         </div>
 
       </div>
