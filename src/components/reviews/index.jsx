@@ -40,7 +40,7 @@ class Reviews extends React.Component {
       .then((res) => {
         console.log(res);
         this.setState({
-          reviews: res.data,
+          reviews: res.data.results,
         });
       });
   }

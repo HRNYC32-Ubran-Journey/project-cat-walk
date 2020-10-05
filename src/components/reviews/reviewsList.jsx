@@ -5,10 +5,11 @@ import Reviews from '.';
 const ReviewsList = (props) => {
   const { reviews } = props;
 
-  console.log('hi');
+  console.log(reviews);
   return (
     <div>
       This is a list.
+      {reviews.map((e) => <div>{e.summery}</div>)}
     </div>
   );
 };
