@@ -17,6 +17,8 @@ const ReviewsList = (props) => {
     markAsHelpful,
     sortType = 'relevant',
     changeSortType,
+    expanded,
+    toggleExpanded
   } = props;
   if (!reviews) { return <div> Loading... </div>; }
   const runChangeSortType = (e) => {
@@ -58,8 +60,8 @@ const ReviewsList = (props) => {
         ))}
       </Grid>
       <Grid item>
-        <Button variant="outlined" color="primary">
-          MORE REVIEWS
+        <Button onClick={toggleExpanded} variant="outlined" color="primary">
+          {expanded ? 'LESS REVIEWS' : 'MORE REVIEWS'}
         </Button>
       </Grid>
       <Grid item>
