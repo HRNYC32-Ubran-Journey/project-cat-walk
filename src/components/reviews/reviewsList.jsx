@@ -1,11 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Reviews from '.';
 
 const ReviewsList = (props) => {
   const { reviews } = props;
   if (!reviews) { return <div> Loading... </div>; }
-  console.log(reviews);
   return (
     <div>
       This is a list.
@@ -15,7 +13,11 @@ const ReviewsList = (props) => {
 };
 
 ReviewsList.propTypes = {
-  reviews: PropTypes.array.isRequired,
+  reviews: PropTypes.arrayOf(
+    PropTypes.shape({
+      summary: PropTypes.string,
+    }),
+  ).isRequired,
 };
 
 export default ReviewsList;
