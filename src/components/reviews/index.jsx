@@ -88,6 +88,7 @@ class Reviews extends React.Component {
   changeSortingMethod(method) {
     if (['relevant', 'newest', 'helpful'].includes(method)) {
       this.setState({sortType: method});
+      return;
     }
     alert('There was an error changing the sorting method.');
     throw new Error(`WARNING: method was ${method} which is not an acceptable method.`)

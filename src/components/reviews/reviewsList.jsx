@@ -19,6 +19,9 @@ const ReviewsList = (props) => {
   } = props;
   if (!reviews) { return <div> Loading... </div>; }
 
+  const runChangeSortType = (e) => {
+    changeSortType(e.target.value);
+  };
 
   return (
     <>
@@ -28,11 +31,17 @@ const ReviewsList = (props) => {
           <TextField
             id="select-sort-type"
             select
-            value="1"
-            // onChange={handleChange}
+            value="relevant"
+            onChange={runChangeSortType}
           >
-            <MenuItem key="1" value={1}>
-              hi
+            <MenuItem key="relevant" value="relevant">
+              relevance
+            </MenuItem>
+            <MenuItem key="newest" value="newest">
+              newest
+            </MenuItem>
+            <MenuItem key="helpful" value="helpful">
+              helpfulness
             </MenuItem>
           </TextField>
         </Typography>
