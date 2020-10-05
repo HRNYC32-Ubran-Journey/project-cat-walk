@@ -17,6 +17,7 @@ class Reviews extends React.Component {
     this.markAsHelpful = this.markAsHelpful.bind(this);
     this.reportReview = this.reportReview.bind(this);
     this.changeSortingMethod = this.changeSortingMethod.bind(this);
+    this.toggleExpanded = this.toggleExpanded.bind(this);
 
     // Define state.
     this.state = {
@@ -100,6 +101,13 @@ class Reviews extends React.Component {
     throw new Error(`WARNING: method was ${method} which is not an acceptable method.`)
   }
 
+  toggleExpanded() {
+    const { expanded } = this.state;
+    this.setState({
+      expanded: !expanded,
+    });
+  }
+
   render() {
     const { reviews, metadata, sortType } = this.state;
 
@@ -115,6 +123,7 @@ class Reviews extends React.Component {
             report={this.reportReview}
             sortType={sortType}
             changeSortType={this.changeSortingMethod}
+            toggleExpanded={this.toggleExpanded}
           />
         </Grid>
       </Grid>
