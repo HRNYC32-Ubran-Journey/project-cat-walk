@@ -19,7 +19,6 @@ const ReviewsList = (props) => {
     changeSortType,
   } = props;
   if (!reviews) { return <div> Loading... </div>; }
-  console.log(sortType)
   const runChangeSortType = (e) => {
     changeSortType(e.target.value);
   };

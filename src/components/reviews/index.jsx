@@ -89,7 +89,8 @@ class Reviews extends React.Component {
 
   changeSortingMethod(method) {
     if (['relevant', 'newest', 'helpful'].includes(method)) {
-      this.setState({sortType: method});
+      this.setState({ sortType: method });
+      this.getReviews();
       return;
     }
     alert('There was an error changing the sorting method.');
