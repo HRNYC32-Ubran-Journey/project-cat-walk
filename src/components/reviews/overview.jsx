@@ -29,13 +29,12 @@ const Overview = (props) => {
   }
 
   setTotal(totalRatings);
-
   return (
     <>
       <Typography variant="h6">
         RATINGS & REVIEWS
       </Typography>
-      <Summery rating={averageRating} />
+      <Summery rating={parseFloat(averageRating)} />
       <Typography>
         {`${likeRatio} of people recommend this product.`}
       </Typography>

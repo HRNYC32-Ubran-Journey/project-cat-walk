@@ -28,26 +28,26 @@ const ReviewsList = (props) => {
 
   return (
     <>
-      <Grid item>
+      <Grid item container>
         <Typography>
           {`${totalReviews} reviews, sorted by `}
-          <TextField
-            id="select-sort-type"
-            select
-            value={sortType}
-            onChange={runChangeSortType}
-          >
-            <MenuItem key="relevant" value="relevant">
-              relevance
-            </MenuItem>
-            <MenuItem key="newest" value="newest">
-              newest
-            </MenuItem>
-            <MenuItem key="helpful" value="helpful">
-              helpfulness
-            </MenuItem>
-          </TextField>
         </Typography>
+        <TextField
+          id="select-sort-type"
+          select
+          value={sortType}
+          onChange={runChangeSortType}
+        >
+          <MenuItem key="relevant" value="relevant">
+            relevance
+          </MenuItem>
+          <MenuItem key="newest" value="newest">
+            newest
+          </MenuItem>
+          <MenuItem key="helpful" value="helpful">
+            helpfulness
+          </MenuItem>
+        </TextField>
       </Grid>
       <Grid container item spacing={2}>
         {reviews.map((e) => (
@@ -60,15 +60,17 @@ const ReviewsList = (props) => {
           </Grid>
         ))}
       </Grid>
-      <Grid item>
-        <Button onClick={toggleExpanded} variant="outlined" color="primary">
-          {expanded ? 'LESS REVIEWS' : 'MORE REVIEWS'}
-        </Button>
-      </Grid>
-      <Grid item>
-        <Button variant="outlined" color="primary">
-          ADD A REVIEW +
-        </Button>
+      <Grid container>
+        <Grid item>
+          <Button onClick={toggleExpanded} variant="outlined" color="primary">
+            {expanded ? 'LESS REVIEWS' : 'MORE REVIEWS'}
+          </Button>
+        </Grid>
+        <Grid item>
+          <Button variant="outlined" color="primary">
+            ADD A REVIEW +
+          </Button>
+        </Grid>
       </Grid>
     </>
   );

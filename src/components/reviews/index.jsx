@@ -27,7 +27,7 @@ class Reviews extends React.Component {
       totalReviews: null,
       reviews: null,
       sortType: 'relevant',
-      currentPage: 1,
+      // currentPage: 1,
       expanded: false,
       ratingsFilters: [],
     };
@@ -51,7 +51,7 @@ class Reviews extends React.Component {
       },
     })
       .then((res) => {
-        console.log(res);
+        console.log(res.data.results);
         this.setState({
           reviews: res.data.results,
         });
@@ -96,20 +96,18 @@ class Reviews extends React.Component {
 
   changeSortingMethod(method) {
     if (['relevant', 'newest', 'helpful'].includes(method)) {
-      this.setState({ sortType: method });
-      this.getReviews();
-      return;
+      this.setState({ sortType: method }, () => this.getReviews());
+    } else {
+      alert('There was an error changing the sorting method.');
+      throw new Error(`WARNING: method was ${method} which is not an acceptable method.`);
     }
-    alert('There was an error changing the sorting method.');
-    throw new Error(`WARNING: method was ${method} which is not an acceptable method.`)
   }
 
   toggleExpanded() {
     const { expanded } = this.state;
     this.setState({
       expanded: !expanded,
-    });
-    this.getReviews();
+    }, () => this.getReviews());
   }
 
   updateNumberOfReviews(total) {
