@@ -65,7 +65,7 @@ class Reviews extends React.Component {
   }
 
   markAsHelpful(id) {
-    axios.put(`http://18.224.37.110/${id}/helpful`)
+    axios.put(`http://18.224.37.110/reviews/${id}/helpful`)
       .then(() => {
         this.getReviews();
       })
@@ -75,7 +75,7 @@ class Reviews extends React.Component {
   }
 
   reportReview(id) {
-    axios.put(`http://18.224.37.110/${id}/report`)
+    axios.put(`http://18.224.37.110/reviews/${id}/report`)
       .then(() => {
         this.getReviews();
       })
