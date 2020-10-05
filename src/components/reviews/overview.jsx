@@ -7,7 +7,6 @@ import Summery from './summery';
 const Overview = (props) => {
   const { metadata, setTotal } = props;
   if (!metadata) { return <div>Loading...</div>; }
-  console.log(metadata);
 
   let totalRatings = 0;
   let totalScore = 0;
@@ -58,6 +57,7 @@ Overview.propTypes = {
       1: PropTypes.number.isRequired,
     }).isRequired,
   }).isRequired,
+  setTotal: PropTypes.func.isRequired,
 };
 
 export default Overview;
