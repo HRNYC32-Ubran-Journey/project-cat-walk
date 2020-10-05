@@ -61,6 +61,8 @@ ReviewsList.propTypes = {
       summary: PropTypes.string,
     }),
   ).isRequired,
+  markAsHelpful: PropTypes.func.isRequired,
+  report: PropTypes.func.isRequired,
 };
 
 export default ReviewsList;
