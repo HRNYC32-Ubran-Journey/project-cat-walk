@@ -17,9 +17,9 @@ class Reviews extends React.Component {
 
     // Define state.
     this.state = {
-      metadata: null,
+      metadata: {},
       totalReviews: 0,
-      reviews: null,
+      reviews: [],
     };
   }
 
@@ -71,9 +71,10 @@ class Reviews extends React.Component {
         this.setState({
           reviews: newReviews,
         }, () => {
-          if (res.results.length >= 100) {
+          if (res.data.results.length >= 100) {
             this.fetchAllReviews(page + 1);
-          } else { console.log('Done'); }
+          }
+          // else { console.log(this.state.reviews); }
         });
       });
   }
