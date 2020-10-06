@@ -12,23 +12,19 @@ class Reviews extends React.Component {
     super(props);
 
     // Bind methods.
-    this.getReviews = this.getReviews.bind(this);
     this.getMetadata = this.getMetadata.bind(this);
-    this.markAsHelpful = this.markAsHelpful.bind(this);
-    this.reportReview = this.reportReview.bind(this);
+    this.fetchAllReviews = this.fetchAllReviews.bind(this);
 
     // Define state.
     this.state = {
       metadata: null,
-      totalReviews: null,
+      totalReviews: 0,
       reviews: null,
-      sortType: 'relevant',
     };
   }
 
   componentDidMount() {
     this.getMetadata();
-    // this.getReviews();
   }
 
   getMetadata() {
@@ -40,7 +36,7 @@ class Reviews extends React.Component {
       },
     })
       .then((res) => {
-        let metadata = res.data;
+        const metadata = res.data;
         let totalReviews = 0;
         for (let i = 1; i <= 5; i += 1) {
           const amount = parseInt(metadata.ratings[i], 10);
@@ -49,104 +45,38 @@ class Reviews extends React.Component {
           }
         }
 
-        this.setState({ metadata, totalReviews, });
-      });
-  }
-
-  getReviews() {
-    const { id } = this.props;
-    const { sortType, expanded } = this.state;
-    const amount = expanded ? 10 : 2;
-
-    axios.get('http://18.224.37.110/reviews/', {
-      params: {
-        product_id: id,
-        sort: 'relevant',
-      },
-    })
-      .then((res) => {
-        console.log(res.data.results);
         this.setState({
-          reviews: res.data.results,
+          metadata,
+          totalReviews,
+        }, () => {
+          this.fetchAllReviews();
         });
       });
   }
 
-  markAsHelpful(id) {
-    axios.put(`http://18.224.37.110/reviews/${id}/helpful`)
-      .then(() => {
-        this.getReviews();
-      })
-      .catch((e) => {
-        alert(e);
+  fetchAllReviews(page = 1) {
+    const { id } = this.props;
+    const { reviews } = this.state;
+
+    const params = {
+      product_id: id,
+      sort: 'relevant',
+      count: 100,
+      page,
+    };
+
+    axios.get('http://18.224.37.110/reviews/', { params })
+      .then((res) => {
+        const newReviews = [...reviews, ...res.data.results];
+        this.setState({
+          reviews: newReviews,
+        }, () => {
+          if (res.results.length >= 100) {
+            this.fetchAllReviews(page + 1);
+          } else { console.log('Done'); }
+        });
       });
   }
-
-  reportReview(id) {
-    axios.put(`http://18.224.37.110/reviews/${id}/report`)
-      .then(() => {
-        this.getReviews();
-      })
-      .catch((e) => {
-        alert(e);
-      });
-  }
-
-  // changeSortingMethod(method) {
-  //   if (['relevant', 'newest', 'helpful'].includes(method)) {
-  //     this.setState({ sortType: method }, () => this.getReviews());
-  //   } else {
-  //     alert('There was an error changing the sorting method.');
-  //     throw new Error(`WARNING: method was ${method} which is not an acceptable method.`);
-  //   }
-  // }
-
-  // toggleExpanded() {
-  //   const { expanded } = this.state;
-  //   this.setState({
-  //     expanded: !expanded,
-  //   }, () => this.getReviews());
-  // }
-
-  // updateNumberOfReviews(total) {
-  //   const { totalReviews } = this.state;
-  //   if (totalReviews === null) {
-  //     this.setState({
-  //       totalReviews: total,
-  //     });
-  //   }
-  // }
-
-  // updateFilters(n) {
-  //   const { ratingsFilters } = this.state;
-  //   if ([1, 2, 3, 4, 5].includes(n)) {
-  //     if (ratingsFilters.includes(n)) {
-  //       this.setState({
-  //         ratingsFilters: ratingsFilters.filter((e) => e !== n),
-  //       });
-  //       return;
-  //     }
-  //     this.setState({
-  //       ratingsFilters: [...ratingsFilters].push(n),
-  //     });
-  //     return;
-  //   }
-  //   alert('There was an error trying to filter the reviews');
-  //   throw new Error('n was out of range.');
-  // }
-  // updatePage(direction) {
-  //   const { currentPage } = this.state;
-  //   if (direction === 'next') {
-  //     this.setState({
-  //       currentPage: currentPage + 1,
-  //     });
-  //   } else if (direction === 'before') {
-  //     this.setState({
-  //       currentPage: currentPage > 1 ? currentPage - 1 : 1,
-  //     });
-  //   }
-  //   alert('There was an error trying to navigate pages.')
-  // }
 
   render() {
     return (
