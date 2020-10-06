@@ -14,12 +14,18 @@ class Reviews extends React.Component {
     // Bind methods.
     this.getMetadata = this.getMetadata.bind(this);
     this.fetchAllReviews = this.fetchAllReviews.bind(this);
+    this.sortReviews = this.sortReviews.bind(this);
 
     // Define state.
     this.state = {
       metadata: {},
       totalReviews: 0,
       reviews: [],
+      allReviews: {
+        relevant: [],
+        helpful: [],
+        newest: [],
+      },
     };
   }
 
@@ -73,10 +79,49 @@ class Reviews extends React.Component {
         }, () => {
           if (res.data.results.length >= 100) {
             this.fetchAllReviews(page + 1);
+          } else {
+            this.sortReviews();
           }
-          // else { console.log(this.state.reviews); }
         });
       });
+  }
+
+  sortReviews() {
+    const { reviews } = this.state;
+    const newest = reviews.sort((a, b) => {
+      let direction = 0;
+      const aDate = new Date(a.date);
+      const bDate = new Date(b.date);
+
+      if (aDate > bDate) {
+        direction = -1;
+      } else if (aDate < bDate) {
+        direction = 1;
+      }
+
+      return direction;
+    });
+    const helpfulness = newest.sort((a, b) => {
+      let direction = 0;
+      const aHelpfulness = a.helpfulness;
+      const bHelpfulness = b.helpfulness;
+
+      if (aHelpfulness > bHelpfulness) {
+        direction = -1;
+      } else if (aHelpfulness < bHelpfulness) {
+        direction = 1;
+      }
+
+      return direction;
+    });
+
+    this.setState({
+      allReviews: {
+        relevant: reviews,
+        helpful: helpfulness,
+        newest,
+      },
+    });
   }
 
   render() {
