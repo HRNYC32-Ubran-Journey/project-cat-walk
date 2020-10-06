@@ -2,10 +2,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
-import { Grid } from '@material-ui/core';
-// Components:
-import Overview from './overview';
-import ReviewsList from './reviewsList';
+// import { Grid } from '@material-ui/core';
+// // Components:
+// import Overview from './overview';
+// import ReviewsList from './reviewsList';
 
 class Reviews extends React.Component {
   constructor(props) {
@@ -16,10 +16,6 @@ class Reviews extends React.Component {
     this.getMetadata = this.getMetadata.bind(this);
     this.markAsHelpful = this.markAsHelpful.bind(this);
     this.reportReview = this.reportReview.bind(this);
-    this.changeSortingMethod = this.changeSortingMethod.bind(this);
-    this.toggleExpanded = this.toggleExpanded.bind(this);
-    this.updateNumberOfReviews = this.updateNumberOfReviews.bind(this);
-    this.updateFilters = this.updateFilters.bind(this);
 
     // Define state.
     this.state = {
@@ -27,35 +23,12 @@ class Reviews extends React.Component {
       totalReviews: null,
       reviews: null,
       sortType: 'relevant',
-      // currentPage: 1,
-      expanded: false,
-      ratingsFilters: [],
     };
   }
 
   componentDidMount() {
-    this.getReviews();
     this.getMetadata();
-  }
-
-  getReviews() {
-    const { id } = this.props;
-    const { sortType, expanded } = this.state;
-    const amount = expanded ? 10 : 2;
-
-    axios.get('http://18.224.37.110/reviews/', {
-      params: {
-        product_id: id,
-        sort: sortType,
-        count: amount,
-      },
-    })
-      .then((res) => {
-        console.log(res.data.results);
-        this.setState({
-          reviews: res.data.results,
-        });
-      });
+    // this.getReviews();
   }
 
   getMetadata() {
@@ -67,9 +40,34 @@ class Reviews extends React.Component {
       },
     })
       .then((res) => {
-        console.log(res);
+        let metadata = res.data;
+        let totalReviews = 0;
+        for (let i = 1; i <= 5; i += 1) {
+          const amount = parseInt(metadata.ratings[i], 10);
+          if (Number.isNaN(amount) === false) {
+            totalReviews += metadata.ratings[i];
+          }
+        }
+
+        this.setState({ metadata, totalReviews, });
+      });
+  }
+
+  getReviews() {
+    const { id } = this.props;
+    const { sortType, expanded } = this.state;
+    const amount = expanded ? 10 : 2;
+
+    axios.get('http://18.224.37.110/reviews/', {
+      params: {
+        product_id: id,
+        sort: 'relevant',
+      },
+    })
+      .then((res) => {
+        console.log(res.data.results);
         this.setState({
-          metadata: res.data,
+          reviews: res.data.results,
         });
       });
   }
@@ -94,48 +92,48 @@ class Reviews extends React.Component {
       });
   }
 
-  changeSortingMethod(method) {
-    if (['relevant', 'newest', 'helpful'].includes(method)) {
-      this.setState({ sortType: method }, () => this.getReviews());
-    } else {
-      alert('There was an error changing the sorting method.');
-      throw new Error(`WARNING: method was ${method} which is not an acceptable method.`);
-    }
-  }
+  // changeSortingMethod(method) {
+  //   if (['relevant', 'newest', 'helpful'].includes(method)) {
+  //     this.setState({ sortType: method }, () => this.getReviews());
+  //   } else {
+  //     alert('There was an error changing the sorting method.');
+  //     throw new Error(`WARNING: method was ${method} which is not an acceptable method.`);
+  //   }
+  // }
 
-  toggleExpanded() {
-    const { expanded } = this.state;
-    this.setState({
-      expanded: !expanded,
-    }, () => this.getReviews());
-  }
+  // toggleExpanded() {
+  //   const { expanded } = this.state;
+  //   this.setState({
+  //     expanded: !expanded,
+  //   }, () => this.getReviews());
+  // }
 
-  updateNumberOfReviews(total) {
-    const { totalReviews } = this.state;
-    if (totalReviews === null) {
-      this.setState({
-        totalReviews: total,
-      });
-    }
-  }
+  // updateNumberOfReviews(total) {
+  //   const { totalReviews } = this.state;
+  //   if (totalReviews === null) {
+  //     this.setState({
+  //       totalReviews: total,
+  //     });
+  //   }
+  // }
 
-  updateFilters(n) {
-    const { ratingsFilters } = this.state;
-    if ([1, 2, 3, 4, 5].includes(n)) {
-      if (ratingsFilters.includes(n)) {
-        this.setState({
-          ratingsFilters: ratingsFilters.filter((e) => e !== n),
-        });
-        return;
-      }
-      this.setState({
-        ratingsFilters: [...ratingsFilters].push(n),
-      });
-      return;
-    }
-    alert('There was an error trying to filter the reviews');
-    throw new Error('n was out of range.');
-  }
+  // updateFilters(n) {
+  //   const { ratingsFilters } = this.state;
+  //   if ([1, 2, 3, 4, 5].includes(n)) {
+  //     if (ratingsFilters.includes(n)) {
+  //       this.setState({
+  //         ratingsFilters: ratingsFilters.filter((e) => e !== n),
+  //       });
+  //       return;
+  //     }
+  //     this.setState({
+  //       ratingsFilters: [...ratingsFilters].push(n),
+  //     });
+  //     return;
+  //   }
+  //   alert('There was an error trying to filter the reviews');
+  //   throw new Error('n was out of range.');
+  // }
   // updatePage(direction) {
   //   const { currentPage } = this.state;
   //   if (direction === 'next') {
@@ -151,34 +149,15 @@ class Reviews extends React.Component {
   // }
 
   render() {
-    const {
-      reviews,
-      metadata,
-      sortType,
-      totalReviews,
-    } = this.state;
-
     return (
-      <Grid container>
-        <Grid item xs={3}>
-          <Overview
-            metadata={metadata}
-            setTotal={this.updateNumberOfReviews}
-            updateFilters={this.updateFilters}
-          />
-        </Grid>
-        <Grid item xs={9}>
-          <ReviewsList
-            reviews={reviews}
-            markAsHelpful={this.markAsHelpful}
-            report={this.reportReview}
-            sortType={sortType}
-            changeSortType={this.changeSortingMethod}
-            toggleExpanded={this.toggleExpanded}
-            totalReviews={totalReviews}
-          />
-        </Grid>
-      </Grid>
+      <div>
+        <div>
+          hi
+        </div>
+        <div>
+          bye
+        </div>
+      </div>
     );
   }
 }
