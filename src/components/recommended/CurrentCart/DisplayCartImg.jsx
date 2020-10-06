@@ -1,10 +1,11 @@
 import React from "react";
 
-const DisplayRelatedImg = ({ styles }) => {
+const DisplayCartImg = ({ styles }) => {
   let foundImg = false;
   if (styles.length === 0) {
     console.log("if statement?");
-    console.log(styles);
+    //  eslint-disable-next-line no-console
+    // console.log(styles);
     return <h1> where are the images?</h1>;
   }
   for (let i = 0; i < styles.length; i += 1) {
@@ -12,15 +13,13 @@ const DisplayRelatedImg = ({ styles }) => {
     //  eslint-disable-next-line no-console
     // console.log(styles[i])
     // if ()
-    // console.log(styles)
+    // console.log(styles);
     if (foundImg === true) {
       break;
     }
 
     for (let j = 0; j < imageArr.length; j += 1) {
-      //  eslint-disable-next-line no-console
-      let thumbnail = imageArr[j].thumbnail_url;
-      if (thumbnail !== null) {
+      if (imageArr[j].thumbnail_url !== null) {
         foundImg = true;
         return (
           <ul className="relatedImg">
@@ -36,4 +35,4 @@ const DisplayRelatedImg = ({ styles }) => {
   return null;
 };
 
-export default DisplayRelatedImg;
+export default DisplayCartImg;

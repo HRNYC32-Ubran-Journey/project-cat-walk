@@ -9,7 +9,6 @@ const FormatRelated = ({ recommended }) => {
 
   return (
     <div className="recommendedThumbNailsRow">
-      hello
       {recommended.map(arr => {
         //  eslint-disable-next-line no-console
         // console.log(arr);

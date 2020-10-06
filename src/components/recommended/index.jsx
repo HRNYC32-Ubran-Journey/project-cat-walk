@@ -17,10 +17,13 @@ class Recomended extends React.Component {
 
     return (
       <div className="recommended">
+        <div className="RelatedProductsTitle"> Related Products</div>
         <div className="RelatedOutFits">
           <GetRecommended id={id} />
         </div>
-        <div className={"currentCartContainer"}>
+        <br />
+        <div className="YourOutfitTitle"> Your Outfit </div>
+        <div className="currentCartContainer">
           <GetCurrentCart cart={[{ id: 2 }, { id: 4 }]} />
         </div>
 
