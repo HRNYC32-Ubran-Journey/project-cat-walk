@@ -15,11 +15,16 @@ class Reviews extends React.Component {
     this.getMetadata = this.getMetadata.bind(this);
     this.fetchAllReviews = this.fetchAllReviews.bind(this);
     this.sortReviews = this.sortReviews.bind(this);
+    this.filterByRatings = this.filterByRatings.bind(this);
 
     // Define state.
     this.state = {
       metadata: {},
       totalReviews: 0,
+      currentSortMethod: 'relevant',
+      page: 1,
+      perPage: 10,
+      ratingFilters: [],
       reviews: [],
       allReviews: {
         relevant: [],
@@ -121,14 +126,44 @@ class Reviews extends React.Component {
         helpful: helpfulness,
         newest,
       },
+    }, () => {
+      this.filterByRatings();
     });
+  }
+
+  filterByRatings() {
+    const {
+      ratingFilters,
+      currentSortMethod,
+      allReviews,
+      perPage,
+      page,
+    } = this.state;
+    let allowed = [];
+
+    if (ratingFilters.length === 0 || ratingFilters.length === 5) {
+      allowed = [1, 2, 3, 4, 5];
+    } else {
+      allowed = ratingFilters;
+    }
+
+    const reviews = [...allReviews[currentSortMethod]]
+      .filter((review) => {
+        if (allowed.includes(review.rating)) {
+          return true;
+        }
+        return false;
+      })
+      .splice(perPage * (page - 1), perPage);
+
+    this.setState({ reviews }, () => {});
   }
 
   render() {
     return (
       <div>
-        <div>
-          hi
+        <div className="Overview">
+
         </div>
         <div>
           bye
