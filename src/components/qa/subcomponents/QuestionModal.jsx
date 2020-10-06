@@ -15,7 +15,7 @@ export default function QuestionModal() {
   return (
     <div>
       <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-        Open Question Modal dialog
+        ADD A QUESTION + 
       </Button>
       <Dialog open={open}>
         <DialogTitle>Ask Your Question</DialogTitle>

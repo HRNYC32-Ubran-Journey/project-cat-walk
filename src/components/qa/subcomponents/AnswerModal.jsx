@@ -7,6 +7,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import UploadPics from './UploadPics.jsx';
+import {Typography} from '@material-ui/core';
 import UploadMediaCard from './UploadMediaCard';
 
 export default function AnswerModal() {
@@ -16,9 +17,11 @@ export default function AnswerModal() {
   };
   return (
     <>
-      <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-        Open Answer Modal dialog
-      </Button>
+    <Typography color="textSecondary" variant="caption" onClick={handleClickOpen}>
+      <u>
+        Add Answer
+      </u>
+      </Typography>
       <Dialog open={open}>
       <input
             accept="image/*"
