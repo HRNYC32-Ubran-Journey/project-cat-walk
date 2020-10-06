@@ -14,7 +14,6 @@ export default function QuestionModal() {
   };
   return (
     <div>
-      <h1>I am a question Modal</h1>
       <Button variant="outlined" color="primary" onClick={handleClickOpen}>
         Open Question Modal dialog
       </Button>
