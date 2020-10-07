@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import axios from 'axios';
 // import { Grid } from '@material-ui/core';
 // // Components:
-// import Overview from './overview';
+import Overview from './overview';
 import ReviewsList from './reviewsList';
 
 class Reviews extends React.Component {
@@ -26,7 +26,7 @@ class Reviews extends React.Component {
 
     // Define state.
     this.state = {
-      metadata: {},
+      metadata: null,
       totalReviews: 0,
       expanded: false,
       currentSortMethod: 'relevant',
@@ -59,16 +59,33 @@ class Reviews extends React.Component {
       .then((res) => {
         const metadata = res.data;
         let totalReviews = 0;
+        let totalScore = 0;
         for (let i = 1; i <= 5; i += 1) {
           const amount = parseInt(metadata.ratings[i], 10);
           if (Number.isNaN(amount) === false) {
             totalReviews += metadata.ratings[i];
+            totalScore += amount * i;
           }
+        }
+
+        const averageRating = `${totalScore / totalReviews}`.slice(0, 3);
+
+        let likeRatio = null;
+        if (metadata.recommended[0] === 0 && metadata.recommended[1] > 0) {
+          likeRatio = '100%';
+        } else if (metadata.recommended[1] === 0) {
+          likeRatio = '0%';
+        } else {
+          const ratio = metadata.recommended[1] / (metadata.recommended[0] + metadata.recommended[1]);
+          likeRatio = `${Math.trunc(ratio * 100)}%`;
         }
 
         this.setState({
           metadata,
           totalReviews,
+          totalScore,
+          averageRating,
+          likeRatio,
         }, () => {
           this.fetchAllReviews();
         });
@@ -164,8 +181,7 @@ class Reviews extends React.Component {
         return false;
       });
 
-    this.setState({ filteredReviews: reviews }, () => {
-      console.log('ran')
+    this.setState({ filteredReviews: reviews, reviewsBuffer: [] }, () => {
       this.updatePage(page);
     });
   }
@@ -232,31 +248,29 @@ class Reviews extends React.Component {
         alert(e);
       });
   }
-  // updateById(id) {
-
-  // }
-
-  // markAsHelpful(id) {
-  //   axios.put(`http://18.224.37.110/reviews/${id}/helpful`)
-  //     .then(() => {
-  //       this.getReviews();
-  //     })
-  //     .catch((e) => {
-  //       alert(e);
-  //     });
-  // }
 
   render() {
     const {
+      metadata,
+      totalScore,
+      averageRating,
+      likeRatio,
+
       reviews,
       currentSortMethod,
       expanded,
+      totalReviews,
     } = this.state;
 
     return (
       <div>
         <div className="Overview">
-          RATINGS & REVIEWS
+          <Overview
+            metadata={metadata}
+            totalScore={totalScore}
+            averageRating={averageRating}
+            likeRatio={likeRatio}
+          />
         </div>
         <div className="ReviewList">
           <ReviewsList
@@ -268,6 +282,7 @@ class Reviews extends React.Component {
             changePage={this.changePage}
             markAsHelpful={this.markAsHelpful}
             report={this.reportReview}
+            totalReviews={totalReviews}
           />
         </div>
       </div>

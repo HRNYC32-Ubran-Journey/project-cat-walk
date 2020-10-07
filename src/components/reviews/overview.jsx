@@ -5,39 +5,23 @@ import { Typography } from '@material-ui/core';
 import Summery from './summery';
 
 const Overview = (props) => {
-  const { metadata, setTotal } = props;
+  const {
+    metadata,
+    totalReviews,
+    totalScore,
+    averageRating,
+    likeRatio, } = props;
   if (!metadata) { return <div>Loading...</div>; }
 
-  let totalRatings = 0;
-  let totalScore = 0;
-  Object.keys(metadata.ratings).forEach((score) => {
-    const { ratings } = metadata;
-    const amount = parseInt(ratings[score], 10);
-    totalRatings += amount;
-    totalScore += amount * parseInt(score, 10);
-  });
-  const averageRating = `${totalScore / totalRatings}`.slice(0, 3);
-
-  let likeRatio = null;
-  if (metadata.recommended[0] === 0 && metadata.recommended[1] > 0) {
-    likeRatio = '100%';
-  } else if (metadata.recommended[1] === 0) {
-    likeRatio = '0%';
-  } else {
-    const ratio = metadata.recommended[1] / (metadata.recommended[0] + metadata.recommended[1]);
-    likeRatio = `${Math.trunc(ratio * 100)}%`;
-  }
-
-  setTotal(totalRatings);
   return (
     <>
       <Typography variant="h6">
         RATINGS & REVIEWS
       </Typography>
-      <Summery rating={parseFloat(averageRating)} />
-      <Typography>
+      <Summery rating={averageRating} />
+      {/* <Typography>
         {`${likeRatio} of people recommend this product.`}
-      </Typography>
+      </Typography> */}
     </>
   );
 };
@@ -56,7 +40,6 @@ Overview.propTypes = {
       1: PropTypes.number.isRequired,
     }).isRequired,
   }).isRequired,
-  setTotal: PropTypes.func.isRequired,
   updateFilters: PropTypes.func.isRequired,
 };
 
