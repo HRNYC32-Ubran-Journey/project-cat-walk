@@ -5,7 +5,7 @@ import axios from 'axios';
 // import { Grid } from '@material-ui/core';
 // // Components:
 // import Overview from './overview';
-// import ReviewsList from './reviewsList';
+import ReviewsList from './reviewsList';
 
 class Reviews extends React.Component {
   constructor(props) {
@@ -16,7 +16,10 @@ class Reviews extends React.Component {
     this.fetchAllReviews = this.fetchAllReviews.bind(this);
     this.sortReviews = this.sortReviews.bind(this);
     this.filterByRatings = this.filterByRatings.bind(this);
-    this.changePageAndUpdate = this.changePageAndUpdate.bind(this);
+    this.changePageAndUpdate = this.updatePage.bind(this);
+    this.changePageAndUpdate = this.changePage.bind(this);
+
+    this.changeSortingMethod = this.changeSortingMethod.bind(this);
 
     // Define state.
     this.state = {
@@ -24,7 +27,7 @@ class Reviews extends React.Component {
       totalReviews: 0,
       currentSortMethod: 'relevant',
       page: 1,
-      perPage: 10,
+      perPage: 2,
       ratingFilters: [],
       filteredReviews: [],
       reviews: [],
@@ -95,7 +98,7 @@ class Reviews extends React.Component {
 
   sortReviews() {
     const { reviews } = this.state;
-    const newest = reviews.sort((a, b) => {
+    const newest = [...reviews].sort((a, b) => {
       let direction = 0;
       const aDate = new Date(a.date);
       const bDate = new Date(b.date);
@@ -108,7 +111,7 @@ class Reviews extends React.Component {
 
       return direction;
     });
-    const helpfulness = newest.sort((a, b) => {
+    const helpfulness = [...newest].sort((a, b) => {
       let direction = 0;
       const aHelpfulness = a.helpfulness;
       const bHelpfulness = b.helpfulness;
@@ -138,6 +141,7 @@ class Reviews extends React.Component {
       ratingFilters,
       currentSortMethod,
       allReviews,
+      page,
     } = this.state;
     let allowed = [];
 
@@ -155,11 +159,14 @@ class Reviews extends React.Component {
         return false;
       });
 
-    this.setState({ filteredReviews: reviews, reviews: [] }, () => {this.changePageAndUpdate(1)});
+    this.setState({ filteredReviews: reviews, reviews: [] }, () => {
+      console.log('ran')
+      this.updatePage(page);
+    });
   }
 
-  changePageAndUpdate(change = 1) {
-    const { page, perPage, filteredReviews } = this.state;
+  changePage(change = 1) {
+    const { page } = this.state;
     let newPage = page + change;
     if (Number.isNaN(newPage)) {
       throw new Error(`Could not turn ${page} and ${change} into a new valid page number.`);
@@ -169,25 +176,55 @@ class Reviews extends React.Component {
 
     this.setState({
       page: newPage,
-      reviews: [...filteredReviews].splice(perPage * (newPage - 1), perPage),
+    }, () => { this.updatePage(); });
+  }
+
+  updatePage() {
+    const { page, perPage, filteredReviews } = this.state;
+    this.setState({
+      reviews: [...filteredReviews].splice(perPage * (page - 1), perPage),
     });
   }
 
+  // ReviewsList Funcs
+  changeSortingMethod(method) {
+    if (['relevant', 'newest', 'helpful'].includes(method)) {
+      this.setState({ currentSortMethod: method }, () => { this.filterByRatings(); });
+    } else {
+      alert('There was an error changing the sorting method.');
+      throw new Error(`WARNING: method was ${method} which is not an acceptable method.`);
+    }
+  }
+
+  // updateById(id) {
+
+  // }
+
+  // markAsHelpful(id) {
+  //   axios.put(`http://18.224.37.110/reviews/${id}/helpful`)
+  //     .then(() => {
+  //       this.getReviews();
+  //     })
+  //     .catch((e) => {
+  //       alert(e);
+  //     });
+  // }
+
   render() {
-    const { reviews } = this.state;
+    const { reviews, currentSortMethod } = this.state;
 
     return (
       <div>
         <div className="Overview">
-          hi.
-          {`${reviews.length}`}
+          RATINGS & REVIEWS
+          {`<percent>% of people liked this product`}
         </div>
-        <div>
-          {reviews.map((e) => (
-            <div key={e.review_id}>
-              {e.summary}
-            </div>
-          ))}
+        <div className="ReviewList">
+          <ReviewsList
+            reviews={reviews}
+            sortType={currentSortMethod}
+            changeSortType={this.changeSortingMethod}
+          />
         </div>
       </div>
     );
