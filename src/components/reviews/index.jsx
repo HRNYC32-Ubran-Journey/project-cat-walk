@@ -20,11 +20,12 @@ class Reviews extends React.Component {
     this.changePageAndUpdate = this.changePage.bind(this);
 
     this.changeSortingMethod = this.changeSortingMethod.bind(this);
-
+    this.toggleExpanded = this.toggleExpanded.bind(this);
     // Define state.
     this.state = {
       metadata: {},
       totalReviews: 0,
+      expanded: false,
       currentSortMethod: 'relevant',
       page: 1,
       perPage: 2,
@@ -196,6 +197,14 @@ class Reviews extends React.Component {
     }
   }
 
+  toggleExpanded() {
+    const { expanded } = this.state;
+    this.setState({
+      expanded: !expanded,
+      perPage: !expanded ? 2 : 10,
+    }, () => this.updatePage());
+  }
+
   // updateById(id) {
 
   // }
@@ -211,19 +220,24 @@ class Reviews extends React.Component {
   // }
 
   render() {
-    const { reviews, currentSortMethod } = this.state;
+    const {
+      reviews,
+      currentSortMethod,
+      expanded,
+    } = this.state;
 
     return (
       <div>
         <div className="Overview">
           RATINGS & REVIEWS
-          {`<percent>% of people liked this product`}
         </div>
         <div className="ReviewList">
           <ReviewsList
             reviews={reviews}
             sortType={currentSortMethod}
             changeSortType={this.changeSortingMethod}
+            expanded={expanded}
+            toggleExpanded={this.toggleExpanded}
           />
         </div>
       </div>
