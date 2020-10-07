@@ -21,6 +21,9 @@ class Reviews extends React.Component {
 
     this.changeSortingMethod = this.changeSortingMethod.bind(this);
     this.toggleExpanded = this.toggleExpanded.bind(this);
+    this.markAsHelpful = this.markAsHelpful.bind(this);
+    this.reportReview = this.reportReview.bind(this);
+
     // Define state.
     this.state = {
       metadata: {},
@@ -30,6 +33,7 @@ class Reviews extends React.Component {
       page: 1,
       perPage: 2,
       ratingFilters: [],
+      reviewsBuffer: [],
       filteredReviews: [],
       reviews: [],
       allReviews: {
@@ -86,7 +90,7 @@ class Reviews extends React.Component {
       .then((res) => {
         const newReviews = [...reviews, ...res.data.results];
         this.setState({
-          reviews: newReviews,
+          reviewsBuffer: newReviews,
         }, () => {
           if (res.data.results.length >= 100) {
             this.fetchAllReviews(page + 1);
@@ -98,8 +102,8 @@ class Reviews extends React.Component {
   }
 
   sortReviews() {
-    const { reviews } = this.state;
-    const newest = [...reviews].sort((a, b) => {
+    const { reviewsBuffer } = this.state;
+    const newest = [...reviewsBuffer].sort((a, b) => {
       let direction = 0;
       const aDate = new Date(a.date);
       const bDate = new Date(b.date);
@@ -128,7 +132,7 @@ class Reviews extends React.Component {
 
     this.setState({
       allReviews: {
-        relevant: reviews,
+        relevant: reviewsBuffer,
         helpful: helpfulness,
         newest,
       },
@@ -160,7 +164,7 @@ class Reviews extends React.Component {
         return false;
       });
 
-    this.setState({ filteredReviews: reviews, reviews: [] }, () => {
+    this.setState({ filteredReviews: reviews }, () => {
       console.log('ran')
       this.updatePage(page);
     });
@@ -205,6 +209,29 @@ class Reviews extends React.Component {
     }, () => { this.updatePage(); });
   }
 
+  markAsHelpful(id) {
+    axios.put(`http://18.224.37.110/reviews/${id}/helpful`)
+      .then(() => {
+        this.setState({ reviews: [] }, () => {
+          this.fetchAllReviews();
+        });
+      })
+      .catch((e) => {
+        alert(e);
+      });
+  }
+
+  reportReview(id) {
+    axios.put(`http://18.224.37.110/reviews/${id}/report`)
+      .then(() => {
+        this.setState({ reviews: [] }, () => {
+          this.fetchAllReviews();
+        });
+      })
+      .catch((e) => {
+        alert(e);
+      });
+  }
   // updateById(id) {
 
   // }
@@ -239,6 +266,8 @@ class Reviews extends React.Component {
             expanded={expanded}
             toggleExpanded={this.toggleExpanded}
             changePage={this.changePage}
+            markAsHelpful={this.markAsHelpful}
+            report={this.reportReview}
           />
         </div>
       </div>
