@@ -22,8 +22,17 @@ const ReviewsList = (props) => {
     totalReviews,
   } = props;
   if (!reviews) { return <div> Loading... </div>; }
+
   const runChangeSortType = (e) => {
     changeSortType(e.target.value);
+  };
+
+  const goBack = () => {
+    props.changePage(-1);
+  };
+
+  const goForward = () => {
+    props.changePage(1);
   };
 
   return (
@@ -62,8 +71,14 @@ const ReviewsList = (props) => {
       </Grid>
       <Grid container>
         <Grid item>
+          <Button onClick={goBack} variant="outlined" color="primary">
+            {'<='}
+          </Button>
           <Button onClick={toggleExpanded} variant="outlined" color="primary">
             {expanded ? 'LESS REVIEWS' : 'MORE REVIEWS'}
+          </Button>
+          <Button onClick={goForward} variant="outlined" color="primary">
+            {'=>'}
           </Button>
         </Grid>
         <Grid item>
@@ -89,6 +104,7 @@ ReviewsList.propTypes = {
   expanded: PropTypes.bool.isRequired,
   toggleExpanded: PropTypes.func.isRequired,
   totalReviews: PropTypes.number.isRequired,
+  changePage: PropTypes.func.isRequired,
 };
 
 export default ReviewsList;

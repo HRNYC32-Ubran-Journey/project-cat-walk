@@ -16,8 +16,8 @@ class Reviews extends React.Component {
     this.fetchAllReviews = this.fetchAllReviews.bind(this);
     this.sortReviews = this.sortReviews.bind(this);
     this.filterByRatings = this.filterByRatings.bind(this);
-    this.changePageAndUpdate = this.updatePage.bind(this);
-    this.changePageAndUpdate = this.changePage.bind(this);
+    this.updatePage = this.updatePage.bind(this);
+    this.changePage = this.changePage.bind(this);
 
     this.changeSortingMethod = this.changeSortingMethod.bind(this);
     this.toggleExpanded = this.toggleExpanded.bind(this);
@@ -201,8 +201,8 @@ class Reviews extends React.Component {
     const { expanded } = this.state;
     this.setState({
       expanded: !expanded,
-      perPage: !expanded ? 2 : 10,
-    }, () => this.updatePage());
+      perPage: expanded ? 2 : 10,
+    }, () => { this.updatePage(); });
   }
 
   // updateById(id) {
@@ -238,6 +238,7 @@ class Reviews extends React.Component {
             changeSortType={this.changeSortingMethod}
             expanded={expanded}
             toggleExpanded={this.toggleExpanded}
+            changePage={this.changePage}
           />
         </div>
       </div>
