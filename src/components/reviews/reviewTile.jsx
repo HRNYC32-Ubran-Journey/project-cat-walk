@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  Card,
-  CardContent,
+  Paper,
   Grid,
   Typography,
 } from '@material-ui/core';
@@ -18,12 +17,15 @@ import {
 const renderRecommend = (recommends) => {
   if (recommends) {
     return (
-      <Typography
-        variant="body2"
-        component="p"
-      >
-        I recommend this product
-      </Typography>
+      <>
+        <Typography
+          variant="body2"
+          component="p"
+        >
+          I recommend this product
+        </Typography>
+        <br />
+      </>
     );
   }
   return '';
@@ -32,15 +34,18 @@ const renderRecommend = (recommends) => {
 const renderResponse = (response) => {
   if (response) {
     return (
-      <Typography
-        variant="body2"
-        component="p"
-        style={{
-          backgroundColor: 'lightgray',
-        }}
-      >
-        { response }
-      </Typography>
+      <>
+        <Typography
+          variant="body2"
+          component="p"
+          style={{
+            backgroundColor: 'lightgray',
+          }}
+        >
+          { response }
+        </Typography>
+        <br />
+      </>
     );
   }
   return '';
@@ -74,37 +79,39 @@ const ReviewTile = (props) => {
   };
 
   return (
-    <Card>
-      <CardContent>
-        <Grid container justify="space-between">
-          <Grid item>
-            <Typography variant="caption" color="textSecondary">
-              {`${review.rating} stars`}
-            </Typography>
-          </Grid>
-          <Grid item>
-            <Typography variant="caption" color="textSecondary">
-              {`${review.reviewer_name}, ${reviewDateText}`}
-            </Typography>
-          </Grid>
+    <Paper elevation={0}>
+      <br />
+      <Grid container justify="space-between">
+        <Grid item>
+          <Typography variant="caption" color="textSecondary">
+            {`${review.rating} stars`}
+          </Typography>
         </Grid>
-        <Typography variant="h5" component="h6">
-          <b>{review.summary}</b>
-        </Typography>
-        <Typography variant="body2" component="p" gutterBottom>
-          {review.body}
-        </Typography>
-        { renderRecommend(review.recommend) }
-        { renderResponse(review.response) }
-        <Typography variant="caption" color="textSecondary">
-          Helpful?
-          <button className="link-button" type="button" onClick={runMarkAsHelpful}>Yes</button>
-          {`(${review.helpfulness})`}
-          |
-          <button className="link-button" type="button" onClick={runReport}>Report</button>
-        </Typography>
-      </CardContent>
-    </Card>
+        <Grid item>
+          <Typography variant="caption" color="textSecondary">
+            {`${review.reviewer_name}, ${reviewDateText}`}
+          </Typography>
+        </Grid>
+      </Grid>
+      <br />
+      <Typography variant="b" component="h3">
+        {review.summary}
+      </Typography>
+      <br />
+      <Typography variant="body2" component="p" gutterBottom>
+        {review.body}
+      </Typography>
+      { renderRecommend(review.recommend) }
+      { renderResponse(review.response) }
+      <Typography variant="caption" color="textSecondary">
+        Helpful?
+        <button className="link-button" type="button" onClick={runMarkAsHelpful}>Yes</button>
+        {`(${review.helpfulness})`}
+        |
+        <button className="link-button" type="button" onClick={runReport}>Report</button>
+      </Typography>
+      <hr />
+    </Paper>
   );
 };
 

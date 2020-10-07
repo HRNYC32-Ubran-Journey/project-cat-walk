@@ -2,7 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
-// import { Grid } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
 // // Components:
 import Overview from './overview';
 import ReviewsList from './reviewsList';
@@ -281,8 +281,8 @@ class Reviews extends React.Component {
     } = this.state;
 
     return (
-      <div>
-        <div className="Overview">
+      <Grid container>
+        <Grid xs={3} item>
           <Overview
             metadata={metadata}
             totalScore={totalScore}
@@ -290,8 +290,8 @@ class Reviews extends React.Component {
             likeRatio={likeRatio}
             updateFilters={this.updateFilters}
           />
-        </div>
-        <div className="ReviewList">
+        </Grid>
+        <Grid xs={9} item>
           <ReviewsList
             reviews={reviews}
             sortType={currentSortMethod}
@@ -303,8 +303,8 @@ class Reviews extends React.Component {
             report={this.reportReview}
             totalReviews={totalReviews}
           />
-        </div>
-      </div>
+        </Grid>
+      </Grid>
     );
   }
 }
