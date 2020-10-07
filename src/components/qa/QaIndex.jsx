@@ -11,36 +11,26 @@ import axios from 'axios';
 import { Typography } from '@material-ui/core';
 import MoreAnsweredQuestions from './subcomponents/MoreAnsweredQuestions';
 
-// class QaIndex extends Component {
-//   constructor(props){
-//     super(props)
-//     this.state = {
-//         questionData: [],
-//         answersData: [],
-//         images:[]
-//     }
-//   }
-//   render() {
-//     return (
-//        <div>
-//        <Searchbar/>
-//        <QuestionModal />
-//        <AnswerModal />
-//        <GetQuestions/>
-//        <GetAnswers/>
-//        <DataParent/>
-//      </div>
-//      );
-//   }
-// }
-
-// export default QaIndex;
 
 export default function QaIndex() {
-  const [questions, setQuestions] = useState({ questions: [] });
-  const [answers, setAnswers] = useState({ answers: [] });
+  const [questions, setQuestions] = useState([]);
+  const [answers, setAnswers] = useState([]);
   const [loadMoreClicked, setLoadMoreClicked] = useState(false);
   const [loadMoreAnswersClicked, setLoadMoreAnswersClicked] = useState(false)
+  const [searchTerm, setSearchTerm] = useState('')
+  const [searchResults, setSearchResults] = useState(null)
+
+  const handleSearchChange = (e) => {
+    let value = e.target.value
+    setSearchTerm(value)
+    handleSearchResults()
+  }
+  const handleSearchResults = () => {
+    let filtered = questions.filter((question) => {
+      return question.question_body.toLowerCase().includes(searchTerm);
+    })
+    setQuestions(filtered)
+  } 
   useEffect(async () => {
     const productId = 380;
     const results = await axios.get(
@@ -61,11 +51,11 @@ export default function QaIndex() {
     <div>
       <Typography variant="h6">Questions & Answers</Typography>
       <br />
-      <Searchbar />
+      {/* <Searchbar handleSearchChange={handleSearchChange}/> */}
       {/* <QAContainer questionsData={questions} answersData={answers}/> */}
       <br />
       <br />
-      <QAContainer questionsData={questions} loadMoreState={loadMoreClicked} loadMoreAnswersClicked={loadMoreAnswersClicked}/>
+      <QAContainer searchTerm={searchTerm} handleSearchChange={handleSearchChange} questionsData={questions} loadMoreState={loadMoreClicked} loadMoreAnswersClicked={loadMoreAnswersClicked}/>
       <Typography>
         <b style={{ cursor: 'pointer' }} onClick={() => setLoadMoreAnswersClicked(true)}>LOAD MORE ANSWERS</b>
       </Typography>

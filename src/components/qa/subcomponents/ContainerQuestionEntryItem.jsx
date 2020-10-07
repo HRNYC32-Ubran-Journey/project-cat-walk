@@ -7,15 +7,19 @@ import { Grid, Typography } from '@material-ui/core';
 export default function ContainerQuestionEntryItem({ questionItem, answers,loadMoreAnswersClicked }) {
   const [twoAnswersArray, setTwoAnswersArray] = useState(answers.slice(0, 2));
   const [allAnswers, setAllAnswers] = useState(answers);
-  
+  const [sortedAnswers, setSortedAnswers] = useState()
   // const showTwoAnswers = answer.map((answer) =>{
 
   //     return <AnswerListEntryItem answer={answer}/>
   // })
-  const renderAllAnswers = answers.map((answer) => {
+  const renderAllAnswers = answers.slice().sort((a, b) => {
+    return b.helpfullness - a.helpfullness
+  }).map((answer) => {
     return <AnswerListEntryItem answer={answer} />;
   });
-  const renderTwoAnswers = twoAnswersArray.map((answer) => {
+  const renderTwoAnswers = twoAnswersArray.slice().sort((a, b) => {
+    return b.helpfullness - a.helpfullness
+  }).map((answer) => {
     return <AnswerListEntryItem answer={answer} />;
   });
   const renderAnswers = loadMoreAnswersClicked ? renderAllAnswers : renderTwoAnswers 
