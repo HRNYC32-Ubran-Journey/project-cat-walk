@@ -19,7 +19,7 @@ const Summery = (props) => {
 };
 
 Summery.propTypes = {
-  rating: PropTypes.number.isRequired,
+  rating: PropTypes.string.isRequired,
 };
 
 export default Summery;
