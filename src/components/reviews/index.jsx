@@ -242,10 +242,17 @@ class Reviews extends React.Component {
   }
 
   toggleExpanded() {
-    const { expanded } = this.state;
+    const { expanded, page, filteredReviews } = this.state;
+
+    const newPerPage = expanded ? 2 : 6;
+    let newPage = page;
+    if (!expanded && (page * newPerPage) > filteredReviews.length) {
+      newPage = Math.floor(filteredReviews.length / newPerPage) + 1;
+    }
     this.setState({
       expanded: !expanded,
-      perPage: expanded ? 2 : 10,
+      page: newPage,
+      perPage: newPerPage,
     }, () => { this.updatePage(); });
   }
 
