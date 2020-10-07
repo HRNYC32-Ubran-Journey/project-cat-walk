@@ -4,8 +4,14 @@ import { Typography } from '@material-ui/core';
 import MoreAnsweredQuestions from './MoreAnsweredQuestions.jsx'
 import Searchbar from './Searchbar.jsx';
 
-export default function QAContainer({ questionsData, answersData, loadMoreState, loadMoreAnswersClicked, handleSearchChange, searchTerm }) {
-    // console.log("this is questions Data", questionsData)
+export default function QAContainer({ questionsData, answersData, loadMoreState, loadMoreAnswersClicked, handleSearchChange, searchTerm, addMore, setLoadMoreAnswersClicked }) {
+  const [newData, setNewData] = useState([])
+  const [toggle, setToggle] = useState(false)
+  
+  useEffect(() => {
+    setNewData(questionsData)
+  },[addMore])  
+  // console.log("this is questions Data", questionsData)
     // const [loadMoreClicked, setLoadMoreClicked] = useState(false)
     // console.log("this is questions data", questionsData)
     // const [questionData,setQuestionData] = useState(questionsData)
@@ -25,12 +31,13 @@ export default function QAContainer({ questionsData, answersData, loadMoreState,
     //     let value = e.target.value
     //     setSearchTerm(value)
     //   }
+   
       
     const renderContainerEntryItemFourQuestions = (
         <div>
             
-          {questionsData.length > 0
-            ? questionsData.slice(0,4).sort((a, b) => {
+          {newData.length > 0
+            ? newData.slice().sort((a, b) => {
                 return b.question_helpfulness - a.question_helpfulness;
               }).map((question) => {
                   const questionsArray = Object.entries(question.answers);
@@ -53,8 +60,8 @@ export default function QAContainer({ questionsData, answersData, loadMoreState,
 
   const renderContainerEntryItemForAllQuestions = (
     <div>
-      {questionsData.length > 0
-        ? questionsData
+      {newData.length > 0
+        ? newData.slice()
             .sort((a, b) => {
               return b.question_helpfulness - a.question_helpfulness;
             })
@@ -80,11 +87,14 @@ const renderQuestions = loadMoreState ? renderContainerEntryItemForAllQuestions 
   return (
     <>
     <Searchbar handleSearchChange={handleSearchChange} value={searchTerm}/>
-    {renderQuestions}
+    {renderContainerEntryItemFourQuestions}
       {/* {renderContainerEntryItemForAllQuestions} */}
       {/* {renderContainerEntryItemFourQuestions} */}
       {/* {loadMoreClicked ? {renderContainerEntryItemForAllQuestions} : {renderContainerEntryItemFourQuestions}} */}
-  
+      <Typography>
+        <b style={{ cursor: 'pointer' }} onClick={() => setLoadMoreAnswersClicked(true)}>LOAD MORE ANSWERS</b>
+      </Typography>
+      <MoreAnsweredQuestions handleClick={addMore}/>
      
     </>
   );

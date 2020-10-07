@@ -1,9 +1,19 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Card, CardMedia, Typography} from '@material-ui/core';
 
 
 
 export default function AnswerListEntryItem({ answer }) {
+  const [helpfullCount, setHelpfulCount] = useState(answer.helpfulness)
+  const [report, setReport] = useState(<u>Report</u>)
+  const [voteCount, setVoteCount] = useState(0)
+  const toggleReport = () => {
+    setReport(<span style={{color: 'red'}}>Reported!</span>)
+  }
+  const updateVote = () => {
+    setHelpfulCount(() => helpfullCount + 1)
+    setVoteCount(voteCount + 1)
+  }
   const formatDate = (date) => {
     const converted = new Date(date);
     const months = [
@@ -68,9 +78,9 @@ export default function AnswerListEntryItem({ answer }) {
       >
         {`by ${answer.answerer_name}, ${formatDate(answer.date)}  |  Helpful? `}
         {/* by {answer.answerer_name}, {formatDate(answer.date)} | Helpful?{' '} */}
-        <u>Yes</u> 
+        <u style={{cursor: 'pointer'}}>Yes</u> 
         {`(${answer.helpfulness})  |  ` }
-        <u>Report</u>
+        <span onClick={toggleReport} style={{cursor: 'pointer'}}>{report}</span>
       </Typography>
     </div>
   );

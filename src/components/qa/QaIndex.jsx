@@ -18,26 +18,41 @@ export default function QaIndex() {
   const [loadMoreClicked, setLoadMoreClicked] = useState(false);
   const [loadMoreAnswersClicked, setLoadMoreAnswersClicked] = useState(false)
   const [searchTerm, setSearchTerm] = useState('')
-  const [searchResults, setSearchResults] = useState(null)
+  const [questionsToRender, setQuestionsToRender] = useState(5)
+  const [finalQuestionsArray, setFinalQuestionsArray] = useState([])
+  
 
   const handleSearchChange = (e) => {
     let value = e.target.value
     setSearchTerm(value)
     handleSearchResults()
+    setFinalQuestionsArray([...questions].slice(0,questionsToRender))
+  }
+  const addMore = () => {
+    setQuestionsToRender(() => questionsToRender + 2)
+    setFinalQuestionsArray([...questions].slice(0,questionsToRender))
   }
   const handleSearchResults = () => {
     let filtered = questions.filter((question) => {
       return question.question_body.toLowerCase().includes(searchTerm);
     })
+
     setQuestions(filtered)
   } 
+  
   useEffect(async () => {
-    const productId = 380;
+    
     const results = await axios.get(
-      `http://18.224.37.110/qa/questions/?product_id=${productId}`
+      `http://18.224.37.110/qa/questions/`,
+      { params:{
+          count: 100,
+          product_id: 380
+      }
+    }
     );
 
-    setQuestions(results.data.results);
+    setQuestions(results.data.results)
+    setFinalQuestionsArray([...results.data.results].splice(0,questionsToRender - 1))
   }, []);
   useEffect(async () => {
     const questionId = 41;
@@ -46,7 +61,7 @@ export default function QaIndex() {
     );
     setAnswers(results.data.results);
   }, []);
-
+  
   return (
     <div>
       <Typography variant="h6">Questions & Answers</Typography>
@@ -55,13 +70,11 @@ export default function QaIndex() {
       {/* <QAContainer questionsData={questions} answersData={answers}/> */}
       <br />
       <br />
-      <QAContainer searchTerm={searchTerm} handleSearchChange={handleSearchChange} questionsData={questions} loadMoreState={loadMoreClicked} loadMoreAnswersClicked={loadMoreAnswersClicked}/>
-      <Typography>
-        <b style={{ cursor: 'pointer' }} onClick={() => setLoadMoreAnswersClicked(true)}>LOAD MORE ANSWERS</b>
-      </Typography>
+      <QAContainer setLoadMoreAnswersClicked={setLoadMoreAnswersClicked} searchTerm={searchTerm} handleSearchChange={handleSearchChange} questionsData={finalQuestionsArray} loadMoreState={loadMoreClicked} loadMoreAnswersClicked={loadMoreAnswersClicked} addMore={addMore}/>
+      
    
       <div className="buttons">
-        <MoreAnsweredQuestions showMoreQuestions={setLoadMoreClicked} />
+        {/* <MoreAnsweredQuestions showMoreQuestions={setLoadMoreClicked} addMore={addMore}/> */}
         <QuestionModal questionsData={questions}/>
       </div>
     </div>
