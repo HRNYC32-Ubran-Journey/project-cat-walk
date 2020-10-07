@@ -131,7 +131,7 @@ class Overview extends React.Component {
                 </div>
               </Slider>
             </div>
-            this is where the modal goes
+            this is where the carousel goes
             <Paper> asdf </Paper>
           </Grid>
           <Grid item xs={4}>
