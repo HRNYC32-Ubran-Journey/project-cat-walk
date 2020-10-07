@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import PropTypes from 'prop-types';
-import styles from './styles';
+import StyleSelction from './styleSelection';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Slider from 'react-slick';
@@ -14,6 +14,11 @@ import Slider from 'react-slick';
 
 // import './styles/slick.css';
 // import './styles/slick-theme.css';
+/*
+  NOTE: These above imports do not style correctly, possible because of webpack.
+  The <link> tags in the jsx override this issue but this is suboptimal and prevents restyling
+*/
+
 import './styles/styles.css';
 
 class Overview extends React.Component {
@@ -21,12 +26,14 @@ class Overview extends React.Component {
     super(props);
 
     this.state = {
-      id: props.id,
-      information: null,
-      styles: null,
-      styleEntries: null,
-      images: null,
+      product: {
+        information: {},
+        styles: [],
+        selectedStyleIndex: 0,
+      },
     };
+
+    this.changeSelectedStyle = this.changeSelectedStyle.bind(this);
   }
 
   componentDidMount() {
@@ -37,11 +44,14 @@ class Overview extends React.Component {
   getInformation() {
     console.log('test');
     axios({
-      url: `http://18.224.37.110/products/${this.state.id}`,
+      url: `http://18.224.37.110/products/${this.props.id}`,
       method: 'get',
     })
       .then((body) => {
-        this.setState({ information: body.data });
+        const { product } = this.state;
+        const newProduct = { ...product };
+        newProduct.information = body.data;
+        this.setState({ product: newProduct });
       })
       .catch((err) => {
         // console.log('ERROR:', err);
@@ -50,17 +60,17 @@ class Overview extends React.Component {
 
   getStyles() {
     axios({
-      url: `http://18.224.37.110/products/${this.state.id}/styles`,
+      url: `http://18.224.37.110/products/${this.props.id}/styles`,
       method: 'get',
     })
       .then((body) => {
-        console.log(body.data.results);
-        this.setState({
-          styles: body.data.results,
-          styleEntries: this.setStyleEntries(body.data.results),
-        });
-        this.setStylesImages();
-        console.log(this.state);
+        // TODO: set default style based on default? (1 for true 0 for false)
+
+        const { product } = this.state;
+        const newProduct = { ...product };
+        newProduct.styles = body.data.results;
+        this.setState({ product: newProduct });
+        console.log('changed update method again', this.state);
       })
       .catch((err) => {
         // console.log('ERROR:', err);
@@ -68,29 +78,23 @@ class Overview extends React.Component {
   }
 
   setStylesImages() {
-    let imgs = '';
-    for (let i = 0; i < this.styles.length; i += 1) {
-      imgs += `<img src=${this.styles.photos[0].url} />`;
+    //don't do this: 
+    console.log('in set styles');
+    let imgs = [];
+    for (let i = 0; i < this.state.styles.length; i += 1) {
+      imgs.push( <img src={this.state.styles[i].photos[0].url} />);
     }
     this.setState({ images: imgs });
     console.log(this.state);
   }
 
-  //not working:
-  setStyleEntries(styles) {
-    console.log('in style entries', styles);
-    let styleEntries = styles.map((style) => {
-      return (
-        <styles url={style.photos[0].url} 
-        thumbnail_url={style.photos[0].thumbnail_url}
-        key={style.photos[0].url} />
-      );
-    });
-    return styleEntries;
+  changeSelectedStyle(id) {
+    //pass as props I believe
+    console.log('in change', id);
   }
 
   render() {
-    let slickSettings = {
+    const slickSettings = {
       arrows: true,
       dots: true,
       dotsClass: 'slick-dots slick-thumb',
@@ -99,7 +103,7 @@ class Overview extends React.Component {
       slidesToShow: 1,
       slidesToScroll: 1,
     };
-
+    const { product } = this.state;
     return (
       <div>
         <link
@@ -133,12 +137,10 @@ class Overview extends React.Component {
           <Grid item xs={4}>
             other stuff here:
             <Paper> asdf </Paper>
+            <StyleSelction product={product} changeSelectedStyle={this.changeSelectedStyle} />
           </Grid>
         </Grid>
-        <div>
-          {/* {this.state.styleEntries} */}
-          {this.state.imgs}
-        </div>
+
       </div>
     );
   }
