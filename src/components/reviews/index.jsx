@@ -16,6 +16,7 @@ class Reviews extends React.Component {
     this.fetchAllReviews = this.fetchAllReviews.bind(this);
     this.sortReviews = this.sortReviews.bind(this);
     this.filterByRatings = this.filterByRatings.bind(this);
+    this.changePageAndUpdate = this.changePageAndUpdate.bind(this);
 
     // Define state.
     this.state = {
@@ -25,6 +26,7 @@ class Reviews extends React.Component {
       page: 1,
       perPage: 10,
       ratingFilters: [],
+      filteredReviews: [],
       reviews: [],
       allReviews: {
         relevant: [],
@@ -136,8 +138,6 @@ class Reviews extends React.Component {
       ratingFilters,
       currentSortMethod,
       allReviews,
-      perPage,
-      page,
     } = this.state;
     let allowed = [];
 
@@ -153,20 +153,41 @@ class Reviews extends React.Component {
           return true;
         }
         return false;
-      })
-      .splice(perPage * (page - 1), perPage);
+      });
 
-    this.setState({ reviews }, () => {});
+    this.setState({ filteredReviews: reviews, reviews: [] }, () => {this.changePageAndUpdate(1)});
+  }
+
+  changePageAndUpdate(change = 1) {
+    const { page, perPage, filteredReviews } = this.state;
+    let newPage = page + change;
+    if (Number.isNaN(newPage)) {
+      throw new Error(`Could not turn ${page} and ${change} into a new valid page number.`);
+    } else if (newPage < 1) {
+      newPage = 1;
+    }
+
+    this.setState({
+      page: newPage,
+      reviews: [...filteredReviews].splice(perPage * (newPage - 1), perPage),
+    });
   }
 
   render() {
+    const { reviews } = this.state;
+
     return (
       <div>
         <div className="Overview">
-
+          hi.
+          {`${reviews.length}`}
         </div>
         <div>
-          bye
+          {reviews.map((e) => (
+            <div key={e.review_id}>
+              {e.summary}
+            </div>
+          ))}
         </div>
       </div>
     );
