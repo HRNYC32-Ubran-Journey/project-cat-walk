@@ -19,6 +19,8 @@ class Reviews extends React.Component {
     this.updatePage = this.updatePage.bind(this);
     this.changePage = this.changePage.bind(this);
 
+    this.updateFilters = this.updateFilters.bind(this);
+
     this.changeSortingMethod = this.changeSortingMethod.bind(this);
     this.toggleExpanded = this.toggleExpanded.bind(this);
     this.markAsHelpful = this.markAsHelpful.bind(this);
@@ -76,7 +78,10 @@ class Reviews extends React.Component {
         } else if (metadata.recommended[1] === 0) {
           likeRatio = '0%';
         } else {
-          const ratio = metadata.recommended[1] / (metadata.recommended[0] + metadata.recommended[1]);
+          const ratio = metadata.recommended[1] / (
+            metadata.recommended[0]
+            + metadata.recommended[1]
+          );
           likeRatio = `${Math.trunc(ratio * 100)}%`;
         }
 
@@ -207,12 +212,31 @@ class Reviews extends React.Component {
     });
   }
 
+  // Overview Funcs
+
+  updateFilters(n) {
+    const { ratingFilters } = this.state;
+
+    if ([1, 2, 3, 4, 5].includes(n)) {
+      let newRatingFilters = [...ratingFilters];
+      if (newRatingFilters.includes(n)) {
+        newRatingFilters = newRatingFilters.filter((e) => e !== n);
+      } else {
+        newRatingFilters.push(n);
+      }
+      this.setState({
+        ratingFilters: newRatingFilters,
+      }, () => { this.filterByRatings(); });
+    } else {
+      throw new Error(`Expected a number 1-5 but got ${n} instead.`);
+    }
+  }
+
   // ReviewsList Funcs
   changeSortingMethod(method) {
     if (['relevant', 'newest', 'helpful'].includes(method)) {
       this.setState({ currentSortMethod: method }, () => { this.filterByRatings(); });
     } else {
-      alert('There was an error changing the sorting method.');
       throw new Error(`WARNING: method was ${method} which is not an acceptable method.`);
     }
   }
@@ -231,9 +255,6 @@ class Reviews extends React.Component {
         this.setState({ reviews: [] }, () => {
           this.fetchAllReviews();
         });
-      })
-      .catch((e) => {
-        alert(e);
       });
   }
 
@@ -243,9 +264,6 @@ class Reviews extends React.Component {
         this.setState({ reviews: [] }, () => {
           this.fetchAllReviews();
         });
-      })
-      .catch((e) => {
-        alert(e);
       });
   }
 
@@ -270,6 +288,7 @@ class Reviews extends React.Component {
             totalScore={totalScore}
             averageRating={averageRating}
             likeRatio={likeRatio}
+            updateFilters={this.updateFilters}
           />
         </div>
         <div className="ReviewList">

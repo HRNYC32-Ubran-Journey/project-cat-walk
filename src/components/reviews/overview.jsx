@@ -7,10 +7,9 @@ import Summery from './summery';
 const Overview = (props) => {
   const {
     metadata,
-    // totalReviews,
-    // totalScore,
     averageRating,
     likeRatio,
+    updateFilters,
   } = props;
   if (!metadata) { return <div>Loading...</div>; }
 
@@ -23,6 +22,15 @@ const Overview = (props) => {
       <Typography>
         {`${likeRatio} of people recommend this product.`}
       </Typography>
+      <div>
+        {[1, 2, 3, 4, 5].map((e) => {
+          const toggleFunc = () => {
+            updateFilters(e);
+          };
+
+          return (<div onClick={toggleFunc}>{`${e} x%`}</div>);
+        })}
+      </div>
     </>
   );
 };
