@@ -3,30 +3,66 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link
-} from "react-router-dom";
-import Button from '@material-ui/core/Button';
+  // Link
+} from 'react-router-dom';
+import { createBrowserHistory } from 'history';
+import axios from 'axios';
+import { Button } from '@material-ui/core';
 // Components
 import Overview from './components/overview/index';
 import Qa from './components/qa/index';
 import Recomended from './components/recommended/index';
 import Reviews from './components/reviews/index';
 
+const history = createBrowserHistory();
+
 class App extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      id: 1,
+      loadingSearch: true,
+      productsAll: [],
       cart: [],
     };
 
+    this.getAllProducts = this.getAllProducts.bind(this);
+    this.changeProduct = this.changeProduct.bind(this);
     this.addToCart = this.addToCart.bind(this);
   }
 
-  // changePage(id) {
+  componentDidMount() {
+    this.getAllProducts();
+  }
 
-  // }
+  getAllProducts(page = 1) {
+    const { productsAll } = this.state;
+
+    const params = {
+      count: 100,
+      page,
+    };
+
+    axios.get('http://18.224.37.110/products/', { params })
+      .then((res) => {
+        const newProductsAll = [...productsAll, ...res.data];
+        this.setState({
+          productsAll: newProductsAll,
+        }, () => {
+          if (res.data.length >= 100) {
+            this.getAllProducts(page + 1);
+          } else {
+            this.setState({
+              loadingSearch: false,
+            });
+          }
+        });
+      });
+  }
+
+  changeProduct(page) {
+    history(`/product/${page}`);
+  }
 
   addToCart({
     id, style, sku, amount,
@@ -51,7 +87,7 @@ class App extends React.Component {
     const { cart } = this.state;
     // Note: The button is here as a temperary refrence on how to use materal-ui.
     return (
-      <Router>
+      <Router history={history}>
         <Switch>
           <Route
             path="/product/:id"

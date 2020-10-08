@@ -21,6 +21,7 @@
     "file-loader": "^6.1.0",
     "fontsource-roboto": "^3.0.3",
     "global": "^4.4.0",
+    "history": "^5.0.0",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
