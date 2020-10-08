@@ -1,4 +1,10 @@
 import React from 'react';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
 import Button from '@material-ui/core/Button';
 // Components
 import Overview from './components/overview/index';
@@ -16,6 +22,10 @@ class App extends React.Component {
     };
 
     this.addToCart = this.addToCart.bind(this);
+  }
+
+  changePage(id) {
+
   }
 
   addToCart({
@@ -41,13 +51,17 @@ class App extends React.Component {
     const { id, cart } = this.state;
     // Note: The button is here as a temperary refrence on how to use materal-ui.
     return (
-      <>
-        <Overview id={id} addToCart={this.addToCart} />
-        <Recomended id={id} cart={cart} />
-        <Qa id={id} />
-        <Reviews id={id} />
-        <Button variant="contained">this is a material UI button</Button>
-      </>
+      <Router>
+        <Switch>
+          <Route path="/products/=item_id">
+            <Overview id={id} addToCart={this.addToCart} />
+            <Recomended id={id} cart={cart} />
+            <Qa id={id} />
+            <Reviews id={id} />
+            <Button variant="contained">this is a material UI button</Button>
+          </Route>
+        </Switch>
+      </Router>
     );
   }
 }
