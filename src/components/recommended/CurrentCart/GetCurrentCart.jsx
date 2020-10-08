@@ -23,7 +23,7 @@ class GetCurrentCart extends React.Component {
           return axios
             .get(`http://18.224.37.110/products/${currentProduct.id}/styles`)
             .then((productStyles) => {
-              console.log(productStyles)
+              // console.log(productStyles)
               return productStyles.data.results;
             })
             .catch((err) => {
