@@ -9,18 +9,45 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import UploadPics from './UploadPics.jsx';
 import {Typography} from '@material-ui/core';
 import UploadMediaCard from './UploadMediaCard';
+import axios from 'axios'
 
-export default function AnswerModal() {
+export default function AnswerModal({dataBack, questionItem}) {
+  const [productTitle,setProductTitle] = useState('');
+  const [formData, setFormData] = useState({
+    answer: '',
+    nickname: '',
+    email: ''
+  })
   const [open, setOpen] = useState(false);
+  const request = () => {
+    console.log("this is db", dataBack)
+    return axios.get(`http://18.224.37.110/products/${dataBack}`)
+      .then((data) => {
+        console.log(data)
+        setProductTitle(data.data.name)
+      })
+      .catch((err) => console.log(err))
+  }
+  const handleInputChange = (e) => {
+    setFormData({...formData,[e.target.name]: e.target.value})
+  }
   const handleClickOpen = () => {
     setOpen(true);
+    request();
   };
+  const handleSubmitForm = () => {
+    setFormData({
+      answer: '',
+      nickname: '',
+      email: ''
+    })
+  }
   return (
     <>
-    <Typography color="textSecondary" variant="caption" onClick={handleClickOpen}>
-      <u>
+    <Typography color="textSecondary" variant="caption" >
+      <span onClick={handleClickOpen}>
         Add Answer
-      </u>
+      </span>
       </Typography>
       <Dialog open={open}>
       <input
@@ -32,13 +59,17 @@ export default function AnswerModal() {
           />
         <DialogTitle>Submit Your Answer</DialogTitle>
         <DialogContent>
-        <DialogContentText>[Product Name]: [Question Body]</DialogContentText>
+        <DialogContentText>{productTitle ? <b>{productTitle}</b> : null}: {questionItem ? questionItem.question_body : null}</DialogContentText>
           
           <DialogContentText>Your Answer</DialogContentText>
           <TextField
             id="outlined-multiline-static"
             required
+            helperText="required field"
+            value={formData.answer}
+            name="answer"
             multiline
+            onChange={handleInputChange}
             rows={7}
             variant="outlined"
             fullWidth
@@ -48,6 +79,10 @@ export default function AnswerModal() {
             margin="dense"
             id="nickname"
             required
+            helperText="required field"
+            value={formData.nickname}
+            name="nickname"
+            onChange={handleInputChange}
             label="Example: jack543!"
             variant="outlined"
             fullWidth
@@ -63,6 +98,10 @@ export default function AnswerModal() {
             margin="dense"
             id="email"
             required
+            helperText="required field"
+            onChange={handleInputChange}
+            value={formData.email}
+            name="email"
             variant="outlined"
             label="Example: jack@email.com"
             type="email"
@@ -74,8 +113,11 @@ export default function AnswerModal() {
           <UploadPics />
         </DialogContent>
         <DialogActions>
-          <Button> Cancel </Button>
-          <Button> Submit </Button>
+          <Button onClick={() => setOpen(false)}> Cancel </Button>
+          <Button onClick={() =>{
+            handleSubmitForm()
+            setOpen(false)
+            }}> Submit </Button>
         </DialogActions>
       </Dialog>
     </>

@@ -3,8 +3,9 @@ import ContainerQuestionEntryItem from './ContainerQuestionEntryItem';
 import { Typography } from '@material-ui/core';
 import MoreAnsweredQuestions from './MoreAnsweredQuestions.jsx'
 import Searchbar from './Searchbar.jsx';
+import QuestionModal from './QuestionModal.jsx'
 
-export default function QAContainer({ questionsData, answersData, loadMoreState, loadMoreAnswersClicked, handleSearchChange, searchTerm, addMore, setLoadMoreAnswersClicked }) {
+export default function QAContainer({ questionsData, answersData, loadMoreState, loadMoreAnswersClicked, handleSearchChange, searchTerm, addMore, setLoadMoreAnswersClicked, dataBack }) {
   const [newData, setNewData] = useState([])
   const [toggle, setToggle] = useState(false)
   
@@ -51,6 +52,7 @@ export default function QAContainer({ questionsData, answersData, loadMoreState,
                       questionItem={question}
                       answers={answerList}
                       loadMoreAnswersClicked={loadMoreAnswersClicked}
+                      dataBack={dataBack}
                     />
                   );
                 })
@@ -77,6 +79,7 @@ export default function QAContainer({ questionsData, answersData, loadMoreState,
                   questionItem={question}
                   answers={answerList}
                   loadMoreAnswersClicked={loadMoreAnswersClicked}
+                  dataBack={dataBack}
                 />
               );
             })
@@ -84,18 +87,21 @@ export default function QAContainer({ questionsData, answersData, loadMoreState,
     </div>
   );
 const renderQuestions = loadMoreState ? renderContainerEntryItemForAllQuestions : renderContainerEntryItemFourQuestions
-  return (
+const loadMore = loadMoreAnswersClicked ? <span>Collapse answers</span> : <span>See more answers</span>
+return (
     <>
     <Searchbar handleSearchChange={handleSearchChange} value={searchTerm}/>
+    <br/>
+    <br/>
     {renderContainerEntryItemFourQuestions}
       {/* {renderContainerEntryItemForAllQuestions} */}
       {/* {renderContainerEntryItemFourQuestions} */}
       {/* {loadMoreClicked ? {renderContainerEntryItemForAllQuestions} : {renderContainerEntryItemFourQuestions}} */}
       <Typography>
-        <b style={{ cursor: 'pointer' }} onClick={() => setLoadMoreAnswersClicked(true)}>LOAD MORE ANSWERS</b>
+        <b style={{ cursor: 'pointer' }} onClick={() => setLoadMoreAnswersClicked(!loadMoreAnswersClicked)}>{loadMore}</b>
       </Typography>
       <MoreAnsweredQuestions handleClick={addMore}/>
-     
+      <QuestionModal  dataBack={dataBack}/>
     </>
   );
 }

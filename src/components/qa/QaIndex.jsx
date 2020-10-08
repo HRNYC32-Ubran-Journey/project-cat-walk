@@ -20,17 +20,18 @@ export default function QaIndex() {
   const [searchTerm, setSearchTerm] = useState('')
   const [questionsToRender, setQuestionsToRender] = useState(5)
   const [finalQuestionsArray, setFinalQuestionsArray] = useState([])
+  const [dataBack, setDataBack] = useState(null)
   
 
   const handleSearchChange = (e) => {
     let value = e.target.value
     setSearchTerm(value)
     handleSearchResults()
-    setFinalQuestionsArray([...questions].slice(0,questionsToRender))
+    setFinalQuestionsArray([...questions].slice(0,questionsToRender + 1))
   }
   const addMore = () => {
     setQuestionsToRender(() => questionsToRender + 2)
-    setFinalQuestionsArray([...questions].slice(0,questionsToRender))
+    setFinalQuestionsArray([...questions].slice(0,questionsToRender + 1))
   }
   const handleSearchResults = () => {
     let filtered = questions.filter((question) => {
@@ -52,7 +53,8 @@ export default function QaIndex() {
     );
 
     setQuestions(results.data.results)
-    setFinalQuestionsArray([...results.data.results].splice(0,questionsToRender - 1))
+    setFinalQuestionsArray([...results.data.results].slice(0,questionsToRender-1))
+    setDataBack(Number(results.data.product_id))
   }, []);
   useEffect(async () => {
     const questionId = 41;
@@ -70,12 +72,12 @@ export default function QaIndex() {
       {/* <QAContainer questionsData={questions} answersData={answers}/> */}
       <br />
       <br />
-      <QAContainer setLoadMoreAnswersClicked={setLoadMoreAnswersClicked} searchTerm={searchTerm} handleSearchChange={handleSearchChange} questionsData={finalQuestionsArray} loadMoreState={loadMoreClicked} loadMoreAnswersClicked={loadMoreAnswersClicked} addMore={addMore}/>
+      <QAContainer setLoadMoreAnswersClicked={setLoadMoreAnswersClicked} searchTerm={searchTerm} handleSearchChange={handleSearchChange} questionsData={finalQuestionsArray} loadMoreState={loadMoreClicked} loadMoreAnswersClicked={loadMoreAnswersClicked} addMore={addMore} dataBack={dataBack}/>
       
    
       <div className="buttons">
         {/* <MoreAnsweredQuestions showMoreQuestions={setLoadMoreClicked} addMore={addMore}/> */}
-        <QuestionModal questionsData={questions}/>
+        {/* <QuestionModal questionsData={questions} dataBack={dataBack}/> */}
       </div>
     </div>
   );

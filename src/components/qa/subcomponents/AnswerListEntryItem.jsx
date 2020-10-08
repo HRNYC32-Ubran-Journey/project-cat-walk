@@ -1,18 +1,24 @@
 import React, {useState} from 'react';
-import {Card, CardMedia, Typography} from '@material-ui/core';
+import {Card, CardMedia, Typography, Paper} from '@material-ui/core';
 
 
 
 export default function AnswerListEntryItem({ answer }) {
   const [helpfullCount, setHelpfulCount] = useState(answer.helpfulness)
   const [report, setReport] = useState(<u>Report</u>)
-  const [voteCount, setVoteCount] = useState(0)
   const toggleReport = () => {
     setReport(<span style={{color: 'red'}}>Reported!</span>)
   }
-  const updateVote = () => {
-    setHelpfulCount(() => helpfullCount + 1)
-    setVoteCount(voteCount + 1)
+  const [voteClicked, setVoteClicked] = useState(false)
+  const [voteCount, setVoteCount] = useState(answer.helpfulness)
+  const handleVoteClicked = () => {
+    if(voteClicked){
+      return <>Already Voted</>
+    } else {
+      setVoteCount(() => voteCount + 1)
+    setVoteClicked(true)
+    }
+    
   }
   const formatDate = (date) => {
     const converted = new Date(date);
@@ -40,29 +46,36 @@ export default function AnswerListEntryItem({ answer }) {
     return (
 
       //   <h5>I am a photo</h5>
-      <Card>
+      <>
+      <Paper 
+        elevation={0}
+
+      >
         <CardMedia
           component="img"
           image={photo}
           style={{
             boxSizing: 'content-box',
-            width: '50px',
+            width: '70px',
             height: '50px',
             float: 'left',
             margin: '10px',
-            border: '1px solid black',
+            border: '1px solid grey',
           }}
         />
-      </Card>
+        
+      </Paper>
+      <br/>
+      <br/>
+      </>
     );
   });
   const renderPhotoMessage =
-    answer.photos.length > 0 ? (
+    answer.photos.length > 0 ? (<>
       <div className="render_photo_message">
-        <div>Yes, as you can see in these photos</div>
         <span>{renderPhotos}</span>
       </div>
-    ) : null;
+        </>) : null;
   return (
     <div className="answer_list_entry">
       <div>
@@ -71,6 +84,8 @@ export default function AnswerListEntryItem({ answer }) {
         </Typography>
       </div>
       {renderPhotoMessage}
+      <br/>
+      <br/>
       <Typography
         className="answer_details"
         color="textSecondary"
@@ -78,8 +93,8 @@ export default function AnswerListEntryItem({ answer }) {
       >
         {`by ${answer.answerer_name}, ${formatDate(answer.date)}  |  Helpful? `}
         {/* by {answer.answerer_name}, {formatDate(answer.date)} | Helpful?{' '} */}
-        <u style={{cursor: 'pointer'}}>Yes</u> 
-        {`(${answer.helpfulness})  |  ` }
+        <u style={{cursor: 'pointer'}} onClick={handleVoteClicked}>Yes</u> 
+        {`(${voteCount})  |  ` }
         <span onClick={toggleReport} style={{cursor: 'pointer'}}>{report}</span>
       </Typography>
     </div>

@@ -4,10 +4,20 @@ import AnswerModal from './AnswerModal.jsx'
 import { Grid, Typography } from '@material-ui/core';
 
 
-export default function ContainerQuestionEntryItem({ questionItem, answers,loadMoreAnswersClicked }) {
+export default function ContainerQuestionEntryItem({ questionItem, answers,loadMoreAnswersClicked, dataBack }) {
   const [twoAnswersArray, setTwoAnswersArray] = useState(answers.slice(0, 2));
   const [allAnswers, setAllAnswers] = useState(answers);
-  const [sortedAnswers, setSortedAnswers] = useState()
+  const [voteClicked, setVoteClicked] = useState(false)
+  const [voteCount, setVoteCount] = useState(questionItem.question_helpfulness)
+  const handleVoteClicked = () => {
+    if(voteClicked){
+      return <>Already Voted</>
+    } else {
+      setVoteCount(() => voteCount + 1)
+    setVoteClicked(true)
+    }
+    
+  }
   // const showTwoAnswers = answer.map((answer) =>{
 
   //     return <AnswerListEntryItem answer={answer}/>
@@ -50,8 +60,8 @@ export default function ContainerQuestionEntryItem({ questionItem, answers,loadM
            
           >
             {' '}
-            Helpful? <u>Yes</u> (
-            {questionItem.question_helpfulness}){' '}    |    <span><AnswerModal/></span>
+            Helpful? <u style={{cursor: 'pointer'}} onClick={handleVoteClicked}>Yes</u> (
+            {voteCount}){' '}    |    <u style={{cursor: 'pointer'}}><AnswerModal questionItem={questionItem} dataBack={dataBack}/></u>
           </span>
           </Typography>
         </Grid>
