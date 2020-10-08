@@ -13,8 +13,8 @@ fs.readdir(path.join(__dirname, '../dist'), (err, files) => {
     // console.log(req.query);
     // res.sendFile()
 
-    const route = req.params['0'].substring(0, req.params['0'].indexOf('/')); // Get the route from the request.
-
+    const route = req.params['0'].split('/')[1]; // Get the route from the request.
+    console.log(route);
     if (fileArray.includes(route)) {
       // If the first part of the route is in the files array its
       // either a file or a folder, we try to send them the file in the

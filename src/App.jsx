@@ -24,9 +24,9 @@ class App extends React.Component {
     this.addToCart = this.addToCart.bind(this);
   }
 
-  changePage(id) {
+  // changePage(id) {
 
-  }
+  // }
 
   addToCart({
     id, style, sku, amount,
@@ -53,7 +53,7 @@ class App extends React.Component {
     return (
       <Router>
         <Switch>
-          <Route path="/products/=item_id">
+          <Route path="/products/:item_id">
             <Overview id={id} addToCart={this.addToCart} />
             <Recomended id={id} cart={cart} />
             <Qa id={id} />
