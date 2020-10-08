@@ -88,31 +88,25 @@ class Overview extends React.Component {
       });
   }
 
-  setStylesImages() {
-    //don't do this: 
-    console.log('in set styles');
-    let imgs = [];
-    for (let i = 0; i < this.state.styles.length; i += 1) {
-      imgs.push( <img src={this.state.styles[i].photos[0].url} />);
-    }
-    this.setState({ images: imgs });
-    console.log(this.state);
-  }
-
   setSelectedStyle(style) {
     this.setState({ selectedStyle: style });
+    this.setSelectedStyleImages();
+  }
+
+  setSelectedStyleImages() {
+    // TODO 1)
     console.log(this.state);
   }
 
   changeSelectedStyle(id) {
-    console.log('in change', id);
     const { product } = this.state;
     const updateProduct = { ...product };
     updateProduct.selectedStyleIndex = id;
     this.setState({ product: updateProduct });
     this.setSelectedStyle(product.styles[id]);
-    console.log(this.state);
   }
+
+  
 
   AddToCart() {
     // TODO!!!!!!!!!
@@ -156,12 +150,9 @@ class Overview extends React.Component {
                 </div>
               </Slider>
             </div>
-            this is where the carousel goes
-            <Paper> asdf </Paper>
+            <Paper> Carousel Goes here </Paper>
           </Grid>
           <Grid item xs={4}>
-            other stuff here:
-            <Paper> asdf </Paper>
             <StyleSelction product={product} changeSelectedStyle={this.changeSelectedStyle} />
           </Grid>
         </Grid>
