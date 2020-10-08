@@ -1,7 +1,6 @@
 import React from 'react';
 import Card from '@material-ui/core/Card';
 import CardMedia from '@material-ui/core/CardMedia';
-import clothingImg from '../../../../dist/clothing.jpg';
 
 export default function UploadMediaCard({files}) {
   const renderPhotos = files.map((file) => {
@@ -23,7 +22,7 @@ export default function UploadMediaCard({files}) {
     )
   })
   return (
-    <div id="media-cards" style={{ display: 'inline-flex'}}>
+    <div id="media-cards" style={{ display: 'inline-flex' }}>
       {files ? renderPhotos : null}
     </div>
   );
