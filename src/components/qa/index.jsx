@@ -19,7 +19,9 @@ export default function QaIndex() {
   const [loadMoreAnswersClicked, setLoadMoreAnswersClicked] = useState(false)
   const [searchTerm, setSearchTerm] = useState('')
   const [questionsToRender, setQuestionsToRender] = useState(5)
+  const [answersToRender, setAnswersToRender] = useState(2)
   const [finalQuestionsArray, setFinalQuestionsArray] = useState([])
+  const [finalAnswersArray, setFinalAnswersArray] = useState([])
   const [dataBack, setDataBack] = useState(null)
   
 
@@ -32,6 +34,9 @@ export default function QaIndex() {
   const addMore = () => {
     setQuestionsToRender(() => questionsToRender + 2)
     setFinalQuestionsArray([...questions].slice(0,questionsToRender + 1))
+  }
+  const addMoreAnswers = () => {
+    setAnswersToRender(() => answersToRender + 2)
   }
   const handleSearchResults = () => {
     let filtered = questions.filter((question) => {
@@ -54,6 +59,7 @@ export default function QaIndex() {
 
     setQuestions(results.data.results)
     setFinalQuestionsArray([...results.data.results].slice(0,questionsToRender-1))
+    setFinalAnswersArray([...results.data.results].slice(0,answersToRender-1))
     setDataBack(Number(results.data.product_id))
   }, []);
   useEffect(async () => {
@@ -72,7 +78,7 @@ export default function QaIndex() {
       {/* <QAContainer questionsData={questions} answersData={answers}/> */}
       <br />
       <br />
-      <QAContainer setLoadMoreAnswersClicked={setLoadMoreAnswersClicked} searchTerm={searchTerm} handleSearchChange={handleSearchChange} questionsData={finalQuestionsArray} loadMoreState={loadMoreClicked} loadMoreAnswersClicked={loadMoreAnswersClicked} addMore={addMore} dataBack={dataBack}/>
+      <QAContainer addMoreAnswers={addMoreAnswers} answersToRender={answersToRender} setLoadMoreAnswersClicked={setLoadMoreAnswersClicked} searchTerm={searchTerm} handleSearchChange={handleSearchChange} questionsData={finalQuestionsArray} loadMoreState={loadMoreClicked} loadMoreAnswersClicked={loadMoreAnswersClicked} addMore={addMore} dataBack={dataBack}/>
       
    
       <div className="buttons">

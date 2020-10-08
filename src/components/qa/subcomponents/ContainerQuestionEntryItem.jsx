@@ -4,8 +4,9 @@ import AnswerModal from './AnswerModal.jsx'
 import { Grid, Typography } from '@material-ui/core';
 
 
-export default function ContainerQuestionEntryItem({ questionItem, answers,loadMoreAnswersClicked, dataBack }) {
-  const [twoAnswersArray, setTwoAnswersArray] = useState(answers.slice(0, 2));
+export default function ContainerQuestionEntryItem({ questionItem, answers,loadMoreAnswersClicked, dataBack, answersToRender }) {
+  // const [answersToRender, setAnswersToRender] = useState(2)
+  const [twoAnswersArray, setTwoAnswersArray] = useState(answers.slice(0, answersToRender));
   const [allAnswers, setAllAnswers] = useState(answers);
   const [voteClicked, setVoteClicked] = useState(false)
   const [voteCount, setVoteCount] = useState(questionItem.question_helpfulness)
@@ -22,7 +23,7 @@ export default function ContainerQuestionEntryItem({ questionItem, answers,loadM
 
   //     return <AnswerListEntryItem answer={answer}/>
   // })
-  const renderAllAnswers = answers.slice().sort((a, b) => {
+  const renderAllAnswers = answers.slice(0,answersToRender).sort((a, b) => {
     return b.helpfullness - a.helpfullness
   }).map((answer) => {
     return <AnswerListEntryItem answer={answer} />;
@@ -50,7 +51,8 @@ export default function ContainerQuestionEntryItem({ questionItem, answers,loadM
           <br/>
           <br/>
           <div className="answers_component">
-            {renderAnswers}
+            {/* {renderAnswers} */}
+            {renderAllAnswers} 
           </div>
         </Grid>
         <Grid xs={3} item>
