@@ -1,7 +1,8 @@
+// hello
 import React from 'react';
 
-const Recomended = () => (
+const Qa = () => (
   <h1>Hello World</h1>
 );
 
-export default Recomended;
+export default Qa;
