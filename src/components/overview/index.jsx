@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import PropTypes from 'prop-types';
 import StyleSelction from './styleSelection';
+import Carousel from './carousel';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Slider from 'react-slick';
@@ -106,50 +107,19 @@ class Overview extends React.Component {
     this.setSelectedStyle(product.styles[id]);
   }
 
-  
-
   AddToCart() {
     // TODO!!!!!!!!!
   }
 
   render() {
-    const slickSettings = {
-      arrows: true,
-      dots: true,
-      dotsClass: 'slick-dots slick-thumb',
-      infinite: true,
-      speed: 500,
-      slidesToShow: 1,
-      slidesToScroll: 1,
-    };
     const { product } = this.state;
     return (
       <div>
-        <link
-          rel="stylesheet"
-          type="text/css"
-          charset="UTF-8"
-          href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css"
-        />
-        <link
-          rel="stylesheet"
-          type="text/css"
-          href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css"
-        />
         <h1>hi from Overview</h1>
         <Grid container fixed spacing={3}>
           <Grid item xs={8}>
           {/* <img src='https://cdn.2kgames.com/web/common/images/bioshock-infinite_keyart_L_1.jpg'></img> */}
-            <div>
-              <Slider {...slickSettings}>
-                <div>
-                  <img src="https://cdn.2kgames.com/web/common/images/bioshock-infinite_keyart_L_1.jpg" alt="random" style={{ width: '100%' }} />
-                </div>
-                <div>
-                  <img src="https://cdn.2kgames.com/web/common/images/bioshock-infinite_keyart_L_1.jpg" style={{ width: '100%' }} alt="random" />
-                </div>
-              </Slider>
-            </div>
+            <Carousel />
             <Paper> Carousel Goes here </Paper>
           </Grid>
           <Grid item xs={4}>
