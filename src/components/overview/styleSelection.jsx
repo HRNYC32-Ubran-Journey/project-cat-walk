@@ -29,8 +29,8 @@ const StyleSelection = (props) => {
 
   const selectedStyle = 0;
   const { product } = props;
-  const { information, styles } = product;
-  console.log(styles);
+  const { information, styles, selectedStyleIndex } = product;
+  console.log(selectedStyleIndex);
 
   if (styles.length === 0) {
     return <div> loading </div>;
@@ -53,13 +53,18 @@ const StyleSelection = (props) => {
 
         {
           // TODO: split styles into groups of 4 in index.js
-          styles.map((style, i)=> {
+          styles.map((style, i) => {
+            //prevents invocation in onCLick
+            const changeStyle = () => {
+              props.changeSelectedStyle(i);
+            };
             return (
               <img
                 height="100"
                 width="100"
                 alt="slectable style"
                 src={style.photos[0].thumbnail_url}
+                onClick={changeStyle}
               />
             );
           })

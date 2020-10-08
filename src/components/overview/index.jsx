@@ -31,6 +31,9 @@ class Overview extends React.Component {
         styles: [],
         selectedStyleIndex: 0,
       },
+      selectedStyle: {
+        photos: [],
+      },
     };
 
     this.changeSelectedStyle = this.changeSelectedStyle.bind(this);
@@ -64,13 +67,21 @@ class Overview extends React.Component {
       method: 'get',
     })
       .then((body) => {
-        // TODO: set default style based on default? (1 for true 0 for false)
-
+        //set styles:
+        const styles = body.data.results;
         const { product } = this.state;
         const newProduct = { ...product };
-        newProduct.styles = body.data.results;
+        newProduct.styles = styles;
         this.setState({ product: newProduct });
-        console.log('changed update method again', this.state);
+
+        //set default style
+        for (let i = 0; i < styles.length; i += 1) {
+          if (styles[i]['default?'] === 1) {
+            this.setSelectedStyle(styles[i]);
+            break;
+          }
+        }
+        console.log('styles set!', this.state);
       })
       .catch((err) => {
         // console.log('ERROR:', err);
@@ -88,9 +99,23 @@ class Overview extends React.Component {
     console.log(this.state);
   }
 
+  setSelectedStyle(style) {
+    this.setState({ selectedStyle: style });
+    console.log(this.state);
+  }
+
   changeSelectedStyle(id) {
-    //pass as props I believe
     console.log('in change', id);
+    const { product } = this.state;
+    const updateProduct = { ...product };
+    updateProduct.selectedStyleIndex = id;
+    this.setState({ product: updateProduct });
+    this.setSelectedStyle(product.styles[id]);
+    console.log(this.state);
+  }
+
+  AddToCart() {
+    // TODO!!!!!!!!!
   }
 
   render() {
