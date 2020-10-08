@@ -48,18 +48,31 @@ class App extends React.Component {
 
   render() {
     // The airbnb linter requires you leverage your state and props like this.
-    const { id, cart } = this.state;
+    const { cart } = this.state;
     // Note: The button is here as a temperary refrence on how to use materal-ui.
     return (
       <Router>
         <Switch>
-          <Route path="/products/:item_id">
-            <Overview id={id} addToCart={this.addToCart} />
-            <Recomended id={id} cart={cart} />
-            <Qa id={id} />
-            <Reviews id={id} />
-            <Button variant="contained">this is a material UI button</Button>
-          </Route>
+          <Route
+            path="/product/:id"
+            render={(props) => {
+              let id = 1;
+              const paramId = props.match.params.id;
+              if (Number.isNaN(paramId) === false && parseInt(paramId, 10) > 0) {
+                id = parseInt(paramId, 10);
+              }
+
+              return (
+                <>
+                  <Overview id={id} addToCart={this.addToCart} />
+                  <Recomended id={id} cart={cart} />
+                  <Qa id={id} />
+                  <Reviews id={id} />
+                  <Button variant="contained">this is a material UI button</Button>
+                </>
+              );
+            }}
+          />
         </Switch>
       </Router>
     );
