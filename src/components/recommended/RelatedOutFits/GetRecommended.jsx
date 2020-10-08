@@ -92,7 +92,7 @@ class GetRecommended extends React.Component {
         // console.log(data.data);
         // let { productInfo } = that.state;
         that.setState({ productInfo: data.data });
-        console.log(that.state);
+        // console.log(that.state);
         const data_1 = data.data;
         return data_1.map((productID) => {
           return axios
@@ -137,7 +137,7 @@ class GetRecommended extends React.Component {
       try {
         const getRelatedProductsArr = await getRelatedProducts();
         const processRelatedReq = await processRelatedRequest(
-          getRelatedProductsArr
+          getRelatedProductsArr,
         );
 
         const getProductDetailsReq = await getProductDetails();

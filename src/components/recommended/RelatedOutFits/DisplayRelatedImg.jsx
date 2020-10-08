@@ -27,7 +27,7 @@ const DisplayRelatedImg = ({ styles }) => {
       const thumbnail = imageArr[j].thumbnail_url;
 
       if (thumbnail !== null) {
-        console.log(styles);
+        // console.log(styles);
         foundImg = true;
         return (
           <div className="relatedImg">
@@ -37,6 +37,7 @@ const DisplayRelatedImg = ({ styles }) => {
               </li>
             </ul>
             <p>{styles.productInfo.category}</p>
+            <p>{}</p>
             <p>{styles.productInfo.name}</p>
           </div>
         );

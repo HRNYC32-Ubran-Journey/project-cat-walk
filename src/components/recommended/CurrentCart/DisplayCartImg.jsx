@@ -3,7 +3,7 @@ import React from "react";
 const DisplayCartImg = ({ styles }) => {
   let foundImg = false;
   if (styles.length === 0) {
-    console.log("if statement?");
+    // console.log("if statement?");
     //  eslint-disable-next-line no-console
     // console.log(styles);
     return <h1> where are the images?</h1>;
