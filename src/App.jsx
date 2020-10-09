@@ -19,14 +19,14 @@ import './App.css';
 // import Roboto from './Roboto-Regular.ttf';
 
 const theme = createMuiTheme({
-  palette: {
-    primary: {
-      main: purple[500],
-    },
-    secondary: {
-      main: '#f44336',
-    },
-  },
+  // palette: {
+  //   primary: {
+  //     main: purple[500],
+  //   },
+  //   secondary: {
+  //     main: '#f44336',
+  //   },
+  // },
 });
 
 const history = createBrowserHistory();

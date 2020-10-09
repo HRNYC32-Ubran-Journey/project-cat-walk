@@ -10,7 +10,7 @@ import {
   Typography,
   Button,
 } from '@material-ui/core';
-import { CheckBox } from '@material-ui/icons';
+import { CheckBox, ChatBubble } from '@material-ui/icons';
 
 // This song is
 // One you won't forget!
@@ -44,26 +44,29 @@ const renderRecommend = (recommends) => {
 };
 
 const renderResponse = (response) => {
-  if (response) {
+  if (response && response !== 'null' && response !== 'undefined') {
     return (
-      <Grid
-        container
-        style={{ backgroundColor: '#fff1ff', padding: '0.25rem' }}
-        alignItems="center"
-        xs
-      >
-        <Typography
-          variant="body2"
-          component="p"
-          color="textSecondary"
+      <CardContent style={{ padding: '0.25rem' }} elevation={1}>
+        <Grid
+          container
+          style={{ backgroundColor: '#f6f6f6', padding: '0.25rem' }}
+          alignItems="center"
+          xs
         >
-          {response}
-        </Typography>
-        <br />
-      </Grid>
+          <ChatBubble
+            style={{ color: 'lightgrey', marginRight: '0.25rem' }}
+          />
+          <Typography
+            variant="body2"
+            component="p"
+            color="textSecondary"
+          >
+            {response}
+          </Typography>
+        </Grid>
+      </CardContent>
     );
   }
-  return '';
 };
 
 // This function tries its best to make a random color using M A T H.
