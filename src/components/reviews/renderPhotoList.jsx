@@ -6,6 +6,7 @@ import {
   GridList,
   GridListTile,
 } from '@material-ui/core';
+import './renderPhotoList.css';
 
 class RenderPhotosList extends React.Component {
   constructor(props) {
@@ -16,12 +17,14 @@ class RenderPhotosList extends React.Component {
 
     this.state = {
       isOpen: false,
+      image: null,
     };
   }
 
-  openModel() {
+  openModel(image) {
     this.setState({
       isOpen: true,
+      image,
     });
   }
 
@@ -33,7 +36,7 @@ class RenderPhotosList extends React.Component {
 
   render() {
     const { pictures } = this.props;
-    const { isOpen } = this.state;
+    const { isOpen, image } = this.state;
 
     if (Array.isArray(pictures) && pictures.length > 0) {
       return (
@@ -41,8 +44,23 @@ class RenderPhotosList extends React.Component {
           <Dialog
             open={isOpen}
             onClose={this.closeModel}
+            style={{
+              overflowY: 'hidden',
+              backgroundColor: 'transparent',
+            }}
           >
-            hi
+            <div
+              style={{
+                width: '70vw',
+                height: '70vh',
+                backgroundColor: 'transparent',
+                backgroundImage: `url(${image})`,
+                backgroundSize: 'contain',
+                backgroundPosition: 'center',
+                backgroundRepeat: 'no-repeat',
+                overflowY: 'hidden',
+              }}
+            />
           </Dialog>
           <GridList
             cols={5}
@@ -56,22 +74,29 @@ class RenderPhotosList extends React.Component {
             }}
           >
             {
-              pictures.map((e) => (
-                <GridListTile
-                  style={{
-                    backgroundImage: `url(${e.url})`,
-                    backgroundSize: 'cover',
-                    boxShadow: '0px 5px 5px -3px rgba(0,0,0,0.3), 0px 8px 10px 1px rgba(0,0,0,0.22), 0px 3px 14px 2px rgba(0,0,0,0.14)',
-                    padding: 'none',
-                  }}
-                >
-                  <ButtonBase
-                    style={{ width: '100%', height: '100%' }}
-                    onClick={this.openModel}
-                  />
-                </GridListTile>
-              ))
-          }
+              pictures.map((e) => {
+                const openImage = () => {
+                  this.openModel(e.url);
+                };
+
+                return (
+                  <GridListTile
+                    className="image-floater"
+                    style={{
+                      backgroundImage: `url(${e.url})`,
+                      backgroundSize: 'cover',
+                      boxShadow: '0px 5px 5px -3px rgba(0,0,0,0.3), 0px 8px 10px 1px rgba(0,0,0,0.22), 0px 3px 14px 2px rgba(0,0,0,0.14)',
+                      padding: 'none',
+                    }}
+                  >
+                    <ButtonBase
+                      style={{ width: '90%', height: '90%' }}
+                      onClick={openImage}
+                    />
+                  </GridListTile>
+                );
+              })
+            }
           </GridList>
         </>
       );
@@ -81,10 +106,12 @@ class RenderPhotosList extends React.Component {
 }
 
 RenderPhotosList.propTypes = {
-  pictures: PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    url: PropTypes.string.isRequired,
-  }),
+  pictures: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      url: PropTypes.string.isRequired,
+    }).isRequired,
+  ),
 };
 
 RenderPhotosList.defaultProps = {
