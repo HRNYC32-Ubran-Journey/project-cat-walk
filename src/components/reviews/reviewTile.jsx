@@ -106,6 +106,45 @@ const generateRandomColor = (name) => {
   return hash;
 };
 
+const CapitalizeTitle = (title) => {
+  const notToCapitalize = [
+    'a',
+    'is',
+    'an',
+    'for',
+    'and',
+    'nor',
+    'but',
+    'or',
+    'yet',
+    'so',
+    'at',
+    'by',
+    'for',
+    'from',
+    'of',
+    'on',
+    'to',
+    'with',
+  ];
+  
+  const arr = title.split(' ');
+  return arr
+    .map((e, i) => {
+      let newWord = e;
+      if (
+        i === 0
+        || i === arr.length - 1
+        || newWord.length > 5
+        || notToCapitalize.includes(e) === false
+      ) {
+        newWord = newWord[0].toUpperCase() + newWord.slice(1);
+      }
+      return newWord;
+    })
+    .join(' ');
+};
+
 const ReviewTile = (props) => {
   const { review, markAsHelpful, report } = props;
   const reviewDate = new Date(review.date);
@@ -143,7 +182,7 @@ const ReviewTile = (props) => {
             </Avatar>
           )
         }
-        title={<b>{review.summary}</b>}
+        title={<b>{CapitalizeTitle(review.summary)}</b>}
         // subheader={review.summary}
       />
       <CardContent>
