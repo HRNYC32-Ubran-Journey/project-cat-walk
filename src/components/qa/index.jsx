@@ -8,7 +8,7 @@ import GetAnswers from './data/GetAnswers.jsx';
 import DataParent from './data/DataParent.jsx';
 import QAContainer from './subcomponents/QAContainer.jsx';
 import axios from 'axios';
-import { Typography } from '@material-ui/core';
+import { Typography, Card, CardContent } from '@material-ui/core';
 import MoreAnsweredQuestions from './subcomponents/MoreAnsweredQuestions';
 
 
@@ -66,15 +66,17 @@ export default function QaIndex() {
   
   return (
     <div>
-      <Typography variant="h6">Questions & Answers</Typography>
-      <br />
-      {/* <Searchbar handleSearchChange={handleSearchChange}/> */}
-      {/* <QAContainer questionsData={questions} answersData={answers}/> */}
-      <br />
-      <br />
-      <QAContainer setLoadMoreAnswersClicked={setLoadMoreAnswersClicked} searchTerm={searchTerm} handleSearchChange={handleSearchChange} questionsData={finalQuestionsArray} loadMoreState={loadMoreClicked} loadMoreAnswersClicked={loadMoreAnswersClicked} addMore={addMore} dataBack={dataBack}/>
-      
-   
+      <Card elevation={3}>
+        <CardContent>
+          <Typography variant="h6">Questions & Answers</Typography>
+          <br />
+          {/* <Searchbar handleSearchChange={handleSearchChange}/> */}
+          {/* <QAContainer questionsData={questions} answersData={answers}/> */}
+          <br />
+          <br />
+          <QAContainer setLoadMoreAnswersClicked={setLoadMoreAnswersClicked} searchTerm={searchTerm} handleSearchChange={handleSearchChange} questionsData={finalQuestionsArray} loadMoreState={loadMoreClicked} loadMoreAnswersClicked={loadMoreAnswersClicked} addMore={addMore} dataBack={dataBack}/>
+        </CardContent>
+      </Card>
       <div className="buttons">
         {/* <MoreAnsweredQuestions showMoreQuestions={setLoadMoreClicked} addMore={addMore}/> */}
         {/* <QuestionModal questionsData={questions} dataBack={dataBack}/> */}

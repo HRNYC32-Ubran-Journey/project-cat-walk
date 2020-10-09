@@ -5,6 +5,7 @@ import {
   CardContent,
   Grid,
   Typography,
+  ButtonBase
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 // Import Components:
@@ -47,7 +48,16 @@ const Overview = (props) => {
                 updateFilters(e);
               };
 
-              return (<div onClick={toggleFunc}>{`${e} x%`}</div>);
+              return (
+                <ButtonBase 
+                  onClick={toggleFunc}
+                  style={{
+                    backgroundColor: 'darkgray',riub
+                  }}
+                >
+                  hi
+                </ButtonBase>
+              );
             })}
           </div>
         </Grid>
