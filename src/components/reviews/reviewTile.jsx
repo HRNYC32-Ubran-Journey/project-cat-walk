@@ -1,10 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  Paper,
+  Card,
+  CardContent,
+  CardActions,
   Grid,
   Typography,
+  Button,
 } from '@material-ui/core';
+import { Check } from '@material-ui/icons';
 
 // This song is
 // One you won't forget!
@@ -17,15 +21,19 @@ import {
 const renderRecommend = (recommends) => {
   if (recommends) {
     return (
-      <>
+      <Grid 
+        style={{ backgroundColor: 'ghostwhite' }}
+        alignItems="center"
+      >
         <Typography
           variant="body2"
           component="p"
+          color="textSecondary"
         >
-          I recommend this product
+          <Check style={{ color: 'yellowgreen' }} /> User recommends this product
         </Typography>
         <br />
-      </>
+      </Grid>
     );
   }
   return '';
@@ -79,39 +87,41 @@ const ReviewTile = (props) => {
   };
 
   return (
-    <Paper elevation={0}>
-      <br />
-      <Grid container justify="space-between">
-        <Grid item>
-          <Typography variant="caption" color="textSecondary">
-            {`${review.rating} stars`}
-          </Typography>
+    <Card elevation={3}>
+      <CardContent>
+        <Grid container justify="space-between">
+          <Grid item>
+            <Typography variant="caption" color="textSecondary">
+              {`${review.rating} stars`}
+            </Typography>
+          </Grid>
+          <Grid item>
+            <Typography variant="caption" color="textSecondary">
+              {`${review.reviewer_name}, ${reviewDateText}`}
+            </Typography>
+          </Grid>
         </Grid>
-        <Grid item>
-          <Typography variant="caption" color="textSecondary">
-            {`${review.reviewer_name}, ${reviewDateText}`}
-          </Typography>
-        </Grid>
-      </Grid>
-      <br />
-      <Typography variant="b" component="h3">
-        {review.summary}
-      </Typography>
-      <br />
-      <Typography variant="body2" component="p" gutterBottom>
-        {review.body}
-      </Typography>
-      { renderRecommend(review.recommend) }
-      { renderResponse(review.response) }
-      <Typography variant="caption" color="textSecondary">
-        Helpful?
-        <button className="link-button" type="button" onClick={runMarkAsHelpful}>Yes</button>
-        {`(${review.helpfulness})`}
-        |
-        <button className="link-button" type="button" onClick={runReport}>Report</button>
-      </Typography>
-      <hr />
-    </Paper>
+        <br />
+        <Typography variant="h5" component="h2" gutterBottom>
+          <b>{review.summary}</b>
+        </Typography>
+        <Typography variant="body2" component="p">
+          {review.body}
+        </Typography>
+        <br />
+        { renderRecommend(review.recommend) }
+        { renderResponse(review.response) }
+      </CardContent>
+      <CardActions>
+        <Button size="small" color="primary" onClick={runMarkAsHelpful}>
+          I found this helpful
+          {` (${review.helpfulness})`}
+        </Button>
+        <Button size="small" color="primary" onClick={runReport}>
+          Report
+        </Button>
+      </CardActions>
+    </Card>
   );
 };
 

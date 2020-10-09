@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
+  Card,
+  CardContent,
   Grid,
   Button,
   Typography,
@@ -36,58 +38,60 @@ const ReviewsList = (props) => {
   };
 
   return (
-    <>
-      <Grid item container>
-        <Typography>
-          {`${totalReviews} reviews, sorted by `}
-        </Typography>
-        <TextField
-          id="select-sort-type"
-          select
-          value={sortType}
-          onChange={runChangeSortType}
-        >
-          <MenuItem key="relevant" value="relevant">
-            relevance
-          </MenuItem>
-          <MenuItem key="newest" value="newest">
-            newest
-          </MenuItem>
-          <MenuItem key="helpful" value="helpful">
-            helpfulness
-          </MenuItem>
-        </TextField>
-      </Grid>
-      <Grid container item spacing={2}>
-        {reviews.map((e) => (
-          <Grid key={e.review_id} xs={12} item>
-            <ReviewTile
-              review={e}
-              markAsHelpful={markAsHelpful}
-              report={report}
-            />
+    <Card raised>
+      <CardContent>
+        <Grid item container>
+          <Typography>
+            {`${totalReviews} reviews, sorted by `}
+          </Typography>
+          <TextField
+            id="select-sort-type"
+            select
+            value={sortType}
+            onChange={runChangeSortType}
+          >
+            <MenuItem key="relevant" value="relevant">
+              relevance
+            </MenuItem>
+            <MenuItem key="newest" value="newest">
+              newest
+            </MenuItem>
+            <MenuItem key="helpful" value="helpful">
+              helpfulness
+            </MenuItem>
+          </TextField>
+        </Grid>
+        <Grid container item spacing={2}>
+          {reviews.map((e) => (
+            <Grid key={e.review_id} xs={12} item>
+              <ReviewTile
+                review={e}
+                markAsHelpful={markAsHelpful}
+                report={report}
+              />
+            </Grid>
+          ))}
+        </Grid>
+        <Grid container>
+          <Grid item>
+            <Button onClick={goBack} variant="outlined" color="primary">
+              {'<='}
+            </Button>
+            <Button onClick={toggleExpanded} variant="outlined" color="primary">
+              {expanded ? 'LESS REVIEWS' : 'MORE REVIEWS'}
+            </Button>
+            <Button onClick={goForward} variant="outlined" color="primary">
+              {'=>'}
+            </Button>
           </Grid>
-        ))}
-      </Grid>
-      <Grid container>
-        <Grid item>
-          <Button onClick={goBack} variant="outlined" color="primary">
-            {'<='}
-          </Button>
-          <Button onClick={toggleExpanded} variant="outlined" color="primary">
-            {expanded ? 'LESS REVIEWS' : 'MORE REVIEWS'}
-          </Button>
-          <Button onClick={goForward} variant="outlined" color="primary">
-            {'=>'}
-          </Button>
+          <Grid item>
+            <Button variant="outlined" color="primary">
+              ADD A REVIEW +
+            </Button>
+          </Grid>
         </Grid>
-        <Grid item>
-          <Button variant="outlined" color="primary">
-            ADD A REVIEW +
-          </Button>
-        </Grid>
-      </Grid>
-    </>
+      </CardContent>
+    </Card>
   );
 };
 
