@@ -93,10 +93,10 @@ class Carousel extends React.Component {
     return (
       <IconButton
         size="medium"
-        style={{backgroundColor: 'rgba(0,0,0,0.5)'}}
+        style={{ color: 'transparent' }}
       >
         <ChevronLeft
-          style={{ color: 'grey' }}
+          style={{ color: 'transparent' }}
           fontSize="large"
           disabled
         />
@@ -121,18 +121,7 @@ class Carousel extends React.Component {
         </IconButton>
       );
     }
-    return (
-      <IconButton
-        size="medium"
-        style={{backgroundColor: 'rgba(0,0,0,0.5)'}}
-      >
-        <ChevronRight
-          style={{ color: 'grey' }}
-          fontSize="large"
-          disabled
-        />
-      </IconButton>
-    );
+    return '';
   }
 
   leftClick() {
