@@ -30,6 +30,9 @@ const StyleSelection = (props) => {
   //setup material hooks
   const [size, setSize] = React.useState('');
   const [quantity, setQuantity] = React.useState('');
+  const [star, setStar] = React.useState(false);
+
+  console.log(star);
 
   const handleSizeChange = (event) => {
     setSize(event.target.value);
@@ -39,14 +42,36 @@ const StyleSelection = (props) => {
     setQuantity(event.target.value);
   };
 
+  const addToCart = () => {
+    if (size && quantity) {
+      setSize(null);
+      setQuantity(null);
+    }
+  };
+
+  const favorite = () => {
+    setStar(!star);
+    console.log(star);
+  };
+
+  const starIcon = () => {
+    if (star) {
+      return <StarIcon />;
+    }
+    return <StarBorderIcon />;
+  }
+
+  // const getStar(){
+  //   if(star === true){
+
+  //   }
+  // }
+
   const { product } = props;
   const { information, styles, selectedStyleIndex } = product;
-  console.log(selectedStyleIndex);
-
   if (styles.length === 0) {
     return <div> loading </div>;
   }
-
   return (
     // <Avatar alt="some shit" src="https://images.unsplash.com/photo-1534011546717-407bced4d25c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=300&q=80" />
     <div>
@@ -135,16 +160,22 @@ const StyleSelection = (props) => {
           </Select>
         </FormControl>
         {/* add to bag: change to button */}
-        <IconButton color="primary" aria-label="add to shopping cart" style={{ position: 'bottom' }}>
+        <IconButton
+          color="primary"
+          aria-label="add to shopping cart"
+          style={{ position: 'bottom' }}
+          onClick={addToCart}
+        >
           <AddShoppingCartIcon />
         </IconButton>
         {/* Star: enable toggle */}
-        <IconButton color="primary" style={{ position: 'bottom' }}>
-          <StarBorderIcon />
+        <IconButton
+          color="primary" 
+          style={{ position: 'bottom' }}
+          onClick={favorite}
+        >
+          {starIcon()}
         </IconButton>
-        {/* <IconButton color="primary" style={{ position: 'bottom' }}>
-          <StarIcon />
-        </IconButton> */}
       </span>
     </div>
   );
