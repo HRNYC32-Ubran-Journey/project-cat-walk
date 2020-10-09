@@ -108,30 +108,22 @@ const generateRandomColor = (name) => {
 
 const CapitalizeTitle = (title) => {
   const notToCapitalize = [
-    'a',
-    'is',
-    'an',
-    'for',
-    'and',
-    'nor',
-    'but',
-    'or',
-    'yet',
-    'so',
-    'at',
-    'by',
-    'for',
-    'from',
-    'of',
-    'on',
-    'to',
-    'with',
+    'a', 'is', 'an', 'for', 'and', 'nor', 'but', 'or', 'yet', 'so', 'at', 'by', 'for',
+    'from', 'of', 'on', 'to', 'with', 'it', 'the',
+    // Prepositions
+    'about', 'above', 'across', 'after', 'against', 'along', 'among', 'around', 'at',
+    'because of', 'before', 'behind', 'below', 'beneath', 'beside', 'besides', 'between',
+    'beyond', 'but', 'by', 'concerning', 'despite', 'down', 'during', 'except', 'excepting',
+    'for', 'from', 'in', 'in front of', 'inside', 'in spite of', 'instead of', 'into',
+    'like', 'near', 'of', 'off', 'on', 'onto', 'out', 'outside', 'over', 'past', 'regarding',
+    'since', 'through', 'throughout', 'to', 'toward', 'under', 'underneath', 'until', 'up',
+    'upon', 'up to', 'with', 'within', 'without', 'with regard to', 'with respect to',
   ];
-  
+
   const arr = title.split(' ');
   return arr
     .map((e, i) => {
-      let newWord = e;
+      let newWord = e.toLowerCase();
       if (
         i === 0
         || i === arr.length - 1
