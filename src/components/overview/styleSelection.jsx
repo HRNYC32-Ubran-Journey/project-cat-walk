@@ -26,13 +26,19 @@ const useStyles = makeStyles((theme) => ({
 
 const StyleSelection = (props) => {
   const classes = useStyles();
-  const [age, setAge] = React.useState('');
 
-  const handleChange = (event) => {
-    setAge(event.target.value);
+  //setup material hooks
+  const [size, setSize] = React.useState('');
+  const [quantity, setQuantity] = React.useState('');
+
+  const handleSizeChange = (event) => {
+    setSize(event.target.value);
   };
 
-  const selectedStyle = 0;
+  const handleQuantityChange = (event) => {
+    setQuantity(event.target.value);
+  };
+
   const { product } = props;
   const { information, styles, selectedStyleIndex } = product;
   console.log(selectedStyleIndex);
@@ -66,6 +72,7 @@ const StyleSelection = (props) => {
             };
             return (
               <img
+                key={style.photos[0].thumbnail_url}
                 height="100"
                 width="100"
                 alt="slectable style"
@@ -91,7 +98,8 @@ const StyleSelection = (props) => {
         <FormControl variant="outlined" className={classes.formControl}>
           <InputLabel>Size</InputLabel>
           <Select
-            value={age}
+            onChange={ handleSizeChange}
+            value={size}
             label="Size"
           >
             <MenuItem value="">
@@ -106,7 +114,8 @@ const StyleSelection = (props) => {
         <FormControl variant="outlined" className={classes.formControl}>
           <InputLabel>Quantity</InputLabel>
           <Select
-            value={age}
+            onClick={handleQuantityChange}
+            value={quantity}
             label="Select Size"
           >
             <MenuItem value="">
