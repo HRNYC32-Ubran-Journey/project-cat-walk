@@ -18,7 +18,7 @@ import {
   ChevronRight,
 } from '@material-ui/icons';
 
-//import
+//if i import in destructuring above, it breaks
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 import StarBorderIcon from '@material-ui/icons/StarBorder';
 import StarIcon from '@material-ui/icons/Star';
