@@ -288,8 +288,8 @@ class Reviews extends React.Component {
     } = this.state;
 
     return (
-      <Grid container>
-        <Grid xs={3} item>
+      <Grid container spacing={3}>
+        <Grid xs={12} lg={3} item>
           <Overview
             metadata={metadata}
             totalScore={totalScore}
@@ -298,7 +298,7 @@ class Reviews extends React.Component {
             updateFilters={this.updateFilters}
           />
         </Grid>
-        <Grid xs={9} item>
+        <Grid xs={12} lg={9} item>
           <ReviewsList
             reviews={reviews}
             sortType={currentSortMethod}

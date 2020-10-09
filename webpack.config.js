@@ -5,6 +5,7 @@ const config = {
   entry: './src/index.js',
   output: {
     path: path.resolve(__dirname, 'dist'),
+    // publicPath: path.resolve(__dirname, 'dist'),
     filename: 'bundle.js',
   },
   module: {
@@ -40,6 +41,7 @@ const config = {
     ],
   },
   devServer: {
+    historyApiFallback: true,
     contentBase: path.join(__dirname, 'dist'),
     compress: true,
     port: 8080,
