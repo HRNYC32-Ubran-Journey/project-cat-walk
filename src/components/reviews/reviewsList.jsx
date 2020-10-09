@@ -1,12 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
+  Card,
+  CardContent,
   Grid,
   Button,
   Typography,
   TextField,
   MenuItem,
+  CardActions,
+  IconButton,
 } from '@material-ui/core';
+import {
+  ChevronLeft,
+  ChevronRight
+} from '@material-ui/icons';
 // Import Components:
 import ReviewTile from './reviewTile';
 
@@ -36,58 +44,71 @@ const ReviewsList = (props) => {
   };
 
   return (
-    <>
-      <Grid item container>
-        <Typography>
-          {`${totalReviews} reviews, sorted by `}
-        </Typography>
-        <TextField
-          id="select-sort-type"
-          select
-          value={sortType}
-          onChange={runChangeSortType}
+    <Card raised>
+      <CardContent>
+        <Grid item container alignItems="center">
+          <Typography>
+            {`${totalReviews} reviews, sorted by `}
+          </Typography>
+          <TextField
+            id="select-sort-type"
+            select
+            value={sortType}
+            onChange={runChangeSortType}
+            style={{ marginLeft: '0.5rem' }}
+          >
+            <MenuItem key="relevant" value="relevant">
+              relevance
+            </MenuItem>
+            <MenuItem key="newest" value="newest">
+              newest
+            </MenuItem>
+            <MenuItem key="helpful" value="helpful">
+              helpfulness
+            </MenuItem>
+          </TextField>
+        </Grid>
+        <Grid
+          container
+          item
+          spacing={2}
+          style={{
+            paddingTop: '1rem',
+            paddingBottom: '0.5rem',
+          }}
         >
-          <MenuItem key="relevant" value="relevant">
-            relevance
-          </MenuItem>
-          <MenuItem key="newest" value="newest">
-            newest
-          </MenuItem>
-          <MenuItem key="helpful" value="helpful">
-            helpfulness
-          </MenuItem>
-        </TextField>
-      </Grid>
-      <Grid container item spacing={2}>
-        {reviews.map((e) => (
-          <Grid key={e.review_id} xs={12} item>
-            <ReviewTile
-              review={e}
-              markAsHelpful={markAsHelpful}
-              report={report}
-            />
+          {reviews.map((e) => (
+            <Grid key={e.review_id} xs={12} item>
+              <ReviewTile
+                review={e}
+                markAsHelpful={markAsHelpful}
+                report={report}
+              />
+            </Grid>
+          ))}
+        </Grid>
+      </CardContent>
+
+      <CardActions>
+        <Grid container justify="space-between" xs>
+          <Grid item>
+            <IconButton onClick={goBack} size="medium" color="primary">
+              <ChevronLeft />
+            </IconButton>
+            <Button onClick={toggleExpanded} size="medium" color="primary">
+              {expanded ? 'LESS REVIEWS' : 'MORE REVIEWS'}
+            </Button>
+            <IconButton onClick={goForward} size="medium" color="primary">
+              <ChevronRight />
+            </IconButton>
           </Grid>
-        ))}
-      </Grid>
-      <Grid container>
-        <Grid item>
-          <Button onClick={goBack} variant="outlined" color="primary">
-            {'<='}
-          </Button>
-          <Button onClick={toggleExpanded} variant="outlined" color="primary">
-            {expanded ? 'LESS REVIEWS' : 'MORE REVIEWS'}
-          </Button>
-          <Button onClick={goForward} variant="outlined" color="primary">
-            {'=>'}
-          </Button>
         </Grid>
-        <Grid item>
-          <Button variant="outlined" color="primary">
-            ADD A REVIEW +
-          </Button>
-        </Grid>
-      </Grid>
-    </>
+
+        <Button size="medium" color="primary">
+          ADD A REVIEW +
+        </Button>
+      </CardActions>
+    </Card>
   );
 };
 

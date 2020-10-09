@@ -1,8 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Typography } from '@material-ui/core';
+import {
+  Card,
+  CardContent,
+  Grid,
+  Typography,
+} from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 // Import Components:
 import Summery from './summery';
+
+const useStyles = makeStyles({
+  title: {
+    fontSize: 14,
+  },
+});
 
 const Overview = (props) => {
   const {
@@ -11,27 +23,36 @@ const Overview = (props) => {
     likeRatio,
     updateFilters,
   } = props;
+  const classes = useStyles();
   if (!metadata) { return <div>Loading...</div>; }
 
   return (
-    <>
-      <Typography variant="h6">
-        RATINGS & REVIEWS
-      </Typography>
-      <Summery rating={averageRating} />
-      <Typography>
-        {`${likeRatio} of people recommend this product.`}
-      </Typography>
-      <div>
-        {[1, 2, 3, 4, 5].map((e) => {
-          const toggleFunc = () => {
-            updateFilters(e);
-          };
+    <Card raised>
+      <CardContent>
+        <Grid
+          container
+          spacing={1}
+          justify="center"
+        >
+          <Typography classes={classes.title}>
+            RATINGS & REVIEWS
+          </Typography>
+          <Summery rating={averageRating} />
+          <Typography>
+            {`${likeRatio} of people recommend this product.`}
+          </Typography>
+          <div>
+            {[1, 2, 3, 4, 5].map((e) => {
+              const toggleFunc = () => {
+                updateFilters(e);
+              };
 
-          return (<div onClick={toggleFunc}>{`${e} x%`}</div>);
-        })}
-      </div>
-    </>
+              return (<div onClick={toggleFunc}>{`${e} x%`}</div>);
+            })}
+          </div>
+        </Grid>
+      </CardContent>
+    </Card>
   );
 };
 

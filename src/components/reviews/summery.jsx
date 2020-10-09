@@ -7,7 +7,7 @@ const Summery = (props) => {
   return (
     <Grid container spacing={1}>
       <Grid xs={6} item>
-        <Typography variant="h3">
+        <Typography variant="h5" component="h2">
           <b>{rating}</b>
         </Typography>
       </Grid>
