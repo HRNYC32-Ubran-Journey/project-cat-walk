@@ -24,7 +24,7 @@ class Recomended extends React.Component {
         <br />
         <div className="YourOutfitTitle"> Your Outfit </div>
         <div className="currentCartContainer">
-          <GetCurrentCart cart={[{ id: 2 }, { id: 4 }]} />
+          <GetCurrentCart cart={ cart } />
         </div>
 
       </div>

@@ -25,7 +25,10 @@ const DisplayRelatedImg = ({ styles }) => {
     for (let j = 0; j < imageArr.length; j += 1) {
       //  eslint-disable-next-line no-console
       const thumbnail = imageArr[j].thumbnail_url;
-
+      const { category } = styles.productInfo;
+      const { default_price } = styles.productInfo;
+      const { name } = styles.productInfo;
+      // console.log(styles)
       if (thumbnail !== null) {
         // console.log(styles);
         foundImg = true;
@@ -36,9 +39,9 @@ const DisplayRelatedImg = ({ styles }) => {
                 <img src={imageArr[j].thumbnail_url} alt="related product" />
               </li>
             </ul>
-            <p>{styles.productInfo.category}</p>
-            <p>{}</p>
-            <p>{styles.productInfo.name}</p>
+            <p>{category}</p>
+            <p>{name}</p>
+            <p>${default_price}</p>
           </div>
         );
       }
