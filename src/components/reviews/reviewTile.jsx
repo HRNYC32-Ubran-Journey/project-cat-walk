@@ -95,12 +95,15 @@ const generateRandomColor = (name) => {
       b = (b + newName.charCodeAt(i)) % 150;
     }
   }
+  r = parseInt(r * 1.6, 10).toString(16);
+  r = r.length < 2 ? `0${r}` : r;
+  g = parseInt(g * 1.6, 10).toString(16);
+  g = g.length < 2 ? `0${g}` : g;
+  b = parseInt(b * 1.6, 10).toString(16);
+  b = b.length < 2 ? `0${b}` : b;
 
-  r += 75;
-  g += 75;
-  b += 75;
-
-  return `#${parseInt(r, 16)}${parseInt(g, 16)}${parseInt(b, 16)}`;
+  const hash = `#${r}${g}${b}`;
+  return hash;
 };
 
 const ReviewTile = (props) => {
@@ -134,9 +137,11 @@ const ReviewTile = (props) => {
     <Card elevation={3}>
       <CardHeader
         avatar={
-          <Avatar aria-label="recipe" style={{backgroundColor: 'red'}}>
-            {review.reviewer_name[0].toUpperCase()}
-          </Avatar>
+          (
+            <Avatar aria-label="recipe" style={{backgroundColor: generateRandomColor(review.reviewer_name) }}>
+              {review.reviewer_name[0].toUpperCase()}
+            </Avatar>
+          )
         }
         title={<b>{review.summary}</b>}
         // subheader={review.summary}
