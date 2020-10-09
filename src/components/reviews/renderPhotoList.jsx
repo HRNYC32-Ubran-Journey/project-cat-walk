@@ -49,18 +49,21 @@ class RenderPhotosList extends React.Component {
               backgroundColor: 'transparent',
             }}
           >
-            <div
-              style={{
-                width: '70vw',
-                height: '70vh',
-                backgroundColor: 'transparent',
-                backgroundImage: `url(${image})`,
-                backgroundSize: 'contain',
-                backgroundPosition: 'center',
-                backgroundRepeat: 'no-repeat',
-                overflowY: 'hidden',
-              }}
-            />
+            <div>
+              <ButtonBase
+                onClick={this.closeModel}
+                style={{
+                  width: '90vw',
+                  height: '90vh',
+                  backgroundColor: 'transparent',
+                  backgroundImage: `url(${image})`,
+                  backgroundSize: 'contain',
+                  backgroundPosition: 'center',
+                  backgroundRepeat: 'no-repeat',
+                  overflowY: 'hidden',
+                }}
+              />
+            </div>
           </Dialog>
           <GridList
             cols={5}

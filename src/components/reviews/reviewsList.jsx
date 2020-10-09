@@ -8,7 +8,13 @@ import {
   Typography,
   TextField,
   MenuItem,
+  CardActions,
+  IconButton,
 } from '@material-ui/core';
+import {
+  ChevronLeft,
+  ChevronRight
+} from '@material-ui/icons';
 // Import Components:
 import ReviewTile from './reviewTile';
 
@@ -40,7 +46,7 @@ const ReviewsList = (props) => {
   return (
     <Card raised>
       <CardContent>
-        <Grid item container>
+        <Grid item container alignItems="center">
           <Typography>
             {`${totalReviews} reviews, sorted by `}
           </Typography>
@@ -49,6 +55,7 @@ const ReviewsList = (props) => {
             select
             value={sortType}
             onChange={runChangeSortType}
+            style={{ marginLeft: '0.5rem' }}
           >
             <MenuItem key="relevant" value="relevant">
               relevance
@@ -61,7 +68,15 @@ const ReviewsList = (props) => {
             </MenuItem>
           </TextField>
         </Grid>
-        <Grid container item spacing={2}>
+        <Grid
+          container
+          item
+          spacing={2}
+          style={{
+            paddingTop: '1rem',
+            paddingBottom: '0.5rem',
+          }}
+        >
           {reviews.map((e) => (
             <Grid key={e.review_id} xs={12} item>
               <ReviewTile
@@ -72,25 +87,27 @@ const ReviewsList = (props) => {
             </Grid>
           ))}
         </Grid>
-        <Grid container>
+      </CardContent>
+
+      <CardActions>
+        <Grid container justify="space-between" xs>
           <Grid item>
-            <Button onClick={goBack} variant="outlined" color="primary">
-              {'<='}
-            </Button>
-            <Button onClick={toggleExpanded} variant="outlined" color="primary">
+            <IconButton onClick={goBack} size="medium" color="primary">
+              <ChevronLeft />
+            </IconButton>
+            <Button onClick={toggleExpanded} size="medium" color="primary">
               {expanded ? 'LESS REVIEWS' : 'MORE REVIEWS'}
             </Button>
-            <Button onClick={goForward} variant="outlined" color="primary">
-              {'=>'}
-            </Button>
-          </Grid>
-          <Grid item>
-            <Button variant="outlined" color="primary">
-              ADD A REVIEW +
-            </Button>
+            <IconButton onClick={goForward} size="medium" color="primary">
+              <ChevronRight />
+            </IconButton>
           </Grid>
         </Grid>
-      </CardContent>
+
+        <Button size="medium" color="primary">
+          ADD A REVIEW +
+        </Button>
+      </CardActions>
     </Card>
   );
 };
