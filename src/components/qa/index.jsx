@@ -8,11 +8,11 @@ import GetAnswers from './data/GetAnswers.jsx';
 import DataParent from './data/DataParent.jsx';
 import QAContainer from './subcomponents/QAContainer.jsx';
 import axios from 'axios';
-import { Typography } from '@material-ui/core';
+import { Typography, Card, CardContent } from '@material-ui/core';
 import MoreAnsweredQuestions from './subcomponents/MoreAnsweredQuestions';
 
 
-export default function QaIndex() {
+export default function QaIndex({ id }) {
   const [questions, setQuestions] = useState([]);
   const [answers, setAnswers] = useState([]);
   const [loadMoreClicked, setLoadMoreClicked] = useState(false);
@@ -52,7 +52,7 @@ export default function QaIndex() {
       `http://18.224.37.110/qa/questions/`,
       { params:{
           count: 100,
-          product_id: 380
+          product_id: id
       }
     }
     );
@@ -60,7 +60,7 @@ export default function QaIndex() {
     setQuestions(results.data.results)
     setFinalQuestionsArray([...results.data.results].slice(0,questionsToRender-1))
     setDataBack(Number(results.data.product_id))
-  }, []);
+  }, [id]);
   useEffect(async () => {
     const questionId = 41;
     const results = await axios.get(
@@ -70,20 +70,21 @@ export default function QaIndex() {
   }, []);
   
   return (
-    <div>
-      <Typography variant="h6">Questions & Answers</Typography>
-      <br />
-      {/* <Searchbar handleSearchChange={handleSearchChange}/> */}
-      {/* <QAContainer questionsData={questions} answersData={answers}/> */}
-      <br />
-      <br />
-      <QAContainer addMoreAnswers={addMoreAnswers} answersToRender={answersToRender} setLoadMoreAnswersClicked={setLoadMoreAnswersClicked} searchTerm={searchTerm} handleSearchChange={handleSearchChange} questionsData={finalQuestionsArray} loadMoreState={loadMoreClicked} loadMoreAnswersClicked={loadMoreAnswersClicked} addMore={addMore} dataBack={dataBack}/>
-      
-   
-      <div className="buttons">
-        {/* <MoreAnsweredQuestions showMoreQuestions={setLoadMoreClicked} addMore={addMore}/> */}
-        {/* <QuestionModal questionsData={questions} dataBack={dataBack}/> */}
-      </div>
-    </div>
+    <Card elevation={3} style={{marginTop: '2rem', marginBottom: '2rem'}}>
+      <CardContent>
+        <Typography variant="h6">Questions & Answers</Typography>
+        <br />
+        {/* <Searchbar handleSearchChange={handleSearchChange}/> */}
+        {/* <QAContainer questionsData={questions} answersData={answers}/> */}
+        <br />
+        <br />
+        <QAContainer addMoreAnswers={addMoreAnswers} answersToRender={answersToRender} setLoadMoreAnswersClicked={setLoadMoreAnswersClicked} searchTerm={searchTerm} handleSearchChange={handleSearchChange} questionsData={finalQuestionsArray} loadMoreState={loadMoreClicked} loadMoreAnswersClicked={loadMoreAnswersClicked} addMore={addMore} dataBack={dataBack}/>
+    
+        <div className="buttons">
+          {/* <MoreAnsweredQuestions showMoreQuestions={setLoadMoreClicked} addMore={addMore}/> */}
+          {/* <QuestionModal questionsData={questions} dataBack={dataBack}/> */}
+        </div>
+      </CardContent>
+    </Card>
   );
 }

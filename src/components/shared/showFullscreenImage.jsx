@@ -31,6 +31,8 @@ class ShowFullscreenImage extends React.Component {
     if (currentImage !== image && this.recent !== image) {
       this.setState({
         currentImage: image,
+      }, () => {
+        document.body.style.overflow = 'hidden';
       });
     }
   }
@@ -43,6 +45,7 @@ class ShowFullscreenImage extends React.Component {
       currentImage: null,
     }, () => {
       this.recent = null;
+      document.body.style.overflow = 'scroll';
     });
   }
 
