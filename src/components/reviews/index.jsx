@@ -6,6 +6,7 @@ import { Grid } from '@material-ui/core';
 // // Components:
 import Overview from './overview';
 import ReviewsList from './reviewsList';
+import StarRating from '../shared/StarRating.jsx'
 
 class Reviews extends React.Component {
   constructor(props) {
@@ -311,6 +312,7 @@ class Reviews extends React.Component {
             totalReviews={totalReviews}
           />
         </Grid>
+        <StarRating averageRating={averageRating}/>
       </Grid>
     );
   }

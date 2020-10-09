@@ -59,7 +59,6 @@ export default function QaIndex() {
 
     setQuestions(results.data.results)
     setFinalQuestionsArray([...results.data.results].slice(0,questionsToRender-1))
-    setFinalAnswersArray([...results.data.results].slice(0,answersToRender-1))
     setDataBack(Number(results.data.product_id))
   }, []);
   useEffect(async () => {
