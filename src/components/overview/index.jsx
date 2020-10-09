@@ -120,7 +120,6 @@ class Overview extends React.Component {
     const { selectedStyle } = this.state;
     return (
       <div>
-        <h1>hi from Overview</h1>
         <Grid container fixed spacing={3}>
           <Grid item xs={12} md={7}>
             <Card

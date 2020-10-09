@@ -19,7 +19,9 @@ export default function QaIndex() {
   const [loadMoreAnswersClicked, setLoadMoreAnswersClicked] = useState(false)
   const [searchTerm, setSearchTerm] = useState('')
   const [questionsToRender, setQuestionsToRender] = useState(5)
+  const [answersToRender, setAnswersToRender] = useState(2)
   const [finalQuestionsArray, setFinalQuestionsArray] = useState([])
+  const [finalAnswersArray, setFinalAnswersArray] = useState([])
   const [dataBack, setDataBack] = useState(null)
   
 
@@ -32,6 +34,9 @@ export default function QaIndex() {
   const addMore = () => {
     setQuestionsToRender(() => questionsToRender + 2)
     setFinalQuestionsArray([...questions].slice(0,questionsToRender + 1))
+  }
+  const addMoreAnswers = () => {
+    setAnswersToRender(() => answersToRender + 2)
   }
   const handleSearchResults = () => {
     let filtered = questions.filter((question) => {
@@ -66,6 +71,7 @@ export default function QaIndex() {
   
   return (
     <div>
+<<<<<<< HEAD
       <Card elevation={3} style={{marginTop: '64px', marginBottom: '64px'}}>
         <CardContent>
           <Typography variant="h6">Questions & Answers</Typography>
@@ -77,6 +83,17 @@ export default function QaIndex() {
           <QAContainer setLoadMoreAnswersClicked={setLoadMoreAnswersClicked} searchTerm={searchTerm} handleSearchChange={handleSearchChange} questionsData={finalQuestionsArray} loadMoreState={loadMoreClicked} loadMoreAnswersClicked={loadMoreAnswersClicked} addMore={addMore} dataBack={dataBack}/>
         </CardContent>
       </Card>
+=======
+      <Typography variant="h6">Questions & Answers</Typography>
+      <br />
+      {/* <Searchbar handleSearchChange={handleSearchChange}/> */}
+      {/* <QAContainer questionsData={questions} answersData={answers}/> */}
+      <br />
+      <br />
+      <QAContainer addMoreAnswers={addMoreAnswers} answersToRender={answersToRender} setLoadMoreAnswersClicked={setLoadMoreAnswersClicked} searchTerm={searchTerm} handleSearchChange={handleSearchChange} questionsData={finalQuestionsArray} loadMoreState={loadMoreClicked} loadMoreAnswersClicked={loadMoreAnswersClicked} addMore={addMore} dataBack={dataBack}/>
+      
+   
+>>>>>>> master
       <div className="buttons">
         {/* <MoreAnsweredQuestions showMoreQuestions={setLoadMoreClicked} addMore={addMore}/> */}
         {/* <QuestionModal questionsData={questions} dataBack={dataBack}/> */}

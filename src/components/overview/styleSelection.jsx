@@ -12,13 +12,23 @@ import {
   CardContent,
   Typography,
   Grid,
+  IconButton,
+  ButtonBase,
+  GridList,
 } from '@material-ui/core/';
 import {
-  ChevronRight
+  ChevronRight,
 } from '@material-ui/icons';
+
+//if i import in destructuring above, it breaks
+import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
+import StarBorderIcon from '@material-ui/icons/StarBorder';
+import StarIcon from '@material-ui/icons/Star';
+
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
+  
   formControl: {
     margin: theme.spacing(1),
     minWidth: 120,
@@ -29,23 +39,88 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const StyleSelection = (props) => {
-  const classes = useStyles();
-  const [age, setAge] = React.useState('');
-
-  const handleChange = (event) => {
-    setAge(event.target.value);
-  };
-
-  const selectedStyle = 0;
   const { product } = props;
   const { information, styles, selectedStyleIndex } = product;
-  console.log(selectedStyleIndex);
+
+  const classes = useStyles();
+
+  //setup material hooks
+  const [size, setSize] = React.useState('');
+  const [quantity, setQuantity] = React.useState('');
+  const [star, setStar] = React.useState(false);
+
+  console.log(star);
+
+  const handleSizeChange = (event) => {
+    setSize(event.target.value);
+  };
+
+  const handleQuantityChange = (event) => {
+    setQuantity(event.target.value);
+  };
+
+  const addToCart = () => {
+    if (size && quantity) {
+      setSize(null);
+      setQuantity(null);
+    }
+  };
+
+  const favorite = () => {
+    setStar(!star);
+    console.log(star);
+  };
+
+  const starIcon = () => {    
+    if (star) {
+      return <StarIcon />;
+    }
+    return <StarBorderIcon />;
+  };
+
+  const thumbnails = () => {
+
+    return styles.map((style, i) => {
+      //prevents invocation in onCLick
+      const changeStyle = () => {
+        props.changeSelectedStyle(i);
+      };
+      return (
+        <>
+          <GridList
+            item
+            col={4}
+            style={{
+              width: '60px',
+              height: '60px',
+            }}
+          >
+            <ButtonBase
+                style={{
+                  backgroundImage: `url(${style.photos[0].thumbnail_url})`,
+                  backgroundSize: 'cover',
+                  boxShadow: '0px 5px 5px -3px rgba(0,0,0,0.3), 0px 8px 10px 1px rgba(0,0,0,0.22), 0px 3px 14px 2px rgba(0,0,0,0.14)',
+                  padding: 'none',
+                  height: '100%',
+                  width: '100%',
+                }}
+                onClick={changeStyle}
+              />
+          </GridList>
+          {/* { i%4 === 3 ? <br /> : ''}
+          { i%4 === 3 ? <br /> : ''} */}
+        </>
+      );
+    })
+
+  }
+
+  
 
   if (styles.length === 0) {
     return <div> loading </div>;
   }
   return (
-    // <Avatar alt="some shit" src="https://images.unsplash.com/photo-1534011546717-407bced4d25c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=300&q=80" />
     <Card raised>
       <CardHeader
         title={(
@@ -96,13 +171,13 @@ const StyleSelection = (props) => {
               marginBottom: '-7px',
             }}
           >
-            {styles[selectedStyle].name.toUpperCase()}
+            {styles[selectedStyleIndex].name.toUpperCase()}
           </Typography>
         </Grid>
       </CardContent>
-      <span>
-
-        {
+      <Grid container justify="space-evenly">
+        {thumbnails()}
+        {/* {
           // TODO: split styles into groups of 4 in index.js
           styles.map((style, i) => {
             //prevents invocation in onCLick
@@ -119,86 +194,74 @@ const StyleSelection = (props) => {
               />
             );
           })
-        }
-      </span>
+        } */}
+      </Grid>
       <br />
       <span>
 
-        {/* size inputs: */}
         <FormControl variant="outlined" className={classes.formControl}>
-          <InputLabel id="demo-simple-select-outlined-label">Select Size</InputLabel>
+          <InputLabel>Size</InputLabel>
           <Select
-            labelId="demo-simple-select-outlined-label"
-            id="demo-simple-select-outlined"
-            value={age}
-            onChange={handleChange}
-            label="Age"
+            onChange={ handleSizeChange}
+            value={size}
+            label="Size"
           >
             <MenuItem value="">
               <em>None</em>
             </MenuItem>
-            <MenuItem value={10}>ChangeMe</MenuItem>
-            <MenuItem value={20}>Twenty</MenuItem>
-            <MenuItem value={30}>Thirty</MenuItem>
+            {/* TODO: generate progromatically: GRAB FROM API */}
+            <MenuItem value={'sm'}> Small </MenuItem>
+            <MenuItem value={'md'}> Medium </MenuItem>
+            <MenuItem value={'lg'}> Large </MenuItem>
           </Select>
         </FormControl>
         {/* quantity input */}
         <FormControl variant="outlined" className={classes.formControl}>
-          <InputLabel id="demo-simple-select-outlined-label"></InputLabel>
+          <InputLabel>Quantity</InputLabel>
           <Select
-            labelId="demo-simple-select-outlined-label"
-            id="demo-simple-select-outlined"
-            value={age}
-            onChange={handleChange}
-            label="Age"
+            onClick={handleQuantityChange}
+            value={quantity}
+            label="Select Size"
           >
             <MenuItem value="">
               <em>None</em>
             </MenuItem>
-            <MenuItem value={10}>Ten</MenuItem>
-            <MenuItem value={20}>Twenty</MenuItem>
-            <MenuItem value={30}>Thirty</MenuItem>
+            {/* TODO: generate progromatically: GRAB FROM API */}
+            <MenuItem value={1}> 1 </MenuItem>
+            <MenuItem value={2}> 2 </MenuItem>
+            <MenuItem value={3}> 3 </MenuItem>
+            <MenuItem value={4}> 4 </MenuItem>
+            <MenuItem value={5}> 5 </MenuItem>
+            <MenuItem value={6}> 6 </MenuItem>
+            <MenuItem value={7}> 7 </MenuItem>
+            <MenuItem value={8}> 8 </MenuItem>
+            <MenuItem value={9}> 9 </MenuItem>
+            <MenuItem value={10}> 10 </MenuItem>
+            <MenuItem value={11}> 11 </MenuItem>
+            <MenuItem value={12}> 12 </MenuItem>
+            <MenuItem value={13}> 13 </MenuItem>
+            <MenuItem value={14}> 14 </MenuItem>
+            <MenuItem value={15}> 15 </MenuItem>
+            
           </Select>
         </FormControl>
-      </span>
-      <br />
-      <span>
         {/* add to bag: change to button */}
-        <FormControl variant="outlined" className={classes.formControl}>
-          <InputLabel id="demo-simple-select-outlined-label">Add to Bag</InputLabel>
-          <Select
-            labelId="demo-simple-select-outlined-label"
-            id="demo-simple-select-outlined"
-            value={age}
-            onChange={handleChange}
-            label="Age"
-          >
-            <MenuItem value="">
-              <em>None</em>
-            </MenuItem>
-            <MenuItem value={10}>Ten</MenuItem>
-            <MenuItem value={20}>Twenty</MenuItem>
-            <MenuItem value={30}>Thirty</MenuItem>
-          </Select>
-        </FormControl>
-        {/* Star: change to button */}
-        <FormControl variant="outlined" className={classes.formControl}>
-          <InputLabel id="demo-simple-select-outlined-label">Age</InputLabel>
-          <Select
-            labelId="demo-simple-select-outlined-label"
-            id="demo-simple-select-outlined"
-            value={age}
-            onChange={handleChange}
-            label="Age"
-          >
-            <MenuItem value="">
-              <em>None</em>
-            </MenuItem>
-            <MenuItem value={10}>Ten</MenuItem>
-            <MenuItem value={20}>Twenty</MenuItem>
-            <MenuItem value={30}>Thirty</MenuItem>
-          </Select>
-        </FormControl>
+        <IconButton
+          color="primary"
+          aria-label="add to shopping cart"
+          style={{ position: 'bottom' }}
+          onClick={addToCart}
+        >
+          <AddShoppingCartIcon />
+        </IconButton>
+        {/* Star: enable toggle */}
+        <IconButton
+          color="primary" 
+          style={{ position: 'bottom' }}
+          onClick={favorite}
+        >
+          {starIcon()}
+        </IconButton>
       </span>
     </Card>
   );

@@ -5,7 +5,7 @@ import MoreAnsweredQuestions from './MoreAnsweredQuestions.jsx'
 import Searchbar from './Searchbar.jsx';
 import QuestionModal from './QuestionModal.jsx'
 
-export default function QAContainer({ questionsData, answersData, loadMoreState, loadMoreAnswersClicked, handleSearchChange, searchTerm, addMore, setLoadMoreAnswersClicked, dataBack }) {
+export default function QAContainer({ questionsData, answersData, loadMoreState, loadMoreAnswersClicked, handleSearchChange, searchTerm, addMore, setLoadMoreAnswersClicked, dataBack, answersToRender, addMoreAnswers }) {
   const [newData, setNewData] = useState([])
   const [toggle, setToggle] = useState(false)
   
@@ -53,6 +53,7 @@ export default function QAContainer({ questionsData, answersData, loadMoreState,
                       answers={answerList}
                       loadMoreAnswersClicked={loadMoreAnswersClicked}
                       dataBack={dataBack}
+                      answersToRender={answersToRender}
                     />
                   );
                 })
@@ -80,6 +81,7 @@ export default function QAContainer({ questionsData, answersData, loadMoreState,
                   answers={answerList}
                   loadMoreAnswersClicked={loadMoreAnswersClicked}
                   dataBack={dataBack}
+                  answersToRender={answersToRender}
                 />
               );
             })
@@ -98,7 +100,11 @@ return (
       {/* {renderContainerEntryItemFourQuestions} */}
       {/* {loadMoreClicked ? {renderContainerEntryItemForAllQuestions} : {renderContainerEntryItemFourQuestions}} */}
       <Typography>
-        <b style={{ cursor: 'pointer' }} onClick={() => setLoadMoreAnswersClicked(!loadMoreAnswersClicked)}>{loadMore}</b>
+        <b style={{ cursor: 'pointer' }} onClick={() => {
+          addMoreAnswers()
+          // setLoadMoreAnswersClicked(!loadMoreAnswersClicked)
+
+          }}>{loadMore}</b>
       </Typography>
       <MoreAnsweredQuestions handleClick={addMore}/>
       <QuestionModal  dataBack={dataBack}/>
