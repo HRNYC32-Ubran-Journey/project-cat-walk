@@ -289,7 +289,7 @@ class Reviews extends React.Component {
 
     return (
       <Grid container spacing={3}>
-        <Grid xs ={12} lg={3} item>
+        <Grid xs={12} lg={3} item>
           <Overview
             metadata={metadata}
             totalScore={totalScore}

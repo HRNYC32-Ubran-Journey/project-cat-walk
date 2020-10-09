@@ -15,6 +15,7 @@ import Overview from './components/overview/index';
 // import Qa from './components/qa/index';
 import Reviews from './components/reviews/index';
 // CSS and Fonts
+import './App.css';
 // import Roboto from './Roboto-Regular.ttf';
 
 const theme = createMuiTheme({

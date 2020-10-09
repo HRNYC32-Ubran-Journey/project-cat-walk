@@ -1,14 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
+  Avatar,
   Card,
   CardContent,
   CardActions,
+  CardHeader,
   Grid,
   Typography,
   Button,
 } from '@material-ui/core';
-import { Check } from '@material-ui/icons';
+import { CheckBox } from '@material-ui/icons';
 
 // This song is
 // One you won't forget!
@@ -21,16 +23,18 @@ import { Check } from '@material-ui/icons';
 const renderRecommend = (recommends) => {
   if (recommends) {
     return (
-      <Grid 
-        style={{ backgroundColor: 'ghostwhite' }}
+      <Grid
+        container
+        style={{ backgroundColor: '#fff1ff', padding: '0.25rem', marginTop: '1rem' }}
         alignItems="center"
+        xs
       >
+        <CheckBox style={{ color: 'yellowgreen', marginRight: '0.25rem' }} />
         <Typography
-          variant="body2"
-          component="p"
+          variant="caption"
           color="textSecondary"
         >
-          <Check style={{ color: 'yellowgreen' }} /> User recommends this product
+          <i>This user recommends this product</i>
         </Typography>
         <br />
       </Grid>
@@ -42,21 +46,61 @@ const renderRecommend = (recommends) => {
 const renderResponse = (response) => {
   if (response) {
     return (
-      <>
+      <Grid
+        container
+        style={{ backgroundColor: '#fff1ff', padding: '0.25rem' }}
+        alignItems="center"
+        xs
+      >
         <Typography
           variant="body2"
           component="p"
-          style={{
-            backgroundColor: 'lightgray',
-          }}
+          color="textSecondary"
         >
-          { response }
+          {response}
         </Typography>
         <br />
-      </>
+      </Grid>
     );
   }
   return '';
+};
+
+// This function tries its best to make a random color using M A T H.
+const generateRandomColor = (name) => {
+  let newName = name;
+  let r = 0;
+  let g = 0;
+  let b = 0;
+  // Our method only works if the input is at least 3 characters long.
+  // If it isn't we need to improvise.
+  if (newName.length < 3) {
+    if (newName.length === 0) {
+      return '#000000';
+    }
+
+    if (newName.length === 1) {
+      newName += newName[0] + newName[0];
+    } else if (newName.length === 2) {
+      newName += newName[1];
+    }
+  }
+
+  for (let i = 0; i < newName.length; i += 1) {
+    if (i % 3 === 0) {
+      r = (r + newName.charCodeAt(i)) % 150;
+    } else if (i % 3 === 1) {
+      g = (g + newName.charCodeAt(i)) % 150;
+    } else {
+      b = (b + newName.charCodeAt(i)) % 150;
+    }
+  }
+
+  r += 75;
+  g += 75;
+  b += 75;
+
+  return `#${parseInt(r, 16)}${parseInt(g, 16)}${parseInt(b, 16)}`;
 };
 
 const ReviewTile = (props) => {
@@ -88,6 +132,15 @@ const ReviewTile = (props) => {
 
   return (
     <Card elevation={3}>
+      <CardHeader
+        avatar={
+          <Avatar aria-label="recipe" style={{backgroundColor: 'red'}}>
+            {review.reviewer_name[0].toUpperCase()}
+          </Avatar>
+        }
+        title={<b>{review.summary}</b>}
+        // subheader={review.summary}
+      />
       <CardContent>
         <Grid container justify="space-between">
           <Grid item>
@@ -101,17 +154,11 @@ const ReviewTile = (props) => {
             </Typography>
           </Grid>
         </Grid>
-        <br />
-        <Typography variant="h5" component="h2" gutterBottom>
-          <b>{review.summary}</b>
-        </Typography>
-        <Typography variant="body2" component="p">
-          {review.body}
-        </Typography>
-        <br />
+      </CardContent>
+      <CardContent>
+      </CardContent>
         { renderRecommend(review.recommend) }
         { renderResponse(review.response) }
-      </CardContent>
       <CardActions>
         <Button size="small" color="primary" onClick={runMarkAsHelpful}>
           I found this helpful
