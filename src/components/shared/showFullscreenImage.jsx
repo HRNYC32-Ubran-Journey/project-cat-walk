@@ -17,8 +17,6 @@ class ShowFullscreenImage extends React.Component {
     this.recent = null;
     this.state = {
       currentImage: null,
-      isBeingClosed: false,
-      lastImage: null,
     };
   }
 
@@ -26,7 +24,7 @@ class ShowFullscreenImage extends React.Component {
     this.openModel();
   }
 
-  openModel () {
+  openModel() {
     const { currentImage } = this.state;
     const { image } = this.props;
 
@@ -56,7 +54,7 @@ class ShowFullscreenImage extends React.Component {
         style={{
           backgroundColor: 'rgba(0,0,0,0.5)',
           backgroundImage: `url(${currentImage})`,
-          backgroundPSize: 'contain',
+          backgroundImageSize: 'contain',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
           overflow: 'hidden',
@@ -64,9 +62,9 @@ class ShowFullscreenImage extends React.Component {
           position: 'absolute',
           top: document.documentElement.scrollTop,
           left: 0,
-          width: '100vw',
-          height: '100vh',
-          display: `${currentImage ? 'inline' : 'none'}`,
+          width: '100%',
+          height: '100%',
+          // display: `${currentImage === null ? 'inline' : 'none'}`,
         }}
       >
         <IconButton
