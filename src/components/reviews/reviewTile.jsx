@@ -25,7 +25,7 @@ const renderRecommend = (recommends) => {
     return (
       <Grid
         container
-        style={{ backgroundColor: '#fff1ff', padding: '0.25rem', marginTop: '1rem' }}
+        style={{ backgroundColor: '#f6f6f6', padding: '0.25rem' }}
         alignItems="center"
         xs
       >
@@ -137,6 +137,16 @@ const CapitalizeTitle = (title) => {
     .join(' ');
 };
 
+const CapitalizeSentences = (body) => {
+  const arr = body.split('. ');
+  return arr
+    .map((e) => {
+      const newSentence = e;
+      return newSentence[0].toUpperCase() + newSentence.slice(1);
+    })
+    .join('. ');
+};
+
 const ReviewTile = (props) => {
   const { review, markAsHelpful, report } = props;
   const reviewDate = new Date(review.date);
@@ -173,7 +183,7 @@ const ReviewTile = (props) => {
       <CardHeader
         avatar={
           (
-            <Avatar aria-label="recipe" style={{backgroundColor: generateRandomColor(review.reviewer_name) }}>
+            <Avatar aria-label="recipe" style={{ backgroundColor: generateRandomColor(review.reviewer_name) }}>
               {review.reviewer_name[0].toUpperCase()}
             </Avatar>
           )
@@ -181,24 +191,25 @@ const ReviewTile = (props) => {
         title={<b>{mainTitle}</b>}
         subheader={subTitle}
       />
-      <CardContent>
-        <Grid container justify="space-between">
-          <Grid item>
-            <Typography variant="caption" color="textSecondary">
-              {`${review.rating} stars`}
-            </Typography>
-          </Grid>
-          <Grid item>
-            <Typography variant="caption" color="textSecondary">
-              {`${review.reviewer_name}, ${reviewDateText}`}
-            </Typography>
-          </Grid>
+      <Grid container justify="space-between" style={{ paddingLeft: '16px', paddingRight: '16px', paddingBottom: '8px' }}>
+        <Grid item>
+          <Typography variant="caption" color="textSecondary">
+            {`${review.rating} stars`}
+          </Typography>
         </Grid>
-      </CardContent>
+        <Grid item>
+          <Typography variant="caption" color="textSecondary">
+            {`${review.reviewer_name}, ${reviewDateText}`}
+          </Typography>
+        </Grid>
+      </Grid>
+      { renderRecommend(review.recommend) }
       <CardContent>
+        <Typography variant="body2" component="p">
+          {CapitalizeSentences(review.body)}
+          {renderResponse(review.response)}
+        </Typography>
       </CardContent>
-        { renderRecommend(review.recommend) }
-        { renderResponse(review.response) }
       <CardActions>
         <Button size="small" color="primary" onClick={runMarkAsHelpful}>
           I found this helpful
