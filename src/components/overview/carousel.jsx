@@ -14,10 +14,10 @@ class Carousel extends React.Component {
   componentDidMount() {
   }
 
-  setImageSelect() {
+  setThumbnailSelect(sliceIndexs) {
     console.log('In Image Select');
     const { images } = this.props;
-    const sliceIndex = this.getImageSelectStartingIndex();
+    let sliceIndex = this.resetThumbnailSelectStartingIndex();
     console.log(sliceIndex);
     return images.slice(sliceIndex, sliceIndex + 5).map((image, i) => {
       const setPhoto = () => (
@@ -40,7 +40,7 @@ class Carousel extends React.Component {
     this.setState({ currentPhoto: i });
   }
 
-  getImageSelectStartingIndex() {
+  resetThumbnailSelectStartingIndex() {
     const { currentPhoto } = this.state;
     const { images } = this.props;
     console.log(currentPhoto, 'in get starting', images.length);
@@ -56,6 +56,33 @@ class Carousel extends React.Component {
     }
     console.log('middle', currentPhoto);
     return currentPhoto - 2;
+  }
+
+  leftClickButton() {
+    const { currentPhoto } = this.state;
+    if (currentPhoto !== 0) {
+      console.log(currentPhoto, 'NOT ZERO')
+      return (
+        <button type="button" onClick={this.leftClick}>
+          {'<'}
+        </button>
+      )
+    }
+    return '';
+  }
+
+  rightClickButton() {
+    const { currentPhoto } = this.state;
+    const { images } = this.props;
+    console.log(currentPhoto)
+    if (currentPhoto !== images.length - 1) {
+      return (
+        <button type="button" onClick={this.rightClick}>
+          {'>'}
+        </button>
+      );
+    }
+    return '';
   }
 
   leftClick() {
@@ -87,7 +114,7 @@ class Carousel extends React.Component {
     }
     return (
       <div className="expandable">
-        {this.setImageSelect()}
+        {this.setThumbnailSelect()}
         {/*
 
             make div expandable
@@ -101,18 +128,15 @@ class Carousel extends React.Component {
             add zoom functionality
 
           */}
-        hello from carousel
-        <button type="button" onClick={this.leftClick}>
-          {'<'}
-        </button>
-        <button type="button" onClick={this.rightClick}>
-          {'>'}
-        </button>
+        <div>
+          THESE ARE THE PHOTOS BUTTONS:
+          {this.leftClickButton()}
+          {this.rightClickButton()}
+        </div>
         <img src={images[currentPhoto].url} alt="product" />
       </div>
     );
   }
-
-};
+}
 
 export default Carousel;
