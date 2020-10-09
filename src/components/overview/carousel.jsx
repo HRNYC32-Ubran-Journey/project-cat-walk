@@ -90,7 +90,7 @@ class Carousel extends React.Component {
 
   upClickButton() {
     const { currentPhoto } = this.state;
-    if (currentPhoto !== 0) {
+    if (currentPhoto > 2) {
       return (
         <IconButton
           size="small"
@@ -107,26 +107,13 @@ class Carousel extends React.Component {
         </IconButton>
       );
     }
-    return (
-      <IconButton
-        size="small"
-        style={{
-          backgroundColor: 'rgba(0,0,0,0.5)',
-          boxShadow: '0px 5px 5px -3px rgba(0,0,0,0.3), 0px 8px 10px 1px rgba(0,0,0,0.22), 0px 3px 14px 2px rgba(0,0,0,0.14)',
-        }}
-      >
-        <ArrowUpward
-          style={{ color: 'grey' }}
-          fontSize="large"
-          disabled
-        />
-      </IconButton>
-    );
+    return '';
   }
 
   downClickButton() {
     const { currentPhoto } = this.state;
-    if (currentPhoto !== 0) {
+    const { images } = this.props;
+    if (currentPhoto < images.length - 3) {
       return (
         <IconButton
           size="small"
@@ -134,7 +121,7 @@ class Carousel extends React.Component {
             backgroundColor: 'rgba(0,0,0,0.5)',
             boxShadow: '0px 5px 5px -3px rgba(0,0,0,0.3), 0px 8px 10px 1px rgba(0,0,0,0.22), 0px 3px 14px 2px rgba(0,0,0,0.14)',
           }}
-          onClick={this.leftClick}
+          onClick={this.rightClick}
         >
           <ArrowDownward
             style={{ color: 'white' }}
@@ -143,26 +130,13 @@ class Carousel extends React.Component {
         </IconButton>
       );
     }
-    return (
-      <IconButton
-        size="small"
-        style={{
-          backgroundColor: 'rgba(0,0,0,0.5)',
-          boxShadow: '0px 5px 5px -3px rgba(0,0,0,0.3), 0px 8px 10px 1px rgba(0,0,0,0.22), 0px 3px 14px 2px rgba(0,0,0,0.14)',
-        }}
-      >
-        <ArrowDownward
-          style={{ color: 'grey' }}
-          fontSize="large"
-          disabled
-        />
-      </IconButton>
-    );
+    return '';
   }
 
 
   leftClickButton() {
     const { currentPhoto } = this.state;
+    
     if (currentPhoto !== 0) {
       return (
         <IconButton
