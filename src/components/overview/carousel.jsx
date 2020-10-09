@@ -17,10 +17,11 @@ class Carousel extends React.Component {
   setImageSelect() {
     console.log('In Image Select');
     const { images } = this.props;
-    return images.map((image, i) => {
-      console.log(image);
+    const sliceIndex = this.getImageSelectStartingIndex();
+    console.log(sliceIndex);
+    return images.slice(sliceIndex, sliceIndex + 5).map((image, i) => {
       const setPhoto = () => (
-        this.setCurrentPhotoIndex(i)
+        this.setCurrentPhotoIndex(i + sliceIndex)
       );
       return (
         <img
@@ -36,7 +37,25 @@ class Carousel extends React.Component {
 
   setCurrentPhotoIndex(i) {
     console.log('in set index', i);
-    this.setState({ CurrentPhoto: i });
+    this.setState({ currentPhoto: i });
+  }
+
+  getImageSelectStartingIndex() {
+    const { currentPhoto } = this.state;
+    const { images } = this.props;
+    console.log(currentPhoto, 'in get starting', images.length);
+
+    //check if less than 5 thumbnails AND first 3 indeices
+    if (currentPhoto <= 2 || images.length < 5) {
+      console.log('returning 0')
+      return 0;
+    }
+    if (currentPhoto >= images.length - 4) {
+      console.log('returning minus');
+      return images.length - 5;
+    }
+    console.log('middle', currentPhoto);
+    return currentPhoto - 2;
   }
 
   leftClick() {
@@ -89,7 +108,7 @@ class Carousel extends React.Component {
         <button type="button" onClick={this.rightClick}>
           {'>'}
         </button>
-        <img src={this.props.images[currentPhoto].url} alt="product" />
+        <img src={images[currentPhoto].url} alt="product" />
       </div>
     );
   }
