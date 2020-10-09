@@ -9,8 +9,13 @@ import {
   Grid,
   Typography,
   Button,
+  // Temp:
+  ButtonBase,
+  GridList,
+  GridListTile,
 } from '@material-ui/core';
 import { CheckBox, ChatBubble } from '@material-ui/icons';
+import ImageListBG from './carbon-fibre-big.png'
 
 // This song is
 // One you won't forget!
@@ -46,7 +51,7 @@ const renderRecommend = (recommends) => {
 const renderResponse = (response) => {
   if (response && response !== 'null' && response !== 'undefined') {
     return (
-      <CardContent style={{ padding: '0.25rem' }} elevation={1}>
+      <CardContent style={{ padding: '0.25rem' }}>
         <Grid
           container
           style={{ backgroundColor: '#f6f6f6', padding: '0.25rem' }}
@@ -67,6 +72,44 @@ const renderResponse = (response) => {
       </CardContent>
     );
   }
+  return '';
+};
+
+const renderPhotos = (pictures) => {
+  if (Array.isArray(pictures) && pictures.length > 0) {
+    return (
+      <GridList
+        cols={5}
+        style={{
+          backgroundColor: 'darkgrey',
+          // backgroundImage: `url(${ImageListBG})`,
+          boxShadow: 'inset 0px 5px 5px -3px rgba(0,0,0,0.2), inset 0px 8px 10px 1px rgba(0,0,0,0.14), inset 0px 3px 14px 2px rgba(0,0,0,0.12)',
+          padding: '0.75rem',
+          paddingTop: '1rem',
+          paddingBottom: '1rem',
+        }}
+      >
+        {
+          pictures.map((e) => (
+
+            <GridListTile
+              style={{
+                backgroundImage: `url(${e.url})`,
+                backgroundSize: 'cover',
+                boxShadow: '0px 5px 5px -3px rgba(0,0,0,0.3), 0px 8px 10px 1px rgba(0,0,0,0.22), 0px 3px 14px 2px rgba(0,0,0,0.14)',
+                padding: 'none',
+              }}
+            >
+              <ButtonBase
+                style={{ width: '100%', height: '100%' }}
+              />
+            </GridListTile>
+          ))
+        }
+      </GridList>
+    );
+  }
+  return '';
 };
 
 // This function tries its best to make a random color using M A T H.
@@ -206,7 +249,11 @@ const ReviewTile = (props) => {
           </Typography>
         </Grid>
       </Grid>
+
+      {renderPhotos(review.photos)}
+
       { renderRecommend(review.recommend) }
+
       <CardContent>
         <Typography variant="body2" component="p">
           {CapitalizeSentences(review.body)}
