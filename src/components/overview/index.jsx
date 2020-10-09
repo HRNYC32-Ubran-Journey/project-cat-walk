@@ -1,11 +1,14 @@
 import React from 'react';
-import axios from 'axios';
 import PropTypes from 'prop-types';
+import {
+  Grid,
+  Paper,
+  Card,
+  CardContent,
+} from '@material-ui/core/';
+import axios from 'axios';
 import StyleSelction from './styleSelection';
 import Carousel from './carousel';
-import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
-import Slider from 'react-slick';
 
 //styling from documentation, not working:
 // import 'slick-carousel/slick/slick.css';
@@ -119,13 +122,16 @@ class Overview extends React.Component {
       <div>
         <h1>hi from Overview</h1>
         <Grid container fixed spacing={3}>
-          <Grid item xs={8}>
-          {/* <img src='https://cdn.2kgames.com/web/common/images/bioshock-infinite_keyart_L_1.jpg'></img> */}
-            <Carousel images={selectedStyle.photos} />
-            <Paper> Carousel Goes here </Paper>
+          <Grid item xs={12} md={7}>
+            <Carousel
+              images={selectedStyle.photos}
+            />
           </Grid>
-          <Grid item xs={4}>
-            <StyleSelction product={product} changeSelectedStyle={this.changeSelectedStyle} />
+          <Grid item xs={12} md={5}>
+            <StyleSelction
+              product={product}
+              changeSelectedStyle={this.changeSelectedStyle}
+            />
           </Grid>
         </Grid>
 

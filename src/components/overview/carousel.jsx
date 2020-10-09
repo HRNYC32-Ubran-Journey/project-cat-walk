@@ -1,4 +1,16 @@
 import React from 'react';
+import {
+  Card,
+  Button,
+  IconButton,
+  Grid,
+  GridList,
+  GridListTile,
+} from '@material-ui/core';
+import {
+  ChevronLeft,
+  ChevronRight,
+} from '@material-ui/icons';
 
 class Carousel extends React.Component {
   constructor(props) {
@@ -23,12 +35,16 @@ class Carousel extends React.Component {
       const setPhoto = () => (
         this.setCurrentPhotoIndex(i + sliceIndex)
       );
+
       return (
-        <img
-          height="100"
-          width="100"
-          alt="thumbnail"
-          src={image.thumbnail_url}
+        <GridListTile
+          style={{
+            backgroundImage: `url(${image.thumbnail_url})`,
+            backgroundSize: 'cover',
+            boxShadow: '0px 5px 5px -3px rgba(0,0,0,0.3), 0px 8px 10px 1px rgba(0,0,0,0.22), 0px 3px 14px 2px rgba(0,0,0,0.14)',
+            padding: 'none',
+            // height: 'width',
+          }}
           onClick={setPhoto}
         />
       );
@@ -61,28 +77,62 @@ class Carousel extends React.Component {
   leftClickButton() {
     const { currentPhoto } = this.state;
     if (currentPhoto !== 0) {
-      console.log(currentPhoto, 'NOT ZERO')
       return (
-        <button type="button" onClick={this.leftClick}>
-          {'<'}
-        </button>
-      )
+        <IconButton
+          size="medium"
+          style={{backgroundColor: 'rgba(0,0,0,0.5)'}}
+          onClick={this.leftClick}
+        >
+          <ChevronLeft
+            style={{ color: 'white' }}
+            fontSize="large"
+          />
+        </IconButton>
+      );
     }
-    return '';
+    return (
+      <IconButton
+        size="medium"
+        style={{backgroundColor: 'rgba(0,0,0,0.5)'}}
+      >
+        <ChevronLeft
+          style={{ color: 'grey' }}
+          fontSize="large"
+          disabled
+        />
+      </IconButton>
+    );
   }
 
   rightClickButton() {
     const { currentPhoto } = this.state;
     const { images } = this.props;
-    console.log(currentPhoto)
     if (currentPhoto !== images.length - 1) {
       return (
-        <button type="button" onClick={this.rightClick}>
-          {'>'}
-        </button>
+        <IconButton
+          size="medium"
+          style={{backgroundColor: 'rgba(0,0,0,0.5)'}}
+          onClick={this.rightClick}
+        >
+          <ChevronRight
+            style={{ color: 'white' }}
+            fontSize="large"
+          />
+        </IconButton>
       );
     }
-    return '';
+    return (
+      <IconButton
+        size="medium"
+        style={{backgroundColor: 'rgba(0,0,0,0.5)'}}
+      >
+        <ChevronRight
+          style={{ color: 'grey' }}
+          fontSize="large"
+          disabled
+        />
+      </IconButton>
+    );
   }
 
   leftClick() {
@@ -113,28 +163,36 @@ class Carousel extends React.Component {
       return <div> loading </div>;
     }
     return (
-      <div className="expandable">
-        {this.setThumbnailSelect()}
-        {/*
-
-            make div expandable
-
-            add arrows
-
-            rotate images
-
-            add side coursel
-
-            add zoom functionality
-
-          */}
-        <div>
-          THESE ARE THE PHOTOS BUTTONS:
-          {this.leftClickButton()}
-          {this.rightClickButton()}
-        </div>
-        <img src={images[currentPhoto].url} alt="product" />
-      </div>
+      <Card
+        raised
+        style={{
+          backgroundImage: `url(${images[currentPhoto].url})`,
+          backgroundColor: 'black',
+          backgroundSize: 'contain',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+          height: '100%',
+        }}
+      >
+        <Grid container style={{ height: '100%' }}>
+          <Grid item xs={2}>
+            <GridList col={1} row cellHeight={70}>
+              {this.setThumbnailSelect()}
+            </GridList>
+          </Grid>
+          <Grid
+            item
+            container
+            alignItems="center"
+            justify="space-between"
+            xs={10}
+            style={{padding: '1rem'}}
+          >
+            {this.leftClickButton()}
+            {this.rightClickButton()}
+          </Grid>
+        </Grid>
+      </Card>
     );
   }
 }
