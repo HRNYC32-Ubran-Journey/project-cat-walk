@@ -162,7 +162,11 @@ const ReviewTile = (props) => {
     'November',
     'December',
   ];
+  // WHAT- IS A- D-J- IF HE CAN'T SCRATCH?!-
   const reviewDateText = `${months[reviewDate.getMonth()]} ${reviewDate.getDate()}, ${reviewDate.getFullYear()}`;
+  const newTitle = CapitalizeTitle(review.summary);
+  const mainTitle = newTitle.length > 40 ? `${newTitle.slice(0, 40)}...` : newTitle;
+  const subTitle = newTitle.length > 40 ? `...${newTitle.slice(40)}` : null;
 
   const runMarkAsHelpful = () => {
     markAsHelpful(review.review_id);
@@ -182,8 +186,8 @@ const ReviewTile = (props) => {
             </Avatar>
           )
         }
-        title={<b>{CapitalizeTitle(review.summary)}</b>}
-        // subheader={review.summary}
+        title={<b>{mainTitle}</b>}
+        subheader={subTitle}
       />
       <CardContent>
         <Grid container justify="space-between">
