@@ -35,6 +35,7 @@ class Overview extends React.Component {
       selectedStyle: {
         photos: [],
       },
+      currentPhoto: 0,
     };
 
     this.changeSelectedStyle = this.changeSelectedStyle.bind(this);
@@ -113,13 +114,14 @@ class Overview extends React.Component {
 
   render() {
     const { product } = this.state;
+    const { selectedStyle } = this.state;
     return (
       <div>
         <h1>hi from Overview</h1>
         <Grid container fixed spacing={3}>
           <Grid item xs={8}>
           {/* <img src='https://cdn.2kgames.com/web/common/images/bioshock-infinite_keyart_L_1.jpg'></img> */}
-            <Carousel />
+            <Carousel images={selectedStyle.photos} />
             <Paper> Carousel Goes here </Paper>
           </Grid>
           <Grid item xs={4}>
