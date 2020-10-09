@@ -9,13 +9,9 @@ import {
   Grid,
   Typography,
   Button,
-  // Temp:
-  ButtonBase,
-  GridList,
-  GridListTile,
 } from '@material-ui/core';
 import { CheckBox, ChatBubble } from '@material-ui/icons';
-import ImageListBG from './carbon-fibre-big.png'
+import RenderPhotoList from './renderPhotoList';
 
 // This song is
 // One you won't forget!
@@ -70,43 +66,6 @@ const renderResponse = (response) => {
           </Typography>
         </Grid>
       </CardContent>
-    );
-  }
-  return '';
-};
-
-const renderPhotos = (pictures) => {
-  if (Array.isArray(pictures) && pictures.length > 0) {
-    return (
-      <GridList
-        cols={5}
-        style={{
-          backgroundColor: 'darkgrey',
-          // backgroundImage: `url(${ImageListBG})`,
-          boxShadow: 'inset 0px 5px 5px -3px rgba(0,0,0,0.2), inset 0px 8px 10px 1px rgba(0,0,0,0.14), inset 0px 3px 14px 2px rgba(0,0,0,0.12)',
-          padding: '0.75rem',
-          paddingTop: '1rem',
-          paddingBottom: '1rem',
-        }}
-      >
-        {
-          pictures.map((e) => (
-
-            <GridListTile
-              style={{
-                backgroundImage: `url(${e.url})`,
-                backgroundSize: 'cover',
-                boxShadow: '0px 5px 5px -3px rgba(0,0,0,0.3), 0px 8px 10px 1px rgba(0,0,0,0.22), 0px 3px 14px 2px rgba(0,0,0,0.14)',
-                padding: 'none',
-              }}
-            >
-              <ButtonBase
-                style={{ width: '100%', height: '100%' }}
-              />
-            </GridListTile>
-          ))
-        }
-      </GridList>
     );
   }
   return '';
@@ -226,6 +185,7 @@ const ReviewTile = (props) => {
 
   return (
     <Card elevation={3}>
+
       <CardHeader
         avatar={
           (
@@ -237,12 +197,14 @@ const ReviewTile = (props) => {
         title={<b>{mainTitle}</b>}
         subheader={subTitle}
       />
+
       <Grid container justify="space-between" style={{ paddingLeft: '16px', paddingRight: '16px', paddingBottom: '8px' }}>
         <Grid item>
           <Typography variant="caption" color="textSecondary">
             {`${review.rating} stars`}
           </Typography>
         </Grid>
+
         <Grid item>
           <Typography variant="caption" color="textSecondary">
             {`${review.reviewer_name}, ${reviewDateText}`}
@@ -250,21 +212,24 @@ const ReviewTile = (props) => {
         </Grid>
       </Grid>
 
-      {renderPhotos(review.photos)}
+      <RenderPhotoList pictures={review.photos} />
 
       { renderRecommend(review.recommend) }
 
       <CardContent>
         <Typography variant="body2" component="p">
           {CapitalizeSentences(review.body)}
+
           {renderResponse(review.response)}
         </Typography>
       </CardContent>
+
       <CardActions>
         <Button size="small" color="primary" onClick={runMarkAsHelpful}>
           I found this helpful
           {` (${review.helpfulness})`}
         </Button>
+
         <Button size="small" color="primary" onClick={runReport}>
           Report
         </Button>
