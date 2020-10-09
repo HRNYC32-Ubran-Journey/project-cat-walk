@@ -11,7 +11,7 @@ import {
   Button,
 } from '@material-ui/core';
 import { CheckBox, ChatBubble } from '@material-ui/icons';
-import RenderPhotoList from './renderPhotoList';
+import RenderPhotoList from '../shared/renderPhotoList';
 
 // This song is
 // One you won't forget!

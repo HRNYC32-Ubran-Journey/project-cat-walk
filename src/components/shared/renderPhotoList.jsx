@@ -6,7 +6,6 @@ import {
   GridList,
   GridListTile,
 } from '@material-ui/core';
-import './renderPhotoList.css';
 
 class RenderPhotosList extends React.Component {
   constructor(props) {
