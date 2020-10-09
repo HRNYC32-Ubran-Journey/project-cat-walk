@@ -5,7 +5,10 @@ import {
   CardContent,
   Grid,
   Typography,
-  ButtonBase
+  Button,
+  ButtonBase,
+  Box,
+  LinearProgress
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 // Import Components:
@@ -42,21 +45,28 @@ const Overview = (props) => {
           <Typography>
             {`${likeRatio} of people recommend this product.`}
           </Typography>
-          <div>
+          <div
+            style={{
+              width: '100%',
+            }}
+          >
             {[1, 2, 3, 4, 5].map((e) => {
               const toggleFunc = () => {
                 updateFilters(e);
               };
 
               return (
-                <ButtonBase 
+                <Button
                   onClick={toggleFunc}
                   style={{
-                    backgroundColor: 'darkgray',riub
+                    backgroundColor: 'ghostwhite',
+                    display: 'inline-block',
+                    width: '100%',
+                    marginTop: '16px',
                   }}
                 >
-                  hi
-                </ButtonBase>
+                  {`Filter by ${e} star ratings.`}
+                </Button>
               );
             })}
           </div>

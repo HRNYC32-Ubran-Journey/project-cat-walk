@@ -66,7 +66,7 @@ export default function QaIndex() {
   
   return (
     <div>
-      <Card elevation={3}>
+      <Card elevation={3} style={{marginTop: '64px', marginBottom: '64px'}}>
         <CardContent>
           <Typography variant="h6">Questions & Answers</Typography>
           <br />
