@@ -2,6 +2,7 @@ import React from 'react';
 import {
   Card,
   Button,
+  ButtonBase,
   IconButton,
   Grid,
   GridList,
@@ -10,6 +11,8 @@ import {
 import {
   ChevronLeft,
   ChevronRight,
+  ArrowUpward,
+  ArrowDownward,
 } from '@material-ui/icons';
 
 class Carousel extends React.Component {
@@ -21,6 +24,8 @@ class Carousel extends React.Component {
     this.leftClick = this.leftClick.bind(this);
     this.rightClick = this.rightClick.bind(this);
     this.setCurrentPhotoIndex = this.setCurrentPhotoIndex.bind(this);
+    this.upClickButton = this.upClickButton.bind(this);
+    this.downClickButton = this.downClickButton.bind(this);
   }
 
   componentDidMount() {
@@ -37,16 +42,25 @@ class Carousel extends React.Component {
       );
 
       return (
-        <GridListTile
+        <Grid
+          item
           style={{
-            backgroundImage: `url(${image.thumbnail_url})`,
-            backgroundSize: 'cover',
-            boxShadow: '0px 5px 5px -3px rgba(0,0,0,0.3), 0px 8px 10px 1px rgba(0,0,0,0.22), 0px 3px 14px 2px rgba(0,0,0,0.14)',
-            padding: 'none',
-            // height: 'width',
+            width: '60px',
+            height: '60px',
           }}
-          onClick={setPhoto}
-        />
+        >
+          <ButtonBase
+            style={{
+              backgroundImage: `url(${image.thumbnail_url})`,
+              backgroundSize: 'cover',
+              boxShadow: '0px 5px 5px -3px rgba(0,0,0,0.3), 0px 8px 10px 1px rgba(0,0,0,0.22), 0px 3px 14px 2px rgba(0,0,0,0.14)',
+              padding: 'none',
+              height: '100%',
+              width: '100%',
+            }}
+            onClick={setPhoto}
+          />
+        </Grid>
       );
     });
   }
@@ -74,13 +88,89 @@ class Carousel extends React.Component {
     return currentPhoto - 2;
   }
 
+  upClickButton() {
+    const { currentPhoto } = this.state;
+    if (currentPhoto !== 0) {
+      return (
+        <IconButton
+          size="small"
+          style={{
+            backgroundColor: 'rgba(0,0,0,0.5)',
+            boxShadow: '0px 5px 5px -3px rgba(0,0,0,0.3), 0px 8px 10px 1px rgba(0,0,0,0.22), 0px 3px 14px 2px rgba(0,0,0,0.14)',
+          }}
+          onClick={this.leftClick}
+        >
+          <ArrowUpward
+            style={{ color: 'white' }}
+            fontSize="large"
+          />
+        </IconButton>
+      );
+    }
+    return (
+      <IconButton
+        size="small"
+        style={{
+          backgroundColor: 'rgba(0,0,0,0.5)',
+          boxShadow: '0px 5px 5px -3px rgba(0,0,0,0.3), 0px 8px 10px 1px rgba(0,0,0,0.22), 0px 3px 14px 2px rgba(0,0,0,0.14)',
+        }}
+      >
+        <ArrowUpward
+          style={{ color: 'grey' }}
+          fontSize="large"
+          disabled
+        />
+      </IconButton>
+    );
+  }
+
+  downClickButton() {
+    const { currentPhoto } = this.state;
+    if (currentPhoto !== 0) {
+      return (
+        <IconButton
+          size="small"
+          style={{
+            backgroundColor: 'rgba(0,0,0,0.5)',
+            boxShadow: '0px 5px 5px -3px rgba(0,0,0,0.3), 0px 8px 10px 1px rgba(0,0,0,0.22), 0px 3px 14px 2px rgba(0,0,0,0.14)',
+          }}
+          onClick={this.leftClick}
+        >
+          <ArrowDownward
+            style={{ color: 'white' }}
+            fontSize="large"
+          />
+        </IconButton>
+      );
+    }
+    return (
+      <IconButton
+        size="small"
+        style={{
+          backgroundColor: 'rgba(0,0,0,0.5)',
+          boxShadow: '0px 5px 5px -3px rgba(0,0,0,0.3), 0px 8px 10px 1px rgba(0,0,0,0.22), 0px 3px 14px 2px rgba(0,0,0,0.14)',
+        }}
+      >
+        <ArrowDownward
+          style={{ color: 'grey' }}
+          fontSize="large"
+          disabled
+        />
+      </IconButton>
+    );
+  }
+
+
   leftClickButton() {
     const { currentPhoto } = this.state;
     if (currentPhoto !== 0) {
       return (
         <IconButton
           size="medium"
-          style={{backgroundColor: 'rgba(0,0,0,0.5)'}}
+          style={{
+            backgroundColor: 'rgba(0,0,0,0.5)',
+            boxShadow: '0px 5px 5px -3px rgba(0,0,0,0.3), 0px 8px 10px 1px rgba(0,0,0,0.22), 0px 3px 14px 2px rgba(0,0,0,0.14)',
+          }}
           onClick={this.leftClick}
         >
           <ChevronLeft
@@ -111,11 +201,14 @@ class Carousel extends React.Component {
       return (
         <IconButton
           size="medium"
-          style={{backgroundColor: 'rgba(0,0,0,0.5)'}}
+          style={{
+            backgroundColor: 'rgba(0,0,0,0.5)',
+            boxShadow: '0px 5px 5px -3px rgba(0,0,0,0.3), 0px 8px 10px 1px rgba(0,0,0,0.22), 0px 3px 14px 2px rgba(0,0,0,0.14)',
+          }}
           onClick={this.rightClick}
         >
           <ChevronRight
-            style={{ color: 'white' }}
+            style={{ color: 'white'}}
             fontSize="large"
           />
         </IconButton>
@@ -152,36 +245,48 @@ class Carousel extends React.Component {
       return <div> loading </div>;
     }
     return (
-      <Card
-        raised
-        style={{
-          backgroundImage: `url(${images[currentPhoto].url})`,
-          backgroundColor: 'black',
-          backgroundSize: 'contain',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat',
-          height: '100%',
-        }}
-      >
-        <Grid container style={{ height: '100%' }}>
-          <Grid item xs={2}>
-            <GridList col={1} row cellHeight={70}>
-              {this.setThumbnailSelect()}
-            </GridList>
+      <>
+        <Grid container style={{ height: '100%'}}>
+          <Grid
+            container
+            item
+            direction="column"
+            justify="space-evenly"
+            alignItems="center"
+            xs={3}
+            md={2}
+            style={{
+              backgroundColor: 'grey',
+              boxShadow: 'inset 0px 5px 5px -3px rgba(0,0,0,0.3), inset 0px 8px 10px 1px rgba(0,0,0,0.22), inset 0px 3px 14px 2px rgba(0,0,0,0.14)',
+            }}
+          >
+            {this.upClickButton()}
+            {this.setThumbnailSelect()}
+            {this.downClickButton()}
           </Grid>
           <Grid
             item
             container
             alignItems="center"
             justify="space-between"
-            xs={10}
-            style={{padding: '1rem'}}
+            xs={9}
+            md={10}
+            style={{
+              backgroundImage: `url(${images[currentPhoto].url})`,
+              backgroundColor: 'transparent',
+              backgroundSize: 'contain',
+              backgroundPosition: 'center',
+              backgroundRepeat: 'no-repeat',
+              height: '100%',
+              paddingLeft: '16px',
+              paddingRight: '16px',
+            }}
           >
             {this.leftClickButton()}
             {this.rightClickButton()}
           </Grid>
         </Grid>
-      </Card>
+      </>
     );
   }
 }

@@ -27,6 +27,7 @@ class Reviews extends React.Component {
     this.reportReview = this.reportReview.bind(this);
 
     // Define state.
+    let _averageRating = null;
     this.state = {
       metadata: null,
       totalReviews: 0,
@@ -38,6 +39,13 @@ class Reviews extends React.Component {
       reviewsBuffer: [],
       filteredReviews: [],
       reviews: [],
+      set averageRating(val) {
+        props.setAverageRating(val);
+        _averageRating = val;
+      },
+      get averageRating() {
+        return _averageRating;
+      },
       allReviews: {
         relevant: [],
         helpful: [],

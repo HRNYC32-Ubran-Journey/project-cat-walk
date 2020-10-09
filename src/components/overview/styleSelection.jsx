@@ -1,22 +1,18 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
-import {
-  // Avatar,
-  InputLabel,
-  MenuItem,
-  // FormHelperText,
-  FormControl,
-  Select,
-  Card,
-  CardHeader,
-  CardContent,
-  Typography,
-  Grid,
-} from '@material-ui/core/';
-import {
-  ChevronRight
-} from '@material-ui/icons';
+import Avatar from '@material-ui/core/Avatar';
+import PropTypes from 'prop-types';
+
 import { makeStyles } from '@material-ui/core/styles';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+
+import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
+import IconButton from '@material-ui/core/IconButton';
+import StarBorderIcon from '@material-ui/icons/StarBorder';
+import StarIcon from '@material-ui/icons/Star';
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -44,62 +40,21 @@ const StyleSelection = (props) => {
   if (styles.length === 0) {
     return <div> loading </div>;
   }
+
   return (
     // <Avatar alt="some shit" src="https://images.unsplash.com/photo-1534011546717-407bced4d25c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=300&q=80" />
-    <Card raised>
-      <CardHeader
-        title={(
-          <>
-            <Typography variant="caption" color="textSecondary">
-              <b>
-                {
-                  typeof information.category === 'string'
-                    ? information.category.toUpperCase()
-                    : null
-                }
-              </b>
-            </Typography>
-            <Typography variant="h4" component="h1">
-              <b>
-                {information.name}
-              </b>
-            </Typography>
-          </>
-        )}
-        subheader={(
-          <>
-            {/* <Typography variant="h6" component="h3" color="textSecondary"> */}
-              {`$${information.default_price}`}
-            {/* </Typography> */}
-          </>
-        )}
-      />
-
-      <CardContent>
-        <Grid container alignItems="center">
-          <Typography
-            variant="body2"
-            component="div"
-          >
-            <b>STYLE</b>
-          </Typography>
-          <ChevronRight
-            styles={{
-              color: 'black',
-              marginBottom: '7px',
-            }}
-          />
-          <Typography
-            variant="body2"
-            component="div"
-            styles={{
-              marginBottom: '-7px',
-            }}
-          >
-            {styles[selectedStyle].name.toUpperCase()}
-          </Typography>
-        </Grid>
-      </CardContent>
+    <div>
+      <h3>{information.category}</h3>
+      <h2>{information.name}</h2>
+      <h4>
+        {`$${information.default_price}`}
+      </h4>
+      <span>
+        { 'STYLE > ' }
+      </span>
+      <span>{styles[selectedStyleIndex].name}</span>
+      <br />
+      <br />
       <span>
 
         {
@@ -124,83 +79,65 @@ const StyleSelection = (props) => {
       <br />
       <span>
 
-        {/* size inputs: */}
+        {/* size inputs:
+
+            change passed value
+
+            change update methods in component
+
+            call super.addToCart
+
+        */}
         <FormControl variant="outlined" className={classes.formControl}>
-          <InputLabel id="demo-simple-select-outlined-label">Select Size</InputLabel>
+          <InputLabel>Size</InputLabel>
           <Select
-            labelId="demo-simple-select-outlined-label"
-            id="demo-simple-select-outlined"
             value={age}
-            onChange={handleChange}
-            label="Age"
+            label="Size"
           >
             <MenuItem value="">
               <em>None</em>
             </MenuItem>
-            <MenuItem value={10}>ChangeMe</MenuItem>
-            <MenuItem value={20}>Twenty</MenuItem>
-            <MenuItem value={30}>Thirty</MenuItem>
+            <MenuItem value={'sm'}> Small </MenuItem>
+            <MenuItem value={'md'}> Medium </MenuItem>
+            <MenuItem value={'lg'}> Large </MenuItem>
           </Select>
         </FormControl>
         {/* quantity input */}
         <FormControl variant="outlined" className={classes.formControl}>
-          <InputLabel id="demo-simple-select-outlined-label"></InputLabel>
+          <InputLabel>Quantity</InputLabel>
           <Select
-            labelId="demo-simple-select-outlined-label"
-            id="demo-simple-select-outlined"
             value={age}
-            onChange={handleChange}
-            label="Age"
+            label="Select Size"
           >
             <MenuItem value="">
               <em>None</em>
             </MenuItem>
-            <MenuItem value={10}>Ten</MenuItem>
-            <MenuItem value={20}>Twenty</MenuItem>
-            <MenuItem value={30}>Thirty</MenuItem>
+            {/* TODO: generate progromatically */}
+            <MenuItem value={1}> 1 </MenuItem>
+            <MenuItem value={2}> 2 </MenuItem>
+            <MenuItem value={3}> 3 </MenuItem>
+            <MenuItem value={4}> 4 </MenuItem>
+            <MenuItem value={5}> 5 </MenuItem>
+            <MenuItem value={6}> 6 </MenuItem>
+            <MenuItem value={7}> 7 </MenuItem>
+            <MenuItem value={8}> 8 </MenuItem>
+            <MenuItem value={9}> 9 </MenuItem>
+            <MenuItem value={10}> 10 </MenuItem>
           </Select>
         </FormControl>
-      </span>
-      <br />
-      <span>
         {/* add to bag: change to button */}
-        <FormControl variant="outlined" className={classes.formControl}>
-          <InputLabel id="demo-simple-select-outlined-label">Add to Bag</InputLabel>
-          <Select
-            labelId="demo-simple-select-outlined-label"
-            id="demo-simple-select-outlined"
-            value={age}
-            onChange={handleChange}
-            label="Age"
-          >
-            <MenuItem value="">
-              <em>None</em>
-            </MenuItem>
-            <MenuItem value={10}>Ten</MenuItem>
-            <MenuItem value={20}>Twenty</MenuItem>
-            <MenuItem value={30}>Thirty</MenuItem>
-          </Select>
-        </FormControl>
-        {/* Star: change to button */}
-        <FormControl variant="outlined" className={classes.formControl}>
-          <InputLabel id="demo-simple-select-outlined-label">Age</InputLabel>
-          <Select
-            labelId="demo-simple-select-outlined-label"
-            id="demo-simple-select-outlined"
-            value={age}
-            onChange={handleChange}
-            label="Age"
-          >
-            <MenuItem value="">
-              <em>None</em>
-            </MenuItem>
-            <MenuItem value={10}>Ten</MenuItem>
-            <MenuItem value={20}>Twenty</MenuItem>
-            <MenuItem value={30}>Thirty</MenuItem>
-          </Select>
-        </FormControl>
+        <IconButton color="primary" aria-label="add to shopping cart" style={{ position: 'bottom' }}>
+          <AddShoppingCartIcon />
+        </IconButton>
+        {/* Star: enable toggle */}
+        <IconButton color="primary" style={{ position: 'bottom' }}>
+          <StarBorderIcon />
+        </IconButton>
+        {/* <IconButton color="primary" style={{ position: 'bottom' }}>
+          <StarIcon />
+        </IconButton> */}
       </span>
-    </Card>
+    </div>
   );
 };
 
