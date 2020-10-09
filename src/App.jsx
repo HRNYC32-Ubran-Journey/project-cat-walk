@@ -43,9 +43,9 @@ class App extends React.Component {
     return (
       <>
         <Overview id={id} addToCart={this.addToCart} />
-        <Recomended id={id} cart={cart} />
+        {/* <Recomended id={id} cart={cart} />
         <Qa id={id} />
-        <Reviews id={id} />
+        <Reviews id={id} /> */}
         <Button variant="contained">this is a material UI button</Button>
       </>
     );
