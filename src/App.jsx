@@ -12,22 +12,10 @@ import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import purple from '@material-ui/core/colors/purple';
 // Components
 import Overview from './components/overview/index';
-// import Qa from './components/qa/index';
+import Qa from './components/qa/index';
 import Reviews from './components/reviews/index';
 // CSS and Fonts
 import './App.css';
-// import Roboto from './Roboto-Regular.ttf';
-
-const theme = createMuiTheme({
-  // palette: {
-  //   primary: {
-  //     main: purple[500],
-  //   },
-  //   secondary: {
-  //     main: '#f44336',
-  //   },
-  // },
-});
 
 const history = createBrowserHistory();
 
@@ -43,10 +31,12 @@ class App extends React.Component {
       // loadingSearch: true,
       // productsAll: [],
       cart: [],
+      averageRating: null,
     };
 
     // this.getAllProducts = this.getAllProducts.bind(this);
     this.addToCart = this.addToCart.bind(this);
+    this.setAverageRating = this.setAverageRating.bind(this);
   }
 
   // componentDidMount() {
@@ -96,9 +86,16 @@ class App extends React.Component {
     }
   }
 
+  setAverageRating(val) {
+    this.setState({
+      averageRating: val,
+    });
+  }
+
   render() {
+    const { averageRating } = this.state;
     return (
-      <ThemeProvider theme={theme}>
+      <ThemeProvider>
         <Router history={history}>
           <Container>
             <Switch>
@@ -113,9 +110,9 @@ class App extends React.Component {
 
                   return (
                     <>
-                      <Overview id={id} addToCart={this.addToCart} />
+                      <Overview id={id} averageRating={averageRating} addToCart={this.addToCart} />
                       {/* <Recomended id={id} cart={cart} /> */}
-                      {/* <Qa id={id} /> */}
+                      <Qa id={id} />
                       <Reviews id={id} />
                     </>
                   );

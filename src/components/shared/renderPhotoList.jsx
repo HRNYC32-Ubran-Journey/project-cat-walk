@@ -6,69 +6,38 @@ import {
   GridList,
   GridListTile,
 } from '@material-ui/core';
+import ShowFullscreenImage from './showFullscreenImage';
 
 class RenderPhotosList extends React.Component {
   constructor(props) {
     super(props);
 
-    this.openModel = this.openModel.bind(this);
-    this.closeModel = this.closeModel.bind(this);
+    this.changeImage = this.changeImage.bind(this);
 
     this.state = {
-      isOpen: false,
       image: null,
     };
   }
 
-  openModel(image) {
+  changeImage(image) {
+    console.log(image);
     this.setState({
-      isOpen: true,
       image,
-    });
-  }
-
-  closeModel() {
-    this.setState({
-      isOpen: false,
-    });
+    }, console.log(this.state.image));
   }
 
   render() {
     const { pictures } = this.props;
-    const { isOpen, image } = this.state;
-
+    const { image } = this.state;
+    console.log(image)
     if (Array.isArray(pictures) && pictures.length > 0) {
       return (
         <>
-          <Dialog
-            open={isOpen}
-            onClose={this.closeModel}
-            style={{
-              overflowY: 'hidden',
-              backgroundColor: 'transparent',
-            }}
-          >
-            <div>
-              <ButtonBase
-                onClick={this.closeModel}
-                style={{
-                  width: '90vw',
-                  height: '90vh',
-                  backgroundColor: 'transparent',
-                  backgroundImage: `url(${image})`,
-                  backgroundSize: 'contain',
-                  backgroundPosition: 'center',
-                  backgroundRepeat: 'no-repeat',
-                  overflowY: 'hidden',
-                }}
-              />
-            </div>
-          </Dialog>
+          <ShowFullscreenImage image={image} />
           <GridList
             cols={5}
             style={{
               backgroundColor: 'darkgrey',
-              // backgroundImage: `url(${ImageListBG})`,
               boxShadow: 'inset 0px 5px 5px -3px rgba(0,0,0,0.2), inset 0px 8px 10px 1px rgba(0,0,0,0.14), inset 0px 3px 14px 2px rgba(0,0,0,0.12)',
               padding: '0.75rem',
               paddingTop: '1rem',
@@ -78,7 +47,7 @@ class RenderPhotosList extends React.Component {
             {
               pictures.map((e) => {
                 const openImage = () => {
-                  this.openModel(e.url);
+                  this.changeImage(e.url);
                 };
 
                 return (
@@ -92,7 +61,7 @@ class RenderPhotosList extends React.Component {
                     }}
                   >
                     <ButtonBase
-                      style={{ width: '90%', height: '90%' }}
+                      style={{ width: '100%', height: '100%' }}
                       onClick={openImage}
                     />
                   </GridListTile>
